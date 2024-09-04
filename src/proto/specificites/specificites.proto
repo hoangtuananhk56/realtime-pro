@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package specificites;
+
+option go_package = "warehouse-service/proto/specificites";
+
+message Specificites {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+	string code_regie = 4;
+	string couleur = 5;
+	string centra_lisation = 6;
+	string milesime = 7;
+	string degre = 8;
+	string reference_id = 9;
+    bool fragilite = 10;
+	bool froid = 11;
+	bool nom_douaniere = 12;
+}

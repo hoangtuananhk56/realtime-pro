@@ -1,0 +1,247 @@
+syntax = "proto3";
+
+package stock;
+
+import "proto/conditionnement/conditionnement.proto";
+import "proto/lotreference/lotreference.proto";
+
+option go_package = "warehouse-service/proto/stock";
+
+message Stock {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string reference_id = 4;
+    string company_code_nom = 5;
+    string warehouse_code_nom = 6;
+    string client_code_nom = 7;
+    int64 quantite = 8;
+    int64 sous_qte = 9;
+    int64 total_pieses = 10;
+    string sous_famille = 11;
+    string attendu_id = 12;
+
+    string status = 13;
+
+    string cur_location_id = 14;
+    string cur_zone_id = 15;
+    string cur_location_code = 16;
+    string cur_location_aisle = 17;
+    string cur_location_bay = 18;
+    string cur_zone_code = 19;
+
+    string pre_location_id = 20;
+    string pre_location_code = 21;
+    string pre_zone_id = 22;
+    string pre_location_aisle = 23;
+    string pre_location_bay = 24;
+    string pre_zone_code = 25;
+
+    string reference_number = 26;
+    int64 fabrication_at = 27;
+
+    AttProduction att_production = 28;
+
+    string creation_by = 29;
+    string creationer_id = 30;
+
+    string modification_by = 31;
+    int64 modification_at = 32;
+    string modifier_id = 33;
+
+    int64 validation_at = 34;
+    string validation_by = 35;
+    string validationer_id = 36;
+
+    int64 liberation_at = 37;
+    string liberation_by = 38;
+    string liberationer_id = 39;
+    int32 cur_level = 40;
+    int32 pre_level = 41;
+    double cur_poids_net = 42;
+    double cur_poids_brut = 43;
+    double cur_height = 44;
+    double cur_volume = 45;
+    string parent_id = 46;
+    int32 number_of_free = 47;
+    string reappro_status = 48;
+    string conditionement_id = 49;
+    int32 conditionement_level = 50;
+    bool is_standard = 51;
+    conditionnement.Conditionnement conditionnement = 52;
+    string type = 53;
+    string mouvement = 54;
+    string eta = 55;
+    int64 created_at = 56;
+    int64 updated_at = 57;
+    string sscc = 58;
+
+    repeated ComArticleOb com_article = 59;
+    AttenduOb attendu = 60;
+    string chrono = 61;
+    string loading_bl = 62;
+    ParentOb parent = 63;
+    int64 sscc_unlock_at = 64;
+	int64 sscc_lock_at = 65;
+	bool  sscc_block = 66;
+    bool  pre_sscc_block = 67;
+    bool is_skip_block_lot = 68;
+    int64 updated_entry_time = 69;
+    string origine = 70;
+    int64 creation_at = 71;
+}
+
+message StockSsccInfo {
+    string id = 1;
+    string reference_id = 2;
+    string company_code_nom = 3;
+    string warehouse_code_nom = 4;
+    string client_code_nom = 5;
+    int64 quantite = 6;
+    int64 sous_qte = 7;
+    int64 total_pieses = 8;
+    string sous_famille = 9;
+    string attendu_id = 10;
+    string status = 11;
+    string cur_location_id = 12;
+    string cur_zone_id = 13;
+    string cur_location_code = 14;
+    string cur_location_aisle = 15;
+    string cur_location_bay = 16;
+    string cur_zone_code = 17;
+    string pre_location_id = 18;
+    string pre_location_code = 19;
+    string pre_zone_id = 20;
+    string pre_location_aisle = 21;
+    string pre_location_bay = 22;
+    string pre_zone_code = 23;
+    string reference_number = 24;
+    int64 fabrication_at = 25;
+    string created_by = 26;
+    string creater_id = 27;
+    string modification_by = 28;
+    int64 modification_at = 29;
+    string modifier_id = 30;
+    int64 validation_at = 31;
+    string validation_by = 32;
+    string validationer_id = 33;
+    int64 liberation_at = 34;
+    string liberation_by = 35;
+    string liberationer_id = 36;
+    int32 cur_level = 37;
+    int32 pre_level = 38;
+    double cur_poids_net = 39;
+    double cur_poids_brut = 40;
+    double cur_height = 41;
+    double cur_volume = 42;
+    string parent_id = 43;
+    int32 number_of_free = 44;
+    string reappro_status = 45;
+    string conditionement_id = 46;
+    int32 conditionement_level = 47;
+    bool is_standard = 48;
+    int64 entry_date = 49;
+    string type = 51;
+    string mouvement = 52;
+    string eta = 53;
+    int64 created_at = 54;
+    int64 updated_at = 55;
+    string sscc = 56;
+    string chrono = 57;
+    string loading_bl = 58;
+    int64 sscc_unlock_at = 59;
+	int64 sscc_lock_at = 60;
+	bool  sscc_block = 61;
+    bool  pre_sscc_block = 62;
+    int64   dluo = 63;
+	bool   dlc = 65;
+	int32  dlc_value = 66;
+	bool   dlv = 67;
+	int32  dlv_value = 68;
+	bool   gestion = 69;
+	bool   blocage_entree = 70;
+	bool   blocage_sortie = 71;
+	int64  livraison_at = 72;
+	int64  chargement_at = 73;
+	string entry_block = 74;
+    int64  loading_validation_at = 75;
+    string lot = 76;
+    string motif = 50;
+	string origine = 77;
+    string location_type = 64;
+	string storage_type = 78;
+    lotreference.LotReference config_lot = 79;
+    int64 updated_entry_time = 80;
+    string storage_func = 81;
+    bool is_skip_block_lot = 82;
+    string company_id = 83;
+    string warehouse_id = 84;
+    string client_id = 85;
+}
+
+message ParentOb {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string attendu_id = 4;
+    AttenduOb attendu = 5;
+}
+
+message ComArticleOb {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string lot = 4;
+    int64 dluo = 5;
+    string stock_id = 6;
+    int64 loading_validation_at = 7;
+    string loading_validation_by = 8;
+}
+
+message AttenduOb {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string bl = 4;
+    string stock_id = 6;
+}
+
+message AttProduction {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string reference_number = 4;
+    string ref_fournisseur_number = 5;
+    string libelle = 6;
+    string lot = 7;
+    string sscc = 8;
+    int64 dluo = 9;
+    int64 quantite = 10;
+    int64 sous_qte = 11;
+    int64 total_pieses = 12;
+    string conditionement = 13;
+    string attendu_id = 14;
+    float volume_qte = 15;
+    float poids_qte = 16;
+    float volume_sousqte = 17;
+    float poids_sousqte = 18;
+    string conditionement_id = 19;
+    string ref_fournisser_id = 20;
+    conditionnement.Conditionnement conditionnement = 21;
+    string lot_tmp = 22;
+    int64 dluo_tmp = 23;
+    int32 dluo_duration = 24;
+    bool is_scan = 25;
+    string reference_id = 26;
+    bool ref_block = 27;
+    bool ref_change = 28;
+    string validation_by = 29;
+    int64 validation_time = 30;
+    string att_bl = 31;
+    string status = 32;
+    string validationer_id = 33;
+    string chrono = 34;
+    string type = 35;
+    string mouvement = 36;
+    string eta = 37;
+}

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package user;
+
+option go_package="warehouse-service/proto/user";
+
+message User {
+  string id = 1;
+  int64 create_at = 2;
+  int64 update_at = 3;
+  string username = 4;
+  string firstname = 5;
+  string lastname = 6;
+  string address = 7;
+  string department_id = 8;
+  string company_id = 9;
+  bool is_vendor = 10;
+  string vendor_id = 11;
+  string code = 12;
+  string client_id = 13;
+  string role = 14;
+  string warehouse_id = 15;
+  string pre_nom = 16;
+  string nom = 17;
+}
+
+
+
+
+
+

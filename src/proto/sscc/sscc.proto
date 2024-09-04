@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package sscc;
+
+option go_package = "warehouse-service/proto/sscc";
+
+message SSCC {
+  string id = 1;
+  int64 create_at = 2;
+  int64 update_at = 3;
+  string num = 4;
+  string code_status = 5;
+}

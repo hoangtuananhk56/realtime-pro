@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+
+package lotreference;
+
+option go_package="warehouse-service/proto/lotreference";
+
+message LotReference {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    int64  lot_unlock_at = 4;
+	int64  lot_lock_at= 5;
+	bool   lot_block = 6;
+	bool   pre_lot_block = 7;
+	string motif = 8;
+	string origine = 9;
+	string lot = 10;
+	string reference_id = 11;
+	string company_code_nom = 12;
+	string warehouse_code_nom = 13;
+	string client_code_nom = 14;
+	string company_id = 15;
+	string warehouse_id = 16;
+	string client_id = 17;
+}

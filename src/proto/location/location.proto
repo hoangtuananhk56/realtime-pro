@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package location;
+
+option go_package = "warehouse-service/proto/location";
+
+message Location {
+  string id = 1;
+  int64 create_at = 2;
+  int64 update_at = 3;
+  string name = 4;
+  string storage_type = 5;
+  string storage_func = 6;
+  string zone_id = 7;
+  string aisle = 8;
+  string bay = 9;
+  double width = 10;
+  double height = 11;
+  double length = 12;
+  string entry_block = 17;
+  string conditionement = 18;
+  double max_height = 19;
+  double max_weight = 20;
+  double min_height = 21;
+  int32 level = 22;
+  double debut = 23;
+  double fin = 24;
+  string location_type = 25;
+  string code = 26;
+  string parent_id = 27;
+  repeated Location children = 28;
+}

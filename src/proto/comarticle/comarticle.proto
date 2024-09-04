@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+import "proto/stock/stock.proto";
+import "proto/reference/reference.proto";
+import "proto/conditionnement/conditionnement.proto";
+
+package comarticle;
+
+option go_package = "warehouse-service/proto/comarticle";
+
+
+message ComArticle {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string lot = 4;
+    string comment = 5;
+    int64 quantite = 6;
+    string statut = 7;
+    string commande_id = 8;
+    string libelle = 9;
+
+    string conditionement_id = 10;
+    conditionnement.Conditionnement conditionnement = 11;
+
+    string reference_id = 12;
+    string reference_number = 13;
+    reference.Reference reference = 14;
+    string status_code = 15;
+
+    string stock_id = 16;
+    stock.Stock stock = 17;
+
+    string created_by = 18;
+    string creater_id = 19;
+
+    string modification_by = 20;
+    string modificationer_id = 21;
+
+    string validation_by = 22;
+    string validationer_id = 23;
+    int64 validation_at = 24;
+    string sscc = 25;
+    int64 total_pieses = 26;
+    int64 sous_qte = 27;
+    int64 dluo = 28;
+
+    float volume_qte = 29;
+    float volume_sousqte = 30;
+    float poids_qte = 31;
+    float poids_sousqte = 32;
+    string source = 33;
+    string error_details = 34;
+    bool is_manual_lot = 35;
+    bool is_manual_sscc = 36;
+    bool is_manual_dluo = 37;
+    int64 manquants = 38;
+    int64 qte_confirmee = 39;
+    string motif = 40;
+    string description = 41;
+    string pre_status = 42;
+    string location_id = 43;
+    string parent_article_id = 44;
+    bool ref_block = 45;
+    string mission_id = 46;
+    bool is_color = 47;
+    string loading_mission_id = 48;
+    bool active_lot = 49;
+    int64 ruptures_check_lot = 50;
+    repeated string sscc_motif = 51;
+    string company_id = 52;
+    string warehouse_id = 53;
+    string client_id = 54;
+    int64 commande_created_at = 55;
+    string info_action = 56;
+    string reappro_mission_id = 57;
+    int32 conditionement_level = 58;
+    string type = 59;
+    string mouvement = 60;
+    string eta = 61;
+    string chrono = 62;
+    reference.ReferenceProduct reference_product = 63;
+    string rap_status = 64;
+    int64 loading_validation_at = 65;
+    string loading_validation_by = 66;
+    string prev_sscc = 67;
+}

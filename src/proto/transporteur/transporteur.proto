@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package transporteur;
+
+option go_package="warehouse-service/proto/transporteur";
+
+message ClientTransporteur {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string transporteur_code = 4;
+    string client_code_nom = 5;
+    string client_id = 6;
+}
+
+message Transporteur {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string nom = 4;
+    repeated TranAddresse addresse = 5;
+    repeated TranContact contact = 6;
+    string code = 7;
+    bool relay = 8;
+    bool saisir_camion = 9;
+    repeated ClientTransporteur client_transporteur = 10;
+}
+
+message TranAddresse {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string addresse = 4;
+    string code_postal = 5;
+    string ville = 6;
+    string pays = 7;
+    string gln = 8;
+    string transporteur_id = 9;
+    string complement = 10;
+    string iso = 11;
+}
+
+message TranContact {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string nom = 4;
+    string tel = 5;
+    string mobile = 6;
+    string email = 7;
+    string transporteur_id = 8;
+}

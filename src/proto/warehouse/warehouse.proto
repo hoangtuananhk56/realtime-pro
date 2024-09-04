@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package Warehouse;
+
+option go_package="warehouse-service/proto/warehouse";
+
+message Warehouse {
+  optional string ID = 1;
+  optional int64 create_at = 2;
+  optional int64 update_at = 3;
+  string nom = 4;
+  string adresse = 5;
+  string code = 6;
+  string code_nom = 7;
+  float height = 8;
+}

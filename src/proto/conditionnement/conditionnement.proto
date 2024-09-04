@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package conditionnement;
+
+option go_package="warehouse-service/proto/conditionnement";
+
+message Conditionnement {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string nom = 4;
+    string icone = 5;
+    int64 niveau = 6;
+    int64 qte = 7;
+    int64 type = 8;
+    double poids_net = 9;
+    double poids_brut = 10;
+    double longueur = 11;
+    double largeur = 12;
+    double hauteur = 13;
+    int64 couche = 14;
+    string type_de_codebarre= 15;
+    string no_codebarre= 16;
+    string variante= 17;
+    string rotation= 18;
+    string support= 19;
+    string reference_id= 20;
+    double poids_add = 21;
+    bool att_enable = 22;
+    bool block_del = 23;
+    bool qte_variable = 24;
+}
+
+

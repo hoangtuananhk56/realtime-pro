@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package destinataire;
+
+option go_package="warehouse-service/proto/destinataire";
+
+message ClientDestinataire {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string destinataire_code = 4;
+    string client_code_nom = 5;
+    string client_id = 6;
+}
+
+message Destinataire {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3; 
+    string nom = 4;
+    repeated DesAddresse addresse = 5;
+    repeated DesContact contact = 6;
+    string code = 7;
+    bool nom_retour_date = 8;
+    repeated ClientDestinataire client_destinataire = 9;
+}
+
+message DesAddresse {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3; 
+    string addresse = 4;
+    string code_postal = 5;
+    string ville = 6;
+    string pays = 7;
+    string gln = 8;
+    string destinataire_id = 9;
+    string complement = 10;
+    string iso = 11;
+}
+
+message DesContact {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3; 
+    string nom = 4;
+    string tel = 5;
+    string mobile = 6;
+    string email = 7;
+    string destinataire_id = 8;
+}

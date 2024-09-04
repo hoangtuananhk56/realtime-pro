@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package client;
+
+option go_package="warehouse-service/proto/client";
+
+message Client {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string nom = 4;
+	string adresse = 5;
+	string tel = 6;
+	string fax = 7;
+	string detail = 8;
+	string contact = 9;
+	string code = 10;
+    int64 current_sscc_value = 11;
+    string pre_code = 12;
+    string code_nom = 13;
+    bool rupture = 14;
+    bool variantes = 15;
+    bool fifo = 16;
+    bool fefo = 17;
+    bool types_cdn = 18;
+    int64 alerte_dluo = 19;
+    repeated ClientCompany client_company = 20;
+    repeated WarehouseClient warehouse_client = 21;
+    repeated ClientWarehouseCompany client_warehouse_company = 22;
+    string email = 23;
+    bool mois_dluo_activate = 24;
+    int32 mois_dluo_input = 25;
+    bool multi_bl = 26;
+    bool etiquettes = 27;
+    bool supports = 28;
+    bool sauvegarde_support = 29;
+    bool support_reception = 30;
+    bool reappro_partiel = 31;
+    bool respect_hauteur_palette = 32;
+    bool is_del = 33;
+    repeated ClientWarehouseCompanyOrg client_warehouse_company_org = 34;
+}
+
+message ClientCompany {
+    int64 create_at = 1;
+    int64 update_at = 2;
+    string client_code_nom = 3;
+    string company_code_nom = 4;
+    string client_id = 5;
+    string company_id = 6;
+    string id = 7;
+}
+
+message WarehouseClient {
+    int64 create_at = 1;
+    int64 update_at = 2;
+    string client_code_nom = 3;
+    string warehouse_code_nom = 4;
+    string client_id = 5;
+    string warehouse_id = 6;
+    string id = 7;
+}
+
+message WarehouseCompany {
+    int64 create_at = 1;
+    int64 update_at = 2;
+    string warehouse_code_nom = 3;
+    string company_code_nom = 4;
+    string warehouse_id = 5;
+    string company_id = 7;
+}
+
+message ClientWarehouseCompany {
+    string user_id = 1;
+    string company_code_nom = 2;
+    string client_code_nom = 3;
+    string warehouse_code_nom = 4;
+    string client_id = 5;
+    string id = 6;
+    string company_id = 7;
+    string warehouse_id = 8;
+}
+
+message ClientWarehouseCompanyOrg {
+    string id = 1;
+    string client_id = 2;
+    string company_id = 3;
+    string warehouse_id = 4;
+    string client_code_nom = 5;
+    string company_code_nom = 6;
+    string warehouse_code_nom = 7;
+}

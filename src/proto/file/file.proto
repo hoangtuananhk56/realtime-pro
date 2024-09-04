@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package file;
+
+option go_package="app/common/proto/file";
+
+message AttFile {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string name = 4;
+    string attendu_id = 5;
+    string description = 6;
+    string path = 7;
+    string file_type = 8;
+    int64 file_size = 9;
+    string source = 10;
+    string sscc = 11;
+}
+
+message ComFile {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string name = 4;
+    string commande_id = 5;
+    string description = 6;
+    string path = 7;
+    string file_type = 8;
+    int64 file_size = 9;
+    string source = 10;
+
+}

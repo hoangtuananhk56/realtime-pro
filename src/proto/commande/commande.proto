@@ -1,0 +1,145 @@
+syntax = "proto3";
+
+import "proto/destinataire/destinataire.proto";
+import "proto/transporteur/transporteur.proto";
+import "proto/comarticle/comarticle.proto";
+
+package commande;
+
+option go_package = "warehouse-service/proto/commande";
+
+message Commande {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string nom = 4;
+    string nom_client = 5;
+    int32 photos = 6;
+    int32 priorite = 7;
+
+    repeated comarticle.ComArticle com_article = 8;
+
+    ComComment com_preparation = 9;
+    ComComment com_livraison = 10;
+
+    int64 qte_total = 11;
+    int64 sous_qte_total = 12;
+
+    string destinataire_id = 13;
+    destinataire.Destinataire destinataire = 14;
+    string des_addresse_id = 15;
+    destinataire.DesAddresse des_addresse = 16;
+    string des_contact_id = 17;
+    destinataire.DesContact des_contact = 18;
+
+    string transporteur_id = 19;
+    transporteur.Transporteur transporteur = 20;
+    string tran_addresse_id = 21;
+    transporteur.TranAddresse tran_addresse = 22;
+    string tran_contact_id = 23;
+    transporteur.TranContact tran_contact = 24;
+
+    string relay_detail = 25;
+    int64 livraison_at = 26;
+    int64 chargement_at = 27;
+    bool imperatif = 28;
+
+    string company_id = 29;
+    string warehouse_id = 30;
+    string client_id = 31;
+
+    string created_by = 32;
+    string creater_id = 33;
+
+    string modification_by = 34;
+    string modificationer_id = 35;
+
+    string validation_by = 36;
+    string validationer_id = 37;
+    int64 validation_at = 38;
+    repeated ComFile com_file = 39;
+    string status_code = 40;
+
+    string assignee_id = 41;
+    string assignee_by = 42;
+    bool force_dlou = 43;
+    repeated MissionInfo mission = 44;
+    int64 canceled_at = 45;
+    string scene = 46;
+    bool active_lot = 47;
+    ClientCommande client_ob = 48;
+    int32 valid_times = 49;
+    string type = 50;
+    string mouvement = 51;
+    string eta = 52;
+    repeated string sscc_block = 53;
+
+    repeated string etas = 54;
+    repeated string types = 55;
+    repeated string statuses = 56;
+    int64 quantite = 57;
+    int64 sous_qte = 58;
+    int64 total_pieses = 59;
+    string chrono = 60;
+    int64 loading_validation_time = 61;
+    string loading_validation_by = 62;
+
+}
+
+message MissionInfo {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string parent_id = 4;
+    string modification_by = 5;
+    string modificationer_id = 6;
+    string validation_by = 7;
+    string validationer_id = 8;
+    int64 validation_time = 9;
+    string manager_id = 10;
+    string manager_by = 11;
+    string assignee_id = 12;
+    string assignee_by = 13;
+    string status_code = 14;
+    string loading_bl = 15;
+    int32 priorite = 16;
+    string company_code_nom = 17;
+    string warehouse_code_nom = 18;
+    string client_code_nom = 19;
+    string nom = 20;
+    int32 mission_type = 21;
+    string truck_number = 22;
+    string sscc = 23;
+    string company_id = 24;
+    string warehouse_id = 25;
+    string client_id = 26;
+}
+
+message ClientCommande {
+    string nom = 1;
+    string code = 2;
+    string code_nom = 3;
+    bool fifo = 4;
+    bool fefo = 5;
+    int32 mois_dluo_input = 6;
+    bool mois_dluo_activate = 7;
+}
+
+message ComComment {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string commande_id = 4;
+    string comment = 5;
+}
+
+message ComFile {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string name = 4;
+    string commande_id = 5;
+    string description = 6;
+    string path = 7;
+    string source = 8;
+}

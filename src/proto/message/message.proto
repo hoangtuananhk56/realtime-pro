@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package message;
+import "proto/comarticle/comarticle.proto";
+import "proto/reference/reference.proto";
+import "proto/stock/stock.proto";
+import "proto/attendu/attendu.proto";
+import "proto/commande/commande.proto";
+
+option go_package="warehouse-service/proto/message";
+
+message User {
+    string id = 1;
+    string name = 2;
+    string room_name = 4;
+}
+
+message Connect {
+  User user = 1;
+  bool active = 2;
+  string room_name = 3;
+  string token = 4;
+}
+
+message Close {}
+
+message Message {
+    string id = 1;
+    string timestamp = 2;
+    string room_name = 3;
+    string action = 4;
+    string type = 5;
+
+    oneof event {
+        attendu.Attendu attendu_entry = 6;
+        attendu.AttProduction att_production_entry = 7;
+        commande.Commande commande_entry = 8;
+        comarticle.ComArticle com_article_entry = 9;
+        reference.Reference reference_entry = 10;
+        stock.Stock stock_entry = 11;
+    }
+}
+
+service MessageService {
+    rpc CreateStream(Connect) returns (stream Message);
+    rpc BroadcastMessage(Message) returns (Close);
+    rpc CloseStream(Connect) returns (Close);
+}

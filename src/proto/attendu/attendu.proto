@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package attendu;
+import "proto/conditionnement/conditionnement.proto";
+import "proto/sscc/sscc.proto";
+import "proto/reference/reference.proto";
+
+option go_package = "warehouse-service/proto/attendu";
+
+message Attendu {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string bl = 4;
+    int64 commande = 5;
+    string client_code_nom = 6;
+    string number_of_fournisseur = 7;
+    int64 livraison = 8;
+    int64 priorite = 9;
+    int64 qte_total = 10;
+    int64 sous_qte_total = 11;
+    repeated AttProduction att_production = 12;
+    AttCommentaire att_commentaire = 13;
+    AttFournisseur att_fournisseur = 14;
+    repeated AttFile att_file = 15;
+    string fournisseur_id = 16;
+    bool is_val = 17;
+    string no_commande = 18;
+    string status = 19;
+    int32 photos = 20;
+    string location_id = 21;
+    string assignee_id = 22;
+    string company_code_nom = 23;
+    string warehouse_code_nom = 24;
+    string created_by = 25;
+    string modification_by = 26;
+    string validation_by = 27;
+    int64 validation_time = 28;
+    string modificationer_id = 29;
+    string manager_by = 30;
+    string manager_id = 31;
+    string assignee_by = 32;
+    string type = 33;
+    string mouvement = 34;
+    string eta = 35;
+    int32 rec_type = 36;
+    repeated string mouvements = 37;
+    repeated string etas = 38;
+    repeated string statuses = 39;
+    repeated string types = 40;
+    repeated int64 type_cdn = 41;
+    int64 quantite = 42;
+    int64 sous_qte = 43;
+    int64 total_pieses = 44;
+    string chrono = 45;
+    string client_id = 46;
+    string company_id = 47;
+    string warehouse_id = 48;
+}
+
+message LocationDTO {
+    string id = 1;
+    string zone_id = 2;
+    string aisle = 4;
+    string bay = 5;
+    string zone_code = 6;
+    int32 level = 7;
+    string entry_block = 8;
+    string code = 9;
+}
+
+message AttFile {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string name = 4;
+    string attendu_id = 5;
+    string description = 6;
+    string path = 7;
+    string source = 8;
+    string sscc = 9;
+}
+
+message AttCommentaire {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string content = 4;
+    string attendu_id = 5;
+}
+
+message AttFournisseur {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string code_nom = 4;
+    string addresse = 5;
+    string code_postal = 6;
+    string ville = 7;
+    string pays = 8;
+    string iso = 9;
+    string complement = 10;
+    string contact = 11;
+    string tel = 12;
+    string mobile = 13;
+    string email = 14;
+    string attendu_id = 15;
+    string gln = 16;
+}
+
+message AttProduction {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string reference_number = 4;
+    string ref_fournisseur_number = 5;
+    string libelle = 6;
+    string lot = 7;
+    string sscc = 8;
+    int64 dluo = 9;
+    int64 quantite = 10;
+    int64 sous_qte = 11;
+    int64 total_pieses = 12;
+    string conditionement = 13;
+    string attendu_id = 14;
+    float volume_qte = 15;
+    float poids_qte = 16;
+    float volume_sousqte = 17;
+    float poids_sousqte = 18;
+    string conditionement_id = 19;
+    string ref_fournisser_id = 20;
+    conditionnement.Conditionnement conditionnement = 21;
+    string lot_tmp = 22;
+    int64 dluo_tmp = 23;
+    int32 dluo_duration = 24;
+    bool is_scan = 25;
+    string reference_id = 26;
+    bool ref_block = 27;
+    bool ref_change = 28;
+    string validation_by = 29;
+    int64 validation_time = 30;
+    string att_bl = 31;
+    string status = 32;
+    string validationer_id = 33;
+    string company_code_nom = 34;
+    string warehouse_code_nom = 35;
+    string client_code_nom = 36;
+    sscc.SSCC sscc_ob = 37;
+    string gen_bar_code_pdf = 38;
+    string dluo_format = 39;
+    LocationDTO location = 40;
+    string location_id = 41;
+    string type = 42;
+    string mouvement = 43;
+    string eta = 44;
+    string chrono = 45;
+    reference.ReferenceProduct reference_product = 46;
+    bool is_standard = 47;
+    string company_id = 48;
+    string warehouse_id = 49;
+    string client_id = 50;
+}

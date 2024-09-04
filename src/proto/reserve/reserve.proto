@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package reserve;
+
+option go_package="warehouse-service/proto/reserve";
+
+message Reserve {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string reserve_type_id = 4;
+    string reserve_type_name = 5;
+    string attendu_id = 6;
+    string sscc = 7;
+    int32 quantity = 8;
+    bool is_take_photos = 9;
+    bool is_input_number = 10;
+    repeated string images = 11;
+}
+
+message ReserveType {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string name = 4;
+    string company_code_nom = 5;
+    string warehouse_code_nom = 6;
+    string client_code_nom = 7;
+    bool is_take_photos = 8;
+    bool is_input_number = 9;
+    bool is_deduct_qty = 10;
+    string company_id = 11;
+    string warehouse_id = 12;
+    string client_id = 13;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package matieresdangereuses;
+
+option go_package ="warehouse-service/proto/matieresdangereuses";
+
+message Matieresdangereuses {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string code = 4;
+    string description = 5;
+}

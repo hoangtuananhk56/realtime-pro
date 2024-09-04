@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package fournisseur;
+
+option go_package = "warehouse-service/proto/fournisseur";
+
+message ClientFournisseur {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string fournisseur_code = 4;
+    string client_code_nom = 5;
+    string client_id = 6;
+}
+
+message Fournisseur {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3; 
+    string nom = 4;
+    repeated FouAddresse addresse = 5;
+    repeated FouContact contact = 6;
+    string code = 7;
+    repeated ClientFournisseur client_fournisseur = 8;
+}
+
+message FouAddresse {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string addresse = 4;
+    string code_postal = 5;
+    string ville = 6;
+    string pays = 7;
+    string gln = 8;
+    string fournisseur_id = 9;
+    string complement = 10;
+    string iso = 11;
+}
+
+message FouContact {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string nom = 4;
+    string tel = 5;
+    string mobile = 6;
+    string email = 7;
+    string fournisseur_id = 8;
+}

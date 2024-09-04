@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package zone;
+
+option go_package="warehouse-service/proto/zone";
+
+message Zone {
+    string id = 1;
+    string name = 2;
+    string warehouse_id = 3;
+    string code = 4;
+}

@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+package reference;
+import "proto/conditionnement/conditionnement.proto";
+import "proto/specificites/specificites.proto";
+import "proto/lotreference/lotreference.proto";
+import "proto/stock/stock.proto";
+
+option go_package="warehouse-service/proto/reference";
+
+message Reference {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string nom = 4;
+    string libelle_long = 5;
+    string langua_libelle = 6;
+    string libelle_court = 7;
+    string marque = 8;
+    string origine = 9;
+    string famille = 10;
+    string sous_famille = 11;
+    // repeated Photo photos = 12;
+    string photo = 12;
+    bool qte_variable = 13;
+    // repeated production_batch.ProductionBatch productionbatch = 15;
+    bool dluo = 14;
+    int32 dluo_value = 15;
+    bool dlv = 16;
+    int32 dlv_value = 17;
+    bool gestion = 18;
+	bool blocage_entree = 19;
+	bool blocage_sortie = 20;
+	bool variante = 21;
+	int32 alerte_stock  = 22;
+	string niveau_alerte  = 23;
+
+    repeated conditionnement.Conditionnement conditionnement = 24;
+
+    repeated ICPE icpe = 25;
+
+    repeated Matieresdangereuses matieresdangereuses = 26;
+
+    repeated RefFournissers ref_fournissers = 27;
+
+    specificites.Specificites specificites = 28;
+
+    Comment ref_charement = 29;
+    Comment ref_livraison = 30;
+    Comment ref_reception = 31;
+    string client_code_nom = 32;
+    bool dlc = 33;
+    int32 dlc_value = 34;
+    bool block_del = 35;
+    repeated stock.Stock stock = 36;
+    string chrono = 37;
+    string created_by = 38;
+    string creater_id = 39;
+    string modification_by = 40;
+    string modificationer_id = 41;
+
+    repeated string mouvements = 42;
+    repeated string etas = 43;
+    repeated string statuses = 44;
+    repeated string types = 45;
+    repeated string cdns = 46;
+    repeated int64 type_cdns = 47;
+    repeated int64 niveaus = 48;
+    int64 quantite = 49;
+    int64 sous_qte = 50;
+    int64 total_pieses = 51;
+    string pre_block_status = 52;
+    repeated lotreference.LotReference config_lot = 53;
+    string client_id = 54;
+}
+
+message Comment {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string reference_id = 4;
+    string comment = 5;
+}
+
+message RefFournissers {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string reference_fournisser = 4;
+	string ref_nom = 5;
+	string fournisser_id = 6;
+	string client_code_nom = 7;
+    bool blocage_entree = 8;
+    bool att_enable = 9;
+    bool block_del = 10;
+    string reference_id = 11;
+    string client_id = 12;
+}
+
+message Matieresdangereuses{
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string code = 4;
+	string description = 5;
+
+}
+
+message ICPE {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string code = 4;
+	string description = 5;
+	int64 qte_nv1 = 6;
+	int64 qte_total_ref = 7;
+	int64 qte_total_code = 8;
+}
+
+message AttenduForRefFourCreate {
+    string id = 1;
+    string bl = 2;
+    string client_code_nom = 3;
+    string warehouse_code_nom = 4;
+    string company_code_nom = 5;
+    string modificationer_id = 6;
+    string client_id = 7;
+    string warehouse_id = 8;
+    string company_id = 9;
+}
+
+message ReferenceProduct {
+    string id = 1;
+    bool blocage_entree = 2;
+    bool blocage_sortie = 3;
+    string pre_block_status = 4;
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package palette;
+
+option go_package = "warehouse-service/proto/palette";
+
+message Palette {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string code_status = 4;
+}

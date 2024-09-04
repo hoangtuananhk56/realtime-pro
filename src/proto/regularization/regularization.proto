@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package regularization;
+
+option go_package="warehouse-service/proto/regularization";
+
+message RegularizationReason {
+    string id = 1;
+    string name = 2;
+}
+
+message Regularization {
+    string id = 1;
+    int32 reg_type = 2;
+    string reason = 3;
+    string sscc = 4;
+    int32 quantity = 5;
+    string comment = 6;
+    string weight = 7;
+    string height = 8;
+}
