@@ -2,7 +2,10 @@ syntax = "proto3";
 
 package transporteur;
 
-option go_package="warehouse-service/proto/transporteur";
+// import "proto/reference/reference.proto";
+// import "proto/fournisseur/fournisseur.proto";
+
+option go_package="broker-service/pb/transporteur";
 
 message ClientTransporteur {
     string id = 1;
@@ -24,6 +27,11 @@ message Transporteur {
     bool relay = 8;
     bool saisir_camion = 9;
     repeated ClientTransporteur client_transporteur = 10;
+}
+
+message TransporteursResponse {
+    repeated Transporteur entry = 1;
+    string messageError = 2;
 }
 
 message TranAddresse {
@@ -49,4 +57,43 @@ message TranContact {
     string mobile = 6;
     string email = 7;
     string transporteur_id = 8;
+}
+
+message GetByIdElementRequest {
+    string id = 1;
+    string id_contact = 2;
+    string id_address = 3;
+}
+
+message CreateRequest {
+    Transporteur entry = 1;
+}
+
+message GetByCodeRequest {
+    string data = 1;
+}
+
+message GetAllRequest {
+
+}
+
+message CreateResponse {
+    Transporteur entry = 1;
+    string messageError = 2;
+}
+
+message GetByNameOrCodeRequest {
+    string data = 1;
+    string client_code_nom = 2;
+    string client_id = 3;
+}
+
+service TransporteurService {
+    rpc Create(CreateRequest) returns (CreateResponse){}
+    rpc GetByID(GetByCodeRequest) returns (CreateResponse){}
+    rpc GetByIdElement(GetByIdElementRequest) returns (CreateResponse){}
+    rpc GetByCode(GetByCodeRequest) returns (CreateResponse){}
+    rpc GetAll(GetAllRequest) returns (TransporteursResponse){}
+    rpc GetByNameOrCode(GetByNameOrCodeRequest) returns (TransporteursResponse){}
+
 }

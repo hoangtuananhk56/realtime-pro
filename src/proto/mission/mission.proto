@@ -1,0 +1,360 @@
+syntax = "proto3";
+
+package mission;
+import "proto/comarticle/comarticle.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "broker-service/pb/mission";
+
+message MissionFile {
+    string path = 1;
+    string name = 2;
+}
+
+message Mission {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string parent_id = 4;
+    string modification_by = 5;
+    string modificationer_id = 6;
+    string validation_by = 7;
+    string validationer_id = 8;
+    int64 validation_time = 9;
+    string manager_id = 10;
+    string manager_by = 11;
+
+    string assignee_id = 12;
+    string assignee_by = 13;
+
+
+    string status_code = 14;
+    repeated comarticle.ComArticle com_article = 15;
+
+    int32 priorite = 16;
+    string company_code_nom = 17;
+    string warehouse_code_nom = 18;
+    string client_code_nom = 19;
+    string nom = 20;
+    int32 mission_type = 21;
+    string truck_number = 22;
+    string sscc = 23;
+    string company_id = 24;
+    string warehouse_id = 25;
+    string client_id = 26;
+    string loading_bl = 27;
+    repeated MissionFile mission_files = 28;
+    int64 expected_date = 29;
+    int64 assignment_date = 30;
+    int64 execution_date   = 31;
+    int64 progress = 32;
+    string mission_name = 33;
+    string created_by = 34;
+}
+
+message MissionRequest {
+    Mission entry = 1;
+    string status_code = 2;
+    string scene = 3;
+}
+
+message UserIDRequest {
+    string userid = 1;
+}
+
+message MissionResponse {
+    Mission entry = 1;
+    string messageError = 2;
+}
+
+message MissionIDRequest {
+    string id = 1;
+}
+
+message CheckEnterTruckNumberResponse {
+    bool is_valid = 1;
+    string message_error = 2;
+}
+
+message CheckEnterTruckNumberRequest {
+    string id = 1;
+}
+
+message UpdateEnterTruckNumberResponse {
+    bool is_valid = 1;
+    string message_error = 2;
+}
+
+message UpdateEnterTruckNumberRequest {
+    string id = 1;
+    string truck_number = 2;
+}
+
+message MissionInfo {
+    bool is_manual_lot = 1;
+    bool is_manual_sscc = 2;
+    bool is_manual_dluo = 3;
+    string sscc = 4;
+    string lot = 5;
+    int64 dluo = 6;
+}
+
+message CreateReapproMission {
+    string commande_id = 1;
+    repeated MissionInfo ssccs = 2;
+    int32 priorite = 3;
+    string company_id = 4;
+    string warehouse_id = 5;
+    string client_id = 6;
+    string commande_nom = 7;
+}
+
+message CreateReapproMissionRequest {
+    CreateReapproMission entry = 1;
+}
+
+message SsccResponse {
+    string sscc = 1;
+    string err_status = 2;
+
+}
+
+message CreateReapproMissionResponse {
+    string status = 1;
+    string message_error = 2;
+    repeated SsccResponse err_detail = 3;
+}
+
+message GetDashboardInformationRequest{
+    string company_code_nom = 1;
+    string warehouse_code_nom = 2;
+    string user_id = 3;
+    string company_id = 4;
+    string warehouse_id = 5;
+}
+
+message GetDashboardInformationResponse{
+    string unassigned = 1;
+    string assigned = 2;
+    string inProgress = 3;
+    string completed = 4;
+    string pending = 5;
+    string messageError = 6;
+}
+
+message TerminateMissionRequest {
+    string id = 1;
+    string user_id = 2;
+}
+
+message GetInterruptReasonMasterDataRequest {
+    int32 mission_type = 1;
+}
+
+message InterruptReasonMasterData{
+    string content = 1;
+    optional bool is_attach_note = 2;
+}
+
+message GetInterruptReasonMasterDataResponse{
+    repeated InterruptReasonMasterData interrupt_reason_master_data = 1;
+}
+
+message CreateMissionMovementRequest {
+    string stock_id = 1;
+    string sscc = 2;
+    string bar_code = 4;
+    int32  priorite = 5;
+    string creationer_code = 6;
+}
+
+message CreateMissionMovementResponse{
+    string content = 1;
+    optional bool is_attach_note = 2;
+}
+
+message UpdateSpecialMissionRequest {
+    string mission_name = 1;
+    string user_id = 2;
+    string company_id = 3;
+    string warehouse_id = 4;
+}
+
+message CheckMissionMovementRequest {
+    string id = 1;
+    string sscc = 2;
+    string user_id = 3;
+}
+
+message CheckMissionMovementResponse{
+    optional bool is_valid = 1;
+}
+
+message CheckActionMovementRequest {
+    string sscc = 1;
+}
+
+message CheckActionMovementResponse{
+    optional bool is_valid = 1;
+}
+
+message MissionReference{
+    string id = 1;
+    string image = 2;
+    repeated string comment = 3;
+}
+
+message MissionArticle {
+    string id = 1;
+    string sscc = 2;
+    MissionReference reference = 3;
+}
+
+message GetMissionDetailRequest {
+    string id = 1;
+}
+
+message GetMissionDetailResponse{
+    string id = 1;
+    optional int32 mission_type = 2;
+    repeated MissionArticle articles = 3;
+}
+
+message MissionFilesRequest {
+    repeated MissionFileRequest mission_files = 1;
+}
+
+message MissionFileRequest {
+    string id = 1;
+    string mission_id = 2;
+    string path = 3;
+    string name = 4;
+}
+
+message Reserve {
+    string id = 1;
+    string reserve_type_id = 2;
+    string reserve_type_name = 3;
+    string attendu_id = 4;
+    string sscc = 5;
+    int32 quantity = 6;
+    repeated string images = 7;
+}
+
+message AttenduReserve {
+    string sscc = 1;
+    repeated Reserve reserves = 2;
+}
+
+message GetScanedReservesByMissionIdRequest {
+    string attendu_id = 1;
+}
+
+message GetScanedReservesByMissionIdResponse {
+    repeated AttenduReserve entry = 1;
+    string messageError = 2;
+}
+
+message MetaData {
+    int32 count = 1;
+    int32 offset = 2;
+    int32 limit  = 3;
+    int64 total  = 4;
+}
+
+message MissionAllRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+    string client_id = 3;
+    string warehouse_id = 4;
+    string company_id = 5;
+    string start_date = 6;
+    string end_date = 7;
+    string nom = 8;
+    string assignee_id = 9;
+    string mission_type = 10;
+    string progress = 11;
+}
+
+message MissionAllResponse{
+    repeated Mission entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+
+}
+
+message FilterUltilsateurResquest {
+    string client_id = 1;
+    string warehouse_id = 2;
+    string company_id = 3;
+}
+
+message UltilsateurResponse{
+    string assignee_id = 1;
+    string assignee_by =2;
+}
+message FilterUtilisateurResponse {
+    repeated UltilsateurResponse entry = 1;
+    string messageError = 2;
+}
+
+
+message MissionTypeResponse{
+    string mission_type = 1;
+    string mission_name = 2;
+}
+
+message GetMissionTypeRequest {
+
+}
+message GetMissionTypeResponse{
+    repeated MissionTypeResponse entry = 1;
+    string messageError =2;
+}
+
+message GetProgressListRequest {}
+
+message ProgressType{
+    string progress = 1;
+    string progress_name = 2;
+}
+
+message GetProgressListResponse {
+    repeated ProgressType entry = 1;
+    string messageError =2;
+}
+
+message UpdatePatchMissionRequest{
+    Mission entry = 1;
+}
+
+message UpdatePatchMissionResponse{
+    Mission entry = 1;
+    string messageError = 2;
+}
+
+service MissionService {
+    rpc Create(MissionRequest) returns (MissionResponse){};
+    rpc GetByID(MissionIDRequest) returns (MissionResponse){};
+    rpc CheckEnterTruckNumber(CheckEnterTruckNumberRequest) returns (CheckEnterTruckNumberResponse){}
+    rpc UpdateEnterTruckNumber(UpdateEnterTruckNumberRequest) returns (UpdateEnterTruckNumberResponse){}
+    rpc CreateReapproMissionBySsccArray(CreateReapproMissionRequest) returns (CreateReapproMissionResponse){};
+    rpc GetDashboardInformation(GetDashboardInformationRequest) returns (GetDashboardInformationResponse){};
+    rpc TerminateMission(TerminateMissionRequest) returns (google.protobuf.Empty){};
+    rpc GetInterruptReasonMasterData(GetInterruptReasonMasterDataRequest) returns (GetInterruptReasonMasterDataResponse){};
+    rpc CheckMissionMovement(CheckMissionMovementRequest) returns (CheckMissionMovementResponse){};
+    rpc CheckActionMovement(CheckActionMovementRequest) returns (CheckActionMovementResponse){};
+    rpc GetMissionDetail(GetMissionDetailRequest) returns (GetMissionDetailResponse){};
+    rpc CreateMissionMovement(CreateMissionMovementRequest) returns (MissionResponse){};
+
+    rpc UpdateSpecialMission(UpdateSpecialMissionRequest) returns (google.protobuf.Empty){};
+    rpc CreateMissionFiles(MissionFilesRequest) returns (google.protobuf.Empty){};
+    rpc DeleteMissionFiles(MissionFilesRequest) returns (google.protobuf.Empty){};
+
+    rpc GetMissionAll(MissionAllRequest) returns (MissionAllResponse){}
+    rpc GetUtilisateurByFilter(FilterUltilsateurResquest) returns (FilterUtilisateurResponse) {};
+    rpc GetMissionType(GetMissionTypeRequest) returns (GetMissionTypeResponse){};
+    rpc GetProgressList(GetProgressListRequest) returns(GetProgressListResponse){}
+    rpc GetScanedReservesByMissionId(GetScanedReservesByMissionIdRequest) returns (GetScanedReservesByMissionIdResponse){};
+    rpc UpdateMission(UpdatePatchMissionRequest) returns (UpdatePatchMissionResponse){};
+}

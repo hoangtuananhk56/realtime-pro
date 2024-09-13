@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package email;
+
+option go_package="broker-service/pb/email";
+
+message Email {
+    string sender = 1;
+    repeated string to = 2;
+    repeated string cc = 3;
+    repeated string bcc = 4;
+    string subject = 5;
+    bytes body = 6;
+    // string body = 6;
+    string type = 7;
+}
+
+message EmailRequest {
+    Email entry = 1;
+}
+
+message EmailResponse {
+    Email entry = 1;
+    string messageError = 2;
+}
+
+message Bytes {
+    bytes b = 1;
+  }
+
+service EmailService {
+    rpc Send(EmailRequest) returns (EmailResponse){}
+}

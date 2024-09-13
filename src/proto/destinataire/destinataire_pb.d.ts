@@ -200,3 +200,159 @@ export namespace DesContact {
   }
 }
 
+export class GetByIdElementRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): GetByIdElementRequest;
+
+  getIdContact(): string;
+  setIdContact(value: string): GetByIdElementRequest;
+
+  getIdAddress(): string;
+  setIdAddress(value: string): GetByIdElementRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByIdElementRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByIdElementRequest): GetByIdElementRequest.AsObject;
+  static serializeBinaryToWriter(message: GetByIdElementRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByIdElementRequest;
+  static deserializeBinaryFromReader(message: GetByIdElementRequest, reader: jspb.BinaryReader): GetByIdElementRequest;
+}
+
+export namespace GetByIdElementRequest {
+  export type AsObject = {
+    id: string,
+    idContact: string,
+    idAddress: string,
+  }
+}
+
+export class CreateRequest extends jspb.Message {
+  getEntry(): Destinataire | undefined;
+  setEntry(value?: Destinataire): CreateRequest;
+  hasEntry(): boolean;
+  clearEntry(): CreateRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateRequest): CreateRequest.AsObject;
+  static serializeBinaryToWriter(message: CreateRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateRequest;
+  static deserializeBinaryFromReader(message: CreateRequest, reader: jspb.BinaryReader): CreateRequest;
+}
+
+export namespace CreateRequest {
+  export type AsObject = {
+    entry?: Destinataire.AsObject,
+  }
+}
+
+export class GetByCodeRequest extends jspb.Message {
+  getData(): string;
+  setData(value: string): GetByCodeRequest;
+
+  getClientId(): string;
+  setClientId(value: string): GetByCodeRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByCodeRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByCodeRequest): GetByCodeRequest.AsObject;
+  static serializeBinaryToWriter(message: GetByCodeRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByCodeRequest;
+  static deserializeBinaryFromReader(message: GetByCodeRequest, reader: jspb.BinaryReader): GetByCodeRequest;
+}
+
+export namespace GetByCodeRequest {
+  export type AsObject = {
+    data: string,
+    clientId: string,
+  }
+}
+
+export class GetAllRequest extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetAllRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllRequest): GetAllRequest.AsObject;
+  static serializeBinaryToWriter(message: GetAllRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllRequest;
+  static deserializeBinaryFromReader(message: GetAllRequest, reader: jspb.BinaryReader): GetAllRequest;
+}
+
+export namespace GetAllRequest {
+  export type AsObject = {
+  }
+}
+
+export class DestinatairesResponse extends jspb.Message {
+  getEntryList(): Array<Destinataire>;
+  setEntryList(value: Array<Destinataire>): DestinatairesResponse;
+  clearEntryList(): DestinatairesResponse;
+  addEntry(value?: Destinataire, index?: number): Destinataire;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): DestinatairesResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DestinatairesResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: DestinatairesResponse): DestinatairesResponse.AsObject;
+  static serializeBinaryToWriter(message: DestinatairesResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DestinatairesResponse;
+  static deserializeBinaryFromReader(message: DestinatairesResponse, reader: jspb.BinaryReader): DestinatairesResponse;
+}
+
+export namespace DestinatairesResponse {
+  export type AsObject = {
+    entryList: Array<Destinataire.AsObject>,
+    messageerror: string,
+  }
+}
+
+export class CreateResponse extends jspb.Message {
+  getEntry(): Destinataire | undefined;
+  setEntry(value?: Destinataire): CreateResponse;
+  hasEntry(): boolean;
+  clearEntry(): CreateResponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): CreateResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateResponse): CreateResponse.AsObject;
+  static serializeBinaryToWriter(message: CreateResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateResponse;
+  static deserializeBinaryFromReader(message: CreateResponse, reader: jspb.BinaryReader): CreateResponse;
+}
+
+export namespace CreateResponse {
+  export type AsObject = {
+    entry?: Destinataire.AsObject,
+    messageerror: string,
+  }
+}
+
+export class GetByNameOrCodeRequest extends jspb.Message {
+  getData(): string;
+  setData(value: string): GetByNameOrCodeRequest;
+
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): GetByNameOrCodeRequest;
+
+  getClientId(): string;
+  setClientId(value: string): GetByNameOrCodeRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByNameOrCodeRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByNameOrCodeRequest): GetByNameOrCodeRequest.AsObject;
+  static serializeBinaryToWriter(message: GetByNameOrCodeRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByNameOrCodeRequest;
+  static deserializeBinaryFromReader(message: GetByNameOrCodeRequest, reader: jspb.BinaryReader): GetByNameOrCodeRequest;
+}
+
+export namespace GetByNameOrCodeRequest {
+  export type AsObject = {
+    data: string,
+    clientCodeNom: string,
+    clientId: string,
+  }
+}
+

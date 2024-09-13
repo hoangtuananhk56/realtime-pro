@@ -7,8 +7,8 @@ import { requestPermission, onMessageListener } from './messaging_initial';
 
 
 
-export const client = new MessageServiceClient("https://grpc.api.equateur.develop.bfast-vn.net", null, null);
-// export const client = new MessageServiceClient("http://localhost:8888", null, null);
+// export const client = new MessageServiceClient("https://grpc.api.equateur.develop.bfast-vn.net", null, null);
+export const client = new MessageServiceClient("http://localhost:8888", null, null);
 
 function App() {
   //Create a room
@@ -70,11 +70,11 @@ function App() {
 
 
 
-  // useEffect(() => {
-  //   console.log("Requesting permission...");
-  //   requestPermission();
-  //   onMessageListener();
-  // }, [])
+  useEffect(() => {
+    console.log("Requesting permission...");
+    requestPermission();
+    onMessageListener();
+  }, [])
 
   const sendHello = () => {
     const msg = new Message()

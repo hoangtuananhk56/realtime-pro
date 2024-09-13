@@ -97,7 +97,6 @@ proto.conditionnement.Conditionnement.toObject = function(includeInstance, msg) 
     referenceId: jspb.Message.getFieldWithDefault(msg, 20, ""),
     poidsAdd: jspb.Message.getFloatingPointFieldWithDefault(msg, 21, 0.0),
     attEnable: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
-    blockDel: jspb.Message.getBooleanFieldWithDefault(msg, 23, false),
     qteVariable: jspb.Message.getBooleanFieldWithDefault(msg, 24, false)
   };
 
@@ -222,10 +221,6 @@ proto.conditionnement.Conditionnement.deserializeBinaryFromReader = function(msg
     case 22:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setAttEnable(value);
-      break;
-    case 23:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setBlockDel(value);
       break;
     case 24:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -411,13 +406,6 @@ proto.conditionnement.Conditionnement.serializeBinaryToWriter = function(message
   if (f) {
     writer.writeBool(
       22,
-      f
-    );
-  }
-  f = message.getBlockDel();
-  if (f) {
-    writer.writeBool(
-      23,
       f
     );
   }
@@ -824,24 +812,6 @@ proto.conditionnement.Conditionnement.prototype.getAttEnable = function() {
  */
 proto.conditionnement.Conditionnement.prototype.setAttEnable = function(value) {
   return jspb.Message.setProto3BooleanField(this, 22, value);
-};
-
-
-/**
- * optional bool block_del = 23;
- * @return {boolean}
- */
-proto.conditionnement.Conditionnement.prototype.getBlockDel = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 23, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.conditionnement.Conditionnement} returns this
- */
-proto.conditionnement.Conditionnement.prototype.setBlockDel = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 23, value);
 };
 
 

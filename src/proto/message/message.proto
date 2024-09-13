@@ -1,13 +1,13 @@
 syntax = "proto3";
 
 package message;
+import "proto/attendu/attendu.proto";
+import "proto/commande/commande.proto";
 import "proto/comarticle/comarticle.proto";
 import "proto/reference/reference.proto";
 import "proto/stock/stock.proto";
-import "proto/attendu/attendu.proto";
-import "proto/commande/commande.proto";
 
-option go_package="warehouse-service/proto/message";
+option go_package="broker-service/pb/message";
 
 message User {
     string id = 1;
@@ -38,6 +38,7 @@ message Message {
         comarticle.ComArticle com_article_entry = 9;
         reference.Reference reference_entry = 10;
         stock.Stock stock_entry = 11;
+        attendu.RealtimeAttendu update_attendu_request = 12;
     }
 }
 
@@ -45,4 +46,5 @@ service MessageService {
     rpc CreateStream(Connect) returns (stream Message);
     rpc BroadcastMessage(Message) returns (Close);
     rpc CloseStream(Connect) returns (Close);
+    rpc CheckConnection(Close) returns (Close);
 }

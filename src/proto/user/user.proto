@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package user;
 
-option go_package="warehouse-service/proto/user";
+import "proto/authentication/authentication.proto";
+option go_package="broker-service/pb/user";
+
 
 message User {
   string id = 1;
@@ -23,6 +25,113 @@ message User {
   string pre_nom = 16;
   string nom = 17;
 }
+
+message UserCreationPayload {
+  authentication.User entry = 1;
+}
+
+message Response {
+  authentication.User entry = 1;
+  string messageError = 2;
+}
+
+message UserAvailableRequest {
+  string company_code_nom = 1;
+  string warehouse_code_nom = 2;
+  string client_code_nom = 3;
+  string mission_type = 4;
+  string user_id = 5;
+  string company_id = 6;
+  string warehouse_id = 7;
+  string client_id = 8;
+}
+
+message GetAllResponse {
+  repeated authentication.User entry = 1;
+  string messageError = 2;
+}
+
+message AssignedMissionResponse {
+  repeated AssignedPerStockitResponse entry = 1;
+  string messageError = 2;
+}
+
+message AssignedPerStockitResponse {
+  string id = 1;
+  string nom = 2;
+  string pre_nom = 3;
+  string user_id = 4;
+  string company_code_nom = 5;
+  string warehouse_code_nom = 6;
+  string client_code_nom = 7;
+  int32 assigned = 8;
+  int32 in_progress = 9;
+  int32 completed = 10;
+  string company_id = 11;
+  string warehouse_id = 12;
+  string client_id = 13;
+}
+
+message UserListRequest {
+  string client_code_nom = 1;
+  string company_code_nom = 2;
+  string warehouse_code_nom = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+}
+
+message UserList {
+  string id = 1;
+  string role = 2;
+  string nom = 3;
+  string pre_nom = 4;
+  string code = 5;
+  string mail = 6;
+  repeated string client = 7;
+  repeated string company = 8;
+  repeated string warehouse = 9;
+  string action = 10;
+  bool statut = 11;
+  int64 update = 12;
+}
+
+message InfoCommon {
+  string code_nom = 1;
+  string code = 2;
+  string nom = 3;
+}
+
+message UserListReponse {
+  repeated UserList entry = 1;
+  string messageError = 2;
+}
+
+
+
+message GetAllUsersResponse {
+  repeated UserList entry = 1;
+  MetaData metadata = 2;
+  string messageError = 3;
+}
+
+message MetaData {
+  int64 count = 1;
+  int64 offset = 2; 
+  int64 limit  = 3; 
+  int64 total  = 4;
+}
+
+message CodeRequest {
+  string code = 1;
+}
+
+service UserService {
+  rpc Create(UserCreationPayload) returns (Response) {};
+  rpc GetAsignedMissionPerStockist(UserAvailableRequest) returns (AssignedMissionResponse) {};
+  rpc GetAllUsers(UserListRequest) returns (GetAllUsersResponse) {};
+  rpc GetMe(CodeRequest) returns (Response) {};
+}
+
 
 
 

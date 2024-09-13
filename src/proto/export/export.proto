@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+
+package export;
+
+option go_package = "broker-service/pb/export";
+
+message ExportAllReferencesRequest {
+    string client_id = 1;
+    string company_id = 2;
+    string warehouse_id = 3;
+
+    string bl = 10; // BL
+    string description = 11; // Libelle
+    string supplier = 12; // Fournisseur
+    string type = 13; // Type
+    string mouvement = 14; // Mouvement
+    string eta = 15; // État
+    string chrono = 16; // Chrono
+    string debut = 17; // Debut
+    string fin = 18; // Fin
+    string status = 19; // Statut
+    string sscc = 20; // Pallete
+    string lot = 21; // Lot
+    string cdn = 22; // Cdn
+    string zone = 23; // Zone
+    string aisle = 24; // Allée
+    string bay = 25; // Travée
+    string level = 26; // Niveau
+    string type_cdn = 27; // Type CDN
+    bool emplacements_vide = 28; // Emplacements Vide
+    string product_number = 29; // No Produit
+    string sort = 30; // Sort
+    string user_code = 31; // UserId
+}
+message ExportAllAttenduRequest {    
+    string client_id = 1;
+    string warehouse_id = 2;
+    string company_id = 3;
+    string user_id = 4;
+    string role = 5;
+    string bl = 6;
+    string description = 7;
+    string supplier = 8;
+    string type = 9;
+    string mouvement = 10;
+    string eta = 11;
+    string chrono = 12;
+    string start_date = 13;
+    string end_date = 14;
+    string product = 15;
+    string status = 16;
+    string palette = 17;
+    string lot = 18;
+    string sort = 19;
+    string user_code = 20; // UserId
+}
+
+message ExportAllCommandeRequest {    
+    string client_id = 1;
+    string warehouse_id = 2;
+    string company_id = 3;
+    string user_id = 4;
+    string role = 5;
+    optional string addressee = 6; // Destinataire
+    optional string description = 7; // Libellé
+    string bl = 8; // BL
+    string transporter = 9; // Transporteur
+    string type = 10; // Type
+    string mouvement = 11; // Mouvement
+    string eta = 12; // État
+    string chrono = 13; // Chrono
+    string debut = 14; // Debut
+    string fin = 15; // Fin
+    string product = 16; // Référence
+    string status = 17; // Statut
+    string sscc = 18; // Pallete
+    string lot = 19; // Lot
+    string cdn = 20; // Cdn
+    string zone = 21; // Zone
+    string aisle = 22; // Allée
+    string bay = 23; // Travée
+    string level = 24; // Niveau
+    string type_cdn = 25; // Type CDN
+    string nom = 26; // N commande
+    string sort = 27; // E.g. sort=bl:asc
+    string user_code = 28; // UserId
+}
+
+message ExportResponse {
+    string status = 1;
+    string messageError = 2;
+}

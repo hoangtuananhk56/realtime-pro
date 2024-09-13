@@ -1,10 +1,10 @@
 import * as jspb from 'google-protobuf'
 
+import * as proto_attendu_attendu_pb from '../../proto/attendu/attendu_pb'; // proto import: "proto/attendu/attendu.proto"
+import * as proto_commande_commande_pb from '../../proto/commande/commande_pb'; // proto import: "proto/commande/commande.proto"
 import * as proto_comarticle_comarticle_pb from '../../proto/comarticle/comarticle_pb'; // proto import: "proto/comarticle/comarticle.proto"
 import * as proto_reference_reference_pb from '../../proto/reference/reference_pb'; // proto import: "proto/reference/reference.proto"
 import * as proto_stock_stock_pb from '../../proto/stock/stock_pb'; // proto import: "proto/stock/stock.proto"
-import * as proto_attendu_attendu_pb from '../../proto/attendu/attendu_pb'; // proto import: "proto/attendu/attendu.proto"
-import * as proto_commande_commande_pb from '../../proto/commande/commande_pb'; // proto import: "proto/commande/commande.proto"
 
 
 export class User extends jspb.Message {
@@ -125,6 +125,11 @@ export class Message extends jspb.Message {
   hasStockEntry(): boolean;
   clearStockEntry(): Message;
 
+  getUpdateAttenduRequest(): proto_attendu_attendu_pb.RealtimeAttendu | undefined;
+  setUpdateAttenduRequest(value?: proto_attendu_attendu_pb.RealtimeAttendu): Message;
+  hasUpdateAttenduRequest(): boolean;
+  clearUpdateAttenduRequest(): Message;
+
   getEventCase(): Message.EventCase;
 
   serializeBinary(): Uint8Array;
@@ -148,6 +153,7 @@ export namespace Message {
     comArticleEntry?: proto_comarticle_comarticle_pb.ComArticle.AsObject,
     referenceEntry?: proto_reference_reference_pb.Reference.AsObject,
     stockEntry?: proto_stock_stock_pb.Stock.AsObject,
+    updateAttenduRequest?: proto_attendu_attendu_pb.RealtimeAttendu.AsObject,
   }
 
   export enum EventCase { 
@@ -158,6 +164,7 @@ export namespace Message {
     COM_ARTICLE_ENTRY = 9,
     REFERENCE_ENTRY = 10,
     STOCK_ENTRY = 11,
+    UPDATE_ATTENDU_REQUEST = 12,
   }
 }
 

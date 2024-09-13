@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package data_bridge;
+
+option go_package="warehouse-service/pb/data-bridge";
+
+service DataBridge {
+    rpc Import(stream ImportRequest) returns (ImportResponse);
+    rpc CreateImportHistory(CreateImportHistoryRequest) returns (CreateImportHistoryResponse);
+}
+
+message ImportRequest {
+    string import_history_id = 1;
+    string source = 2;
+    bytes chunk = 3;
+}
+
+message ImportResponse {
+    string status = 1;
+    bytes errorData = 2;
+    string flow = 3;
+}
+
+message CreateImportHistoryRequest {
+    string path = 1;
+    string type = 2;
+    string status = 3;
+    string created_by = 4;
+    int64 file_size = 5;
+    int64 number_lines = 6;
+    string file_hash = 7;
+    string metadata = 8;
+    string client_id = 9;
+    string company_id = 10;
+    string warehouse_id = 11;
+    int64 uploaded_at = 12;
+    string filename = 13;
+}
+
+message CreateImportHistoryResponse {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    int64 deleted_at = 4;
+    string path = 5;
+    string type = 6;
+    string status = 7;
+    int64 uploaded_at = 8;
+    int64 processed_at = 9;
+    string created_by = 10;
+    int64 file_size = 11;
+    int64 number_lines = 12;
+    string file_hash = 13;
+    string metadata = 14;
+}

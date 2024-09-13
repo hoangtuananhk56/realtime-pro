@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package fournisseur;
 
-option go_package = "warehouse-service/proto/fournisseur";
+option go_package = "warehouse-service/pb/fournisseur";
 
 message ClientFournisseur {
     string id = 1;
@@ -47,4 +47,59 @@ message FouContact {
     string mobile = 6;
     string email = 7;
     string fournisseur_id = 8;
+}
+
+message GetByIdElementRequest {
+    string id = 1;
+    string id_contact = 2;
+    string id_address = 3;
+}
+
+message CreateRequest {
+    Fournisseur entry = 1;
+}
+
+message GetByCodeRequest {
+    string data = 1;
+    string client_code_nom = 2;
+    string client_id = 3;
+}
+
+message GetAllRequest {
+
+}
+
+message FournisseursResponse {
+    repeated Fournisseur entry = 1;
+    string messageError = 2;
+}
+
+message IdRefRequest {
+    string Id = 1;
+}
+
+message GetByIdsRefRequest {
+    repeated IdRefRequest IdsRef = 1;
+}
+
+message CreateResponse {
+    Fournisseur entry = 1;
+    string messageError = 2;
+}
+
+message GetByNameOrCodeRequest {
+    string data = 1;
+    string client_code_nom = 2;
+    string client_id = 3;
+}
+
+service FournisseurService {
+    rpc Create(CreateRequest) returns (CreateResponse){}
+    rpc GetByCode(GetByCodeRequest) returns (CreateResponse){}
+    rpc GetByID(GetByCodeRequest) returns (CreateResponse){}
+    rpc GetByIdElement(GetByIdElementRequest) returns (CreateResponse){}
+    rpc GetByNameDigit(GetByCodeRequest) returns (FournisseursResponse){}
+    rpc GetByIdsRef(GetByIdsRefRequest) returns (FournisseursResponse){}
+    rpc GetAll(GetAllRequest) returns (FournisseursResponse){}
+    rpc GetByNameOrCode(GetByNameOrCodeRequest) returns (FournisseursResponse){}
 }

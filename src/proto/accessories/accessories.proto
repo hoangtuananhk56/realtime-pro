@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package accessories;
 
-option go_package="warehouse-service/proto/accessories";
+option go_package="broker-service/pb/accessories";
 
 message MetaData {
     int32 count = 1;
@@ -42,4 +42,145 @@ message ClientWarehouseCompany {
     int64 company_code_nom = 2;
     int64 client_code_nom = 3;
     string warehouse_code_nom = 4;
+}
+
+
+message GetAllRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message GetCompanyWarehouseByUserIdRequest {
+    string user_id = 1;
+    string client_id = 2;
+    bool is_block = 3;
+}
+
+message GetCompanyWarehouseRequest {
+
+}
+
+message GetCompanyWarehouseResponse {
+    repeated WarehouseCompany entry = 1;
+    string messageError = 2;
+
+}
+
+message CodeNomMess {
+    string id = 1;
+    string code_nom = 2;
+}
+
+message NomMess {
+    string id = 1;
+    string nom = 2;
+}
+
+message FilterForCompanyRequest {
+    string user_id = 1;
+    string user_role = 2;
+    string warehouse_id = 3;
+    string client_id = 4;
+}
+
+message FilterForCompanyResponse {
+    repeated CodeNomMess entry = 1;
+    string messageError = 2;
+}
+
+message FilterForClientRequest {
+    string user_id = 1;
+    string user_role = 2;
+    string warehouse_id = 3;
+    string company_id = 4;
+}
+
+message FilterForClientResponse {
+    repeated CodeNomMess entry = 1;
+    string messageError = 2;
+}
+
+message FilterForWarehouseRequest {
+    string user_id = 1;
+    string user_role = 2;
+    string company_id = 3;
+    string client_id = 4;
+}
+
+message FilterForWarehouseResponse {
+    repeated CodeNomMess entry = 1;
+    string messageError = 2;
+}
+
+message FilterForNiveauRequest {
+    string user_id = 1;
+    string user_role = 2;
+    string client_id = 3;
+    string warehouse_id = 4;
+    string company_id = 5;
+    optional string type = 6; // commandes | stock
+}
+
+message FilterForNiveauResponse {
+    repeated string entry = 1;
+    string messageError = 2;
+}
+
+message GetTotalRequest {
+    string client_id = 1;
+    string company_id = 2;
+    string warehouse_id = 3;
+    string type = 4; // attendus | commandes | stock
+}
+
+message GetTotalResponse {
+    int64 total = 1;
+    string messageError = 2;
+}
+
+message FilterReferenceItem{
+    string id = 1;
+    string name = 2;
+}
+
+message FilterMemberItem{
+    string id = 1;
+    string name = 2;
+    string pre_name = 3;
+}
+
+message GetDashboardFilterResponse{
+    string messageError = 1;
+    repeated FilterReferenceItem references = 2;
+    repeated FilterMemberItem members = 3;
+}
+
+message GetDashboardInformationRequest{
+    repeated string client_id = 1;
+    repeated string company_id = 2;
+    repeated string warehouse_id = 3;
+}
+
+message ValidWarningDluoRequest {
+    int64 dluo = 1;
+    string warehouse_id = 2;
+}
+  
+message ValidWarningDluoResponse {
+    bool is_warning = 1;
+    string message_error = 2;
+}
+
+service AccessoriesService {
+    rpc GetCompanyWarehouseByUserID(GetCompanyWarehouseByUserIdRequest) returns (GetCompanyWarehouseResponse) {};
+    rpc GetCompanyWarehouse(GetCompanyWarehouseRequest) returns (GetCompanyWarehouseResponse) {};
+    rpc FilterForCompany(FilterForCompanyRequest) returns (FilterForCompanyResponse) {};
+    rpc FilterForClient(FilterForClientRequest) returns (FilterForClientResponse) {};
+    rpc FilterForWarehouse(FilterForWarehouseRequest) returns (FilterForWarehouseResponse) {};
+    rpc FilterForNiveau(FilterForNiveauRequest) returns (FilterForNiveauResponse) {};
+    rpc GetTotal(GetTotalRequest) returns (GetTotalResponse) {};
+    rpc GetDashboardFilterData(GetDashboardInformationRequest) returns (GetDashboardFilterResponse){};
+
+    rpc ValidWarningDluo(ValidWarningDluoRequest) returns (ValidWarningDluoResponse) {};
+    
 }

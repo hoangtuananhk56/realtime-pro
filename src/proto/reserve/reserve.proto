@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package reserve;
 
-option go_package="warehouse-service/proto/reserve";
+option go_package="broker-service/pb/reserve";
 
 message Reserve {
     string id = 1;
@@ -16,6 +16,8 @@ message Reserve {
     bool is_take_photos = 9;
     bool is_input_number = 10;
     repeated string images = 11;
+    bool is_block = 12;
+    string comment = 13;
 }
 
 message ReserveType {
@@ -32,4 +34,160 @@ message ReserveType {
     string company_id = 11;
     string warehouse_id = 12;
     string client_id = 13;
+}
+
+message GetReserveTypeForMissionRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+    string company_code_nom = 3;
+    string warehouse_code_nom = 4;
+    string client_code_nom = 5;
+    string attendu_id = 6;
+    string sscc = 7;
+    string company_id = 8;
+    string warehouse_id = 9;
+    string client_id = 10;
+}
+
+message GetReserveForMissionRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+    string attendu_id = 3;
+    string sscc = 4;
+}
+
+message MetaData {
+    int64 count = 1;
+    int64 offset = 2; 
+    int64 limit  = 3; 
+    int64 total  = 4;
+}
+
+message GetReserveTypeForMissionResponse {
+    repeated ReserveType entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message GetReserveForMissionResponse {
+    repeated Reserve entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message CreateManyReserveTypeRequest {
+    repeated ReserveType entry = 1;
+}
+
+message CreateManyReserveTypeResponse {
+    repeated ReserveType entry = 1;
+    string messageError = 2;
+}
+
+message CreateManyReserveRequest {
+    repeated Reserve entry = 1;
+    repeated string attFilePaths = 2;
+    CheckPutAwayLocationInfo location_info = 3;
+}
+
+message CheckPutAwayLocationInfo {
+  string bar_code = 1;
+  string user_id = 2;
+  repeated string att_production_id = 3;
+  int64 entry_date = 4;
+  bool is_auto = 5;
+  bool is_anomaly = 6;
+}
+
+message LocationDTO {
+  string id = 1;
+  string zone_id = 2;
+  string aisle = 4;
+  string bay = 5;
+	string zone_code = 6;
+  int32 level = 7;
+  string entry_block = 8;
+  string code = 9;
+}
+
+message CreateManyReserveResponse {
+    repeated Reserve entry = 1;
+    string messageError = 2;
+    string dataError = 3;
+    bool is_anomaly = 4;
+    string location_id = 5;
+    LocationDTO location = 6;
+}
+
+message ValidQtyRequest {
+    string sscc = 1;
+    int32 quantity = 2;
+}
+
+message ValidQtyResponse {
+    bool valid = 1;
+    string messageError = 2;
+}
+
+message DeleteAllReserveByAttenduInfoRequest {
+    string sscc = 1;
+    string attendu_id = 2;
+}
+
+message DeleteAllReserveByAttenduInfoResponse {
+    string messageError = 1;
+}
+
+message ReserveOnAttenduDTO {
+    string reserve_type_name = 1;
+    string sscc = 2;
+    int32 quantity = 3;
+    repeated string images = 4;
+    string comment = 5;
+    bool is_block = 6;
+    string id = 7;
+}
+
+message ReserveOnAttenduResponse {
+    repeated ReserveOnAttenduDTO entry = 1;
+    string messageError = 2;
+}
+
+message ReserveOnAttenduRequest {
+    string attendu_id = 1;
+}
+
+message UpdateReserveRequest {
+    Reserve entry = 1;
+}
+
+message UpdateReserveResponse {
+    Reserve entry = 1;
+    bool isAllReserveUnblock = 2;
+    MetaData metadata = 3;
+    string messageError = 4;
+}
+
+
+message UpdateReservesRequest {
+    repeated Reserve entry = 1;
+}
+
+message UpdateReservesResponse {
+    repeated Reserve entry = 1;
+    MetaData metadata = 3;
+    string messageError = 4;
+}
+
+
+service ReserveService {
+    rpc CreateManyReserveType(CreateManyReserveTypeRequest) returns (CreateManyReserveTypeResponse){}
+    rpc CreateManyReserve(CreateManyReserveRequest) returns (CreateManyReserveResponse){}
+    rpc GetReserveTypeForMission(GetReserveTypeForMissionRequest) returns (GetReserveTypeForMissionResponse){}
+    rpc GetReserveForMission(GetReserveForMissionRequest) returns (GetReserveForMissionResponse){}
+    rpc ValidQtyBySSCC(ValidQtyRequest) returns (ValidQtyResponse){}
+    rpc DeleteAllReserveByAttenduInfo(DeleteAllReserveByAttenduInfoRequest) returns (DeleteAllReserveByAttenduInfoResponse){}
+    rpc GetReserveOnAttendu(ReserveOnAttenduRequest) returns (ReserveOnAttenduResponse){}
+    rpc UpdateUnblock(UpdateReserveRequest) returns (UpdateReserveResponse){}
+    rpc UpdateReserves(UpdateReservesRequest) returns (UpdateReservesResponse){}
 }

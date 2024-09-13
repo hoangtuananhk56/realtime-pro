@@ -297,3 +297,239 @@ export namespace ComArticle {
   }
 }
 
+export class ComArticleCreate extends jspb.Message {
+  getId(): string;
+  setId(value: string): ComArticleCreate;
+
+  getCreatedAt(): number;
+  setCreatedAt(value: number): ComArticleCreate;
+
+  getUpdatedAt(): number;
+  setUpdatedAt(value: number): ComArticleCreate;
+
+  getLot(): string;
+  setLot(value: string): ComArticleCreate;
+
+  getComment(): string;
+  setComment(value: string): ComArticleCreate;
+
+  getQuantite(): number;
+  setQuantite(value: number): ComArticleCreate;
+
+  getStatut(): string;
+  setStatut(value: string): ComArticleCreate;
+
+  getCommandeId(): string;
+  setCommandeId(value: string): ComArticleCreate;
+
+  getLibelle(): string;
+  setLibelle(value: string): ComArticleCreate;
+
+  getConditionementId(): string;
+  setConditionementId(value: string): ComArticleCreate;
+
+  getReferenceId(): string;
+  setReferenceId(value: string): ComArticleCreate;
+
+  getReferenceNumber(): string;
+  setReferenceNumber(value: string): ComArticleCreate;
+
+  getStatusCode(): string;
+  setStatusCode(value: string): ComArticleCreate;
+
+  getStockId(): string;
+  setStockId(value: string): ComArticleCreate;
+
+  getCreatedBy(): string;
+  setCreatedBy(value: string): ComArticleCreate;
+
+  getCreaterId(): string;
+  setCreaterId(value: string): ComArticleCreate;
+
+  getModificationBy(): string;
+  setModificationBy(value: string): ComArticleCreate;
+
+  getModificationerId(): string;
+  setModificationerId(value: string): ComArticleCreate;
+
+  getValidationBy(): string;
+  setValidationBy(value: string): ComArticleCreate;
+
+  getValidationerId(): string;
+  setValidationerId(value: string): ComArticleCreate;
+
+  getValidationAt(): number;
+  setValidationAt(value: number): ComArticleCreate;
+
+  getSscc(): string;
+  setSscc(value: string): ComArticleCreate;
+
+  getTotalPieses(): number;
+  setTotalPieses(value: number): ComArticleCreate;
+
+  getSousQte(): number;
+  setSousQte(value: number): ComArticleCreate;
+
+  getDluo(): number;
+  setDluo(value: number): ComArticleCreate;
+
+  getVolumeQte(): number;
+  setVolumeQte(value: number): ComArticleCreate;
+
+  getVolumeSousqte(): number;
+  setVolumeSousqte(value: number): ComArticleCreate;
+
+  getPoidsQte(): number;
+  setPoidsQte(value: number): ComArticleCreate;
+
+  getPoidsSousqte(): number;
+  setPoidsSousqte(value: number): ComArticleCreate;
+
+  getSource(): string;
+  setSource(value: string): ComArticleCreate;
+
+  getErrorDetails(): string;
+  setErrorDetails(value: string): ComArticleCreate;
+
+  getIsManualLot(): boolean;
+  setIsManualLot(value: boolean): ComArticleCreate;
+
+  getIsManualSscc(): boolean;
+  setIsManualSscc(value: boolean): ComArticleCreate;
+
+  getIsManualDluo(): boolean;
+  setIsManualDluo(value: boolean): ComArticleCreate;
+
+  getManquants(): number;
+  setManquants(value: number): ComArticleCreate;
+
+  getQteConfirmee(): number;
+  setQteConfirmee(value: number): ComArticleCreate;
+
+  getMotif(): string;
+  setMotif(value: string): ComArticleCreate;
+
+  getDescription(): string;
+  setDescription(value: string): ComArticleCreate;
+
+  getPreStatus(): string;
+  setPreStatus(value: string): ComArticleCreate;
+
+  getLocationId(): string;
+  setLocationId(value: string): ComArticleCreate;
+
+  getParentArticleId(): string;
+  setParentArticleId(value: string): ComArticleCreate;
+
+  getRefBlock(): boolean;
+  setRefBlock(value: boolean): ComArticleCreate;
+
+  getMissionId(): string;
+  setMissionId(value: string): ComArticleCreate;
+
+  getIsColor(): boolean;
+  setIsColor(value: boolean): ComArticleCreate;
+
+  getLoadingMissionId(): string;
+  setLoadingMissionId(value: string): ComArticleCreate;
+
+  getActiveLot(): boolean;
+  setActiveLot(value: boolean): ComArticleCreate;
+
+  getRupturesCheckLot(): number;
+  setRupturesCheckLot(value: number): ComArticleCreate;
+
+  getSsccMotifList(): Array<string>;
+  setSsccMotifList(value: Array<string>): ComArticleCreate;
+  clearSsccMotifList(): ComArticleCreate;
+  addSsccMotif(value: string, index?: number): ComArticleCreate;
+
+  getCompanyId(): string;
+  setCompanyId(value: string): ComArticleCreate;
+
+  getWarehouseId(): string;
+  setWarehouseId(value: string): ComArticleCreate;
+
+  getClientId(): string;
+  setClientId(value: string): ComArticleCreate;
+
+  getCommandeCreatedAt(): number;
+  setCommandeCreatedAt(value: number): ComArticleCreate;
+
+  getConditionementLevel(): string;
+  setConditionementLevel(value: string): ComArticleCreate;
+
+  getType(): string;
+  setType(value: string): ComArticleCreate;
+
+  getMouvement(): string;
+  setMouvement(value: string): ComArticleCreate;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ComArticleCreate.AsObject;
+  static toObject(includeInstance: boolean, msg: ComArticleCreate): ComArticleCreate.AsObject;
+  static serializeBinaryToWriter(message: ComArticleCreate, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ComArticleCreate;
+  static deserializeBinaryFromReader(message: ComArticleCreate, reader: jspb.BinaryReader): ComArticleCreate;
+}
+
+export namespace ComArticleCreate {
+  export type AsObject = {
+    id: string,
+    createdAt: number,
+    updatedAt: number,
+    lot: string,
+    comment: string,
+    quantite: number,
+    statut: string,
+    commandeId: string,
+    libelle: string,
+    conditionementId: string,
+    referenceId: string,
+    referenceNumber: string,
+    statusCode: string,
+    stockId: string,
+    createdBy: string,
+    createrId: string,
+    modificationBy: string,
+    modificationerId: string,
+    validationBy: string,
+    validationerId: string,
+    validationAt: number,
+    sscc: string,
+    totalPieses: number,
+    sousQte: number,
+    dluo: number,
+    volumeQte: number,
+    volumeSousqte: number,
+    poidsQte: number,
+    poidsSousqte: number,
+    source: string,
+    errorDetails: string,
+    isManualLot: boolean,
+    isManualSscc: boolean,
+    isManualDluo: boolean,
+    manquants: number,
+    qteConfirmee: number,
+    motif: string,
+    description: string,
+    preStatus: string,
+    locationId: string,
+    parentArticleId: string,
+    refBlock: boolean,
+    missionId: string,
+    isColor: boolean,
+    loadingMissionId: string,
+    activeLot: boolean,
+    rupturesCheckLot: number,
+    ssccMotifList: Array<string>,
+    companyId: string,
+    warehouseId: string,
+    clientId: string,
+    commandeCreatedAt: number,
+    conditionementLevel: string,
+    type: string,
+    mouvement: string,
+  }
+}
+

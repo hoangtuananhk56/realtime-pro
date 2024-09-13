@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package file;
 
-option go_package="app/common/proto/file";
+option go_package="broker-service/pb/file";
+
 
 message AttFile {
     string id = 1;
@@ -29,5 +30,144 @@ message ComFile {
     string file_type = 8;
     int64 file_size = 9;
     string source = 10;
+
+}
+
+message AttFilesRespnose {
+    string id = 1;
+    string name = 2;
+    string attendu_id = 3;
+    string path = 4;
+}
+
+
+message UploadRequest {
+    oneof data {
+      AttFile info = 1;
+      bytes chunk_data = 2;
+    };
+}
+
+message UploadComRequest {
+    oneof data {
+      ComFile info = 1;
+      bytes chunk_data = 2;
+    };
+}
+
+message UploadComResponse {
+    ComFile entry = 1;
+    UploadStatusCode Code = 2;
+    string messageError = 3;
+} 
+
+message DeleteRequest {
+    string path = 1;
+}
+
+message DownloadRequest {
+    string path = 1;
+    string type = 2;
+}
+
+message GetFilesInAtt {
+    string att_id = 1;
+}
+
+message GetAllByClassAndIdRequest {
+    string class_file = 1;
+    string id = 2;
+}
+
+message GetAllByClassAndIdResponse {
+    repeated string file_path = 1;
+    string message_error = 2;
+}
+
+message DownloadResponse {
+    bytes chunk = 1;;
+}
+
+message UploadResponse {
+    AttFile entry = 1;
+    UploadStatusCode Code = 2;
+    string messageError = 3;
+} 
+
+message DeleteResponse {
+    string status = 1;
+    string messageError = 3;
+}
+
+message FilesResponse {
+    repeated AttFile entry = 1;
+    string messageError = 2;
+}
+
+enum UploadStatusCode {
+    Unknown = 0;
+    Ok = 1;
+    Failed = 2;
+}
+
+message UrlResponse {
+    string scheme = 1;
+    string host = 2;
+    string path = 3;
+    string raw_query = 4;
+
+    string messageError = 5;
+}
+
+message DeleteMutltiRequest {
+    repeated string paths = 1;
+}
+
+message DeleteMutltiResponse {
+    string status = 1;
+    string messageError = 2;
+}
+
+message MetaData {
+    string name = 1;
+    string file_type = 2;
+    int64 file_size = 3;
+    string class_file = 4;
+}
+
+message UploadOneFileRequest {
+    oneof data {
+        MetaData info = 1;
+        bytes chunk_data = 2;
+    };
+}
+
+message UploadOneFileResponse {
+    string path = 1;
+    UploadStatusCode Code = 2;
+    string messageError = 3;
+}
+
+message DownloadOneFileRequest {
+    string path = 1;
+    string class_file = 2;
+}
+
+service FileService {
+    rpc Upload(stream UploadRequest) returns (UploadResponse){}
+    rpc Download(DownloadRequest) returns (stream DownloadResponse){}
+    rpc GetUrlDownload(DownloadRequest) returns (UrlResponse){}
+    rpc GetUrl(DownloadRequest) returns (UrlResponse){}
+    rpc Delete(DeleteRequest) returns (DeleteResponse){}
+    rpc DeleteMulti(DeleteMutltiRequest) returns (DeleteMutltiResponse){}
+    rpc GetAll(GetFilesInAtt) returns (FilesResponse){}
+    rpc GetAllByClassAndId(GetAllByClassAndIdRequest) returns (GetAllByClassAndIdResponse){}
+    
+    rpc UploadAttFile(stream UploadRequest) returns (UploadResponse){}
+    rpc UploadComFile(stream UploadComRequest) returns (UploadComResponse){}
+
+    rpc UploadOneFile(stream UploadOneFileRequest) returns (UploadOneFileResponse){}
+    rpc DownloadOneFile(DownloadOneFileRequest) returns (stream DownloadResponse){}
+    rpc DeleteOneFile(DownloadOneFileRequest) returns (DeleteResponse){}
 
 }

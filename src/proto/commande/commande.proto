@@ -1,12 +1,15 @@
 syntax = "proto3";
 
 import "proto/destinataire/destinataire.proto";
+import "proto/history/history.proto";
 import "proto/transporteur/transporteur.proto";
 import "proto/comarticle/comarticle.proto";
+import "proto/mission/mission.proto";
+import "proto/export/export.proto";
 
 package commande;
 
-option go_package = "warehouse-service/proto/commande";
+option go_package = "broker-service/pb/commande";
 
 message Commande {
     string id = 1;
@@ -83,7 +86,6 @@ message Commande {
     string chrono = 60;
     int64 loading_validation_time = 61;
     string loading_validation_by = 62;
-
 }
 
 message MissionInfo {
@@ -113,6 +115,15 @@ message MissionInfo {
     string company_id = 24;
     string warehouse_id = 25;
     string client_id = 26;
+    repeated MissionFileInfo mission_files = 27;
+    int64 execution_date = 28;
+    int64 assignment_date = 29;
+    int64 expected_date = 30;
+}
+
+message MissionFileInfo {
+    string path = 1;
+    string name = 2;
 }
 
 message ClientCommande {
@@ -142,4 +153,393 @@ message ComFile {
     string description = 6;
     string path = 7;
     string source = 8;
+}
+
+message MetaData {
+    int64 count = 1;
+    int64 offset = 2;
+    int64 limit = 3;
+    int64 total = 4;
+}
+
+message CreateRequest {
+    Commande entry = 1;
+    bool cache_status = 2;
+}
+
+message DeleteByIds {
+    repeated string id = 1;
+}
+
+message UpdateRequest {
+    Commande entry = 1;
+    DeleteByIds details_delete = 2;
+    DeleteByIds files_delete = 3;
+    bool cache_status = 4;
+}
+
+message GetByIdRequest{
+    string id = 1;
+}
+
+message Response {
+    Commande entry = 1;
+    string messageError = 2;
+    string status = 3;
+}
+
+message GetAllRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+    string client_id = 3;
+    string warehouse_id = 4;
+    string company_id = 5;
+    string user_id = 6;
+    string role = 7;
+    optional string addressee = 8; // Destinataire
+    optional string description = 9; // Libellé
+    string bl = 10; // BL
+    string transporter = 11; // Transporteur
+    string type = 12; // Type
+    string mouvement = 13; // Mouvement
+    string eta = 14; // État
+    string chrono = 15; // Chrono
+    string debut = 16; // Debut
+    string fin = 17; // Fin
+    string product = 18; // Référence
+    string status = 19; // Statut
+    string sscc = 20; // Pallete
+    string lot = 21; // Lot
+    string cdn = 22; // Cdn
+    string zone = 23; // Zone
+    string aisle = 24; // Allée
+    string bay = 25; // Travée
+    string level = 26; // Niveau
+    string type_cdn = 27; // Type CDN
+    string nom = 28; // N commande
+    string sort = 29; // E.g. sort=bl:asc
+}
+
+message GetAllResponse {
+    repeated Commande entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message IdRequest {
+    string id = 1;
+}
+
+message DelFileRequest {
+    string id = 1;
+    string user_id = 2;
+    string user_role = 3;
+}
+
+message DeleteResponse {
+    string status = 1;
+    string messageError = 2;
+}
+
+message UpdateResponse {
+    string status = 1;
+    string messageError = 2;
+    int64 updated_at = 3;
+}
+
+message ValidComResponse {
+    string status = 1;
+    string messageError = 2;
+    Commande entry = 3;
+
+}
+
+message CreateAutoFileResponse {
+    ComFile entry = 1;
+    string messageError = 2;
+}
+
+message UpdateActiveLotRequest {
+    bool status = 1;
+    string commande_id = 2;
+}
+
+message UpdateActiveLotResponse {
+    string status = 1;
+    string messageError = 2;
+}
+
+message RaportFile {
+    string index = 1;
+    string commande_id = 2;
+    string commande_nom = 3;
+    string description = 4;
+    repeated PreparationItem preparation_array = 5;
+}
+
+message PreparationItem {
+    string nbl = 1;
+    string reference_name = 2;
+    string lot = 3;
+    string sscc = 4;
+    string dluo = 5;
+    string motif = 6;
+}
+
+message UploadResponse {
+    string url = 1;
+    string messageError = 2;
+}
+
+message DePrelevement {
+    string index = 1;
+    string commande_id = 2;
+    string bl = 3;
+    string date = 4;
+    string hour = 5;
+    string commentaire = 6;
+    string client = 7;
+    string description = 8;
+    string commande_nom = 9;
+    repeated DePrelevementItem preparation_array = 10;
+}
+
+message DePrelevementItem {
+    string reference_name = 1;
+    string lot = 2;
+    string dluo = 3;
+    string sscc = 4;
+    string quantite = 5;
+    string total = 6;
+    string zone = 7;
+    string allee = 8;
+    string travee = 9;
+    string niveau = 10;
+    string position = 11;
+    string note = 12;
+}
+
+message CheckLastestRequest {
+    string id = 1;
+    int64 updated_at = 2;
+    bool cache_status = 3;
+}
+
+message CheckLastestResponse {
+    string status = 1;
+    string messageError = 2;
+    bool result = 3;
+    int64 updated_at = 4;
+}
+
+message CommandeTable {
+    string id = 1;
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    string nom = 4;
+    string nom_client = 5;
+    int32 photos = 6;
+    int32 priorite = 7;
+    int64 qte_total = 8;
+    int64 sous_qte_total = 9;
+    string destinataire_id = 10;
+    string des_addresse_id = 11;
+    string des_contact_id = 12;
+    string transporteur_id = 13;
+    string tran_addresse_id = 14;
+    string tran_contact_id = 15;
+    string relay_detail = 16;
+    int64 livraison_at = 17;
+    int64 chargement_at = 18;
+    bool imperatif = 19;
+    string company_id = 20;
+    string warehouse_id = 21;
+    string client_id = 22;
+    string created_by = 23;
+    string creater_id = 24;
+    string modification_by = 25;
+    string modificationer_id = 26;
+    string validation_by = 27;
+    string validationer_id = 28;
+    int64 validation_at = 29;
+    repeated ComFile com_file = 30;
+    string status_code = 31;
+    string assignee_id = 32;
+    string assignee_by = 33;
+    bool force_dlou = 34;
+    int64 canceled_at = 35;
+    string scene = 36;
+    bool active_lot = 37;
+    int32 valid_times = 38;
+    string type = 39;
+    string mouvement = 40;
+    string eta = 41;
+    repeated mission.Mission mission = 42;
+    repeated string sscc_block = 43;
+}
+
+message SenOnMissionRequest {
+    CommandeTable entry = 1;
+    bool cache_status = 2;
+}
+
+message SenOnMissionResponse {
+    CommandeTable entry = 1;
+    string messageError = 2;
+    string status = 3;
+}
+
+message CancelRequest {
+    CommandeTable entry = 1;
+    bool cache_status = 2;
+}
+
+message CancelResponse {
+    CommandeTable entry = 1;
+    string messageError = 2;
+    string status = 3;
+}
+
+message GetDashboardInformationRequest{
+    repeated string client_id = 1;
+    repeated string company_id = 2;
+    repeated string warehouse_id = 3;
+    repeated string user_id = 4;
+    repeated string reference = 5; // Référence
+    repeated string member = 6; // Membre
+    string start_date = 7; // Début
+    string end_date = 8; // Fin
+}
+
+message TypeOfConditionnementItem{
+    string level = 1;
+    float percent = 2;
+}
+
+message DashboardChart {
+    string date = 1;
+    string name = 2;
+    int64 value = 3;
+    float percent = 4;
+}
+
+message GetDashboardInformationResponse{
+    string messageError = 1;
+    int64 total = 2; // Total
+    int64 items = 3; // Articles
+    int64 items_cdn = 4; // Articles(selon CDN)
+    int64 referecence = 5; // Références
+    int64 load_item = 6; // Préparations (en Cours)
+    int64 traited_item = 7; // Préparations (Traitées)
+    int64 average_preparation_time = 8; // Temps moyen de préparation
+    int64 loading_now = 9; // Chargement(en cours)
+    int64 loading_finish = 10; // Chargement(traitées)
+    int64 average_loading_time = 11; // Temps moyen de chargement
+    int64 affected_staff = 12; // Personnel concerné
+    repeated TypeOfConditionnementItem type_of_conditionnement = 13; // Type of CDN
+    repeated DashboardChart stick_chart = 14;
+    repeated DashboardChart pie_chart = 15;
+//    int64 on_hold = 14; // En attente
+//    int64 prepared = 15; // Préparés
+//    int64 loaded = 16; // Chargés
+}
+
+message CommandeDocCreate {
+  string id = 1;
+  string nom = 4;
+  string nom_client = 5;
+  int32 photos = 6;
+  int32 priorite = 7;
+
+  repeated comarticle.ComArticleCreate com_article = 8;
+
+  ComComment com_preparation = 10;
+  ComComment com_livraison = 12;
+
+  int64 qte_total = 13;
+  int64 sous_qte_total = 14;
+
+  string destinataire_id = 15;
+  string des_addresse_id = 17;
+  string des_contact_id = 19;
+
+  string transporteur_id = 21;
+  string tran_addresse_id = 23;
+  string tran_contact_id = 25;
+
+  string relay_detail = 29;
+  int64 livraison_at = 30;
+  int64 chargement_at = 31;
+  bool imperatif = 32;
+
+  string company_id = 33;
+  string warehouse_id = 34;
+  string client_id = 35;
+
+  string created_by = 36;
+  string creater_id = 37;
+  string status_code = 27;
+  bool force_dlou = 43;
+  string scene = 46;
+  bool active_lot = 47;
+  int32 valid_times = 49;
+
+}
+
+message UpdateRequestDoc {
+  CommandeDocCreate entry = 1;
+  DeleteByIds details_delete = 2;
+  DeleteByIds files_delete = 3;
+
+}
+
+message CancelRequestDoc {
+  CommandeTable entry = 1;
+}
+
+message CheckLastestRequestGenApiDoc {
+  string id = 1;
+  int64 updated_at = 2;
+}
+
+message GetCommandeHistoryByIdRequest {
+    string id = 1;
+    int64 limit = 2;
+    int64 offset = 3;
+    int64 start_date = 4;
+    int64 end_date = 5;
+}
+
+message ResponseHistory {
+    repeated history.History entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+
+service CommandeService {
+    rpc Create(CreateRequest) returns (Response) {};
+    rpc GetByID(GetByIdRequest) returns (Response) {};
+    rpc Update(UpdateRequest) returns (UpdateResponse) {};
+    rpc ValidCom(UpdateRequest) returns (ValidComResponse) {};
+    rpc SearchStock(UpdateRequest) returns (ValidComResponse) {};
+    rpc Delete(CheckLastestRequest) returns (DeleteResponse) {};
+    rpc DeleteFile(DelFileRequest) returns (DeleteResponse) {};
+    rpc GetAll(GetAllRequest) returns (GetAllResponse) {};
+
+    rpc CreateAutoFile(ComFile) returns (CreateAutoFileResponse) {};
+    rpc Cancel(CreateRequest) returns (Response) {};
+
+    rpc UpdateActiveLotStatus(UpdateActiveLotRequest) returns (UpdateActiveLotResponse) {};
+    rpc RapportFileGenerator(RaportFile) returns (UploadResponse) {};
+    rpc DePrelevementFileGenerator(DePrelevement) returns (UploadResponse) {};
+
+    rpc CheckLastest(CheckLastestRequest) returns (CheckLastestResponse) {};
+
+    rpc SendOnMission(SenOnMissionRequest) returns (SenOnMissionResponse) {};
+    rpc CancelOptimize(CancelRequest) returns (CancelResponse) {};
+
+    rpc GetDashboardInformation(GetDashboardInformationRequest) returns (GetDashboardInformationResponse){}
+    rpc GetCommandeHistoryByID(GetCommandeHistoryByIdRequest) returns (ResponseHistory) {};
+    rpc ExportAllCommandes(export.ExportAllCommandeRequest) returns (export.ExportResponse){}
 }

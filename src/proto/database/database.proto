@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package database;
+
+option go_package="broker-service/pb/database";
+
+message DropAndUnitRequest {
+    string user_code = 1;
+}
+
+message DropAndUnitResponse {
+    string status = 1;
+    string message_err = 2;
+}
+
+message MigrateRequest {
+    string user_code = 1;
+}
+
+message MigrateResponse {
+    string status = 1;
+    string message_err = 2;
+}
+
+message MigrateDataRequest {
+    string user_code = 1;
+    string version = 2;
+}
+
+service DatabaseService {
+    
+    rpc DropAndUnit(DropAndUnitRequest) returns (DropAndUnitResponse) {};
+    rpc Migrate(MigrateRequest) returns (MigrateResponse) {};
+    rpc MigrateDetail(MigrateRequest) returns (MigrateResponse) {};
+
+    rpc InitDefenitionTable(MigrateRequest) returns (MigrateResponse) {};
+    rpc MigrateData(MigrateDataRequest) returns (MigrateResponse) {};
+
+    rpc MigrateDataMongo(MigrateRequest) returns (MigrateResponse) {};
+}

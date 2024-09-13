@@ -8,7 +8,7 @@ const firebaseConfig = {
   storageBucket: "myproject-cbd1a.appspot.com",
   messagingSenderId: "923660796067",
   appId: "1:923660796067:web:17fde8337b85b6bb2b7f16",
-  measurementId: "G-5W9XJTVFMN"
+  measurementId: "G-5W9XJTVFMN",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -22,7 +22,7 @@ export const requestPermission = async () => {
 
     getToken(messaging, {
       vapidKey:
-      "BDxXwGjCnIRL990zkUY4igdDAVD8zZw-s7IMBXvRkMwUzth-c6PL_5txZdTFPdE2OBhSLdNZcewIQGhaf7PGe0U",
+        "BDxXwGjCnIRL990zkUY4igdDAVD8zZw-s7IMBXvRkMwUzth-c6PL_5txZdTFPdE2OBhSLdNZcewIQGhaf7PGe0U",
     }).then((currentToken) => {
       if (currentToken) {
         console.log("currentToken: ", currentToken);
@@ -36,13 +36,12 @@ export const requestPermission = async () => {
 };
 
 export const onMessageListener = () =>
-  new Promise((resolve) => {    
+  new Promise((resolve) => {
     onMessage(messaging, (payload) => {
       console.log("AA", payload);
       resolve(payload);
     });
-})
-
+  });
 
 //   Notification.requestPermission().then((permission) => {
 //     if (permission === "granted") {

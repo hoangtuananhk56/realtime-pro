@@ -14,13 +14,13 @@ const defaultConfig = {
 };
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAz3hn-d6LlvakJurc9AwheXpDN0Blpuac",
-    authDomain: "myproject-cbd1a.firebaseapp.com",
-    projectId: "myproject-cbd1a",
-    storageBucket: "myproject-cbd1a.appspot.com",
-    messagingSenderId: "923660796067",
-    appId: "1:923660796067:web:17fde8337b85b6bb2b7f16",
-    measurementId: "G-5W9XJTVFMN"
+  apiKey: "AIzaSyAz3hn-d6LlvakJurc9AwheXpDN0Blpuac",
+  authDomain: "myproject-cbd1a.firebaseapp.com",
+  projectId: "myproject-cbd1a",
+  storageBucket: "myproject-cbd1a.appspot.com",
+  messagingSenderId: "923660796067",
+  appId: "1:923660796067:web:17fde8337b85b6bb2b7f16",
+  measurementId: "G-5W9XJTVFMN",
 };
 
 firebase.initializeApp(firebaseConfig);

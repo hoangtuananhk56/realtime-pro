@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package matieresdangereuses;
 
-option go_package ="warehouse-service/proto/matieresdangereuses";
+option go_package ="broker-service/pb/matieresdangereuses";
 
 message Matieresdangereuses {
     string id = 1;

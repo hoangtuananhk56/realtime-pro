@@ -69,9 +69,6 @@ export class Conditionnement extends jspb.Message {
   getAttEnable(): boolean;
   setAttEnable(value: boolean): Conditionnement;
 
-  getBlockDel(): boolean;
-  setBlockDel(value: boolean): Conditionnement;
-
   getQteVariable(): boolean;
   setQteVariable(value: boolean): Conditionnement;
 
@@ -107,7 +104,6 @@ export namespace Conditionnement {
     referenceId: string,
     poidsAdd: number,
     attEnable: boolean,
-    blockDel: boolean,
     qteVariable: boolean,
   }
 }

@@ -1,8 +1,12 @@
 syntax = "proto3";
 
+import "proto/comarticle/comarticle.proto";
+import "proto/attendu/attendu.proto";
+import "proto/reserve/reserve.proto";
+
 package location;
 
-option go_package = "warehouse-service/proto/location";
+option go_package = "broker-service/pb/location";
 
 message Location {
   string id = 1;
@@ -29,4 +33,244 @@ message Location {
   string code = 26;
   string parent_id = 27;
   repeated Location children = 28;
+}
+
+message LocationCreateRequest {
+  Location entry = 1;
+}
+
+message LocationResponse {
+  Location entry = 1;
+  string messageError = 2;
+  int32 rec_type = 3;
+}
+
+message MetaData {
+  int32 count = 1;
+  int32 offset = 2;
+  int32 limit = 3;
+  int64 total = 4;
+}
+
+message GetAllRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message GetAllResponse {
+  repeated Location entry = 1;
+  MetaData metadata = 2;
+  string messageError = 3;
+}
+
+message VallidLocationRequest {
+  string code_bar = 1;
+  string att_id = 2;
+  string warehourse_id = 3;
+  string user_id = 4;
+  string warehouse_id = 5;
+}
+
+message GetLocationByIdRequest {
+  string id = 1;
+}
+
+message CheckPutAwayManuallyRequest {
+  string bar_code = 1;
+  string user_id = 2;
+  repeated string att_production_id = 3;
+  int32 check_type = 4;
+  int64 entry_date = 5;
+  bool is_auto = 6;
+  bool is_anomaly = 7;
+}
+
+message CheckPutAwayManuallyResponse {
+  string messageError = 1;
+  string location_id = 2;
+}
+
+message CheckPutAwayLocationRequest {
+  repeated reserve.Reserve entry = 1;
+  repeated string attFilePaths = 2;
+  CheckPutAwayLocationInfo location_info = 3;
+}
+
+message CheckPutAwayLocationInfo {
+  string bar_code = 1;
+  string user_id = 2;
+  repeated string att_production_id = 3;
+  int64 entry_date = 4;
+  bool is_auto = 5;
+  bool is_anomaly = 6;
+}
+
+message CheckPutAwayLocationResponse {
+  string messageError = 1;
+  string location_id = 2;
+  LocationDTO location = 3;
+  repeated reserve.Reserve entry = 4;
+  string dataError = 5;
+  bool is_anomaly = 6;
+}
+
+message LocationDTO {
+  string id = 1;
+  string zone_id = 2;
+  string aisle = 4;
+  string bay = 5;
+	string zone_code = 6;
+  int32 level = 7;
+  string entry_block = 8;
+  string code = 9;
+}
+
+message CheckPreparationLocationRequest {
+  string bar_code = 1;
+  string user_id = 2;
+  string article_id = 3;
+  string mission_id = 4;
+  string sscc = 5;
+  bool reused = 6;
+  string sscc_host = 7;
+  int64 quantity = 8;
+  bool is_accept_over_height = 9;
+}
+
+message CheckPreparationLocationResponse {
+  string messageError = 1;
+  string location_id = 2;
+  bool is_valid = 3;
+  bool is_scan_next = 4;
+  bool is_last_mission = 5;
+  bool is_first_mission_in_day = 6;
+  repeated comarticle.ComArticle com_article = 7;
+  attendu.LocationDTO location = 8;
+  bool is_over_height = 9;
+}
+
+message CheckMovementLocationRequest {
+  string bar_code = 1;
+  string user_id = 2;
+  string sscc = 3;
+  string mission_id = 4;
+  bool is_auto = 5;
+}
+
+message CheckMovementLocationResponse {
+  string message_error = 1;
+  string location_id = 2;
+}
+
+message CheckReapproRequest {
+  string bar_code = 1;
+  string user_id = 2;
+  string sscc = 3;
+  string mission_id = 4;
+}
+
+message CheckReapproResponse {
+  string messageError = 1;
+  bool is_valid = 2;
+}
+
+message SuggestLocationRequest {
+  repeated string ssccs = 1;
+  string refuse_loc_id = 2;
+  bool is_refresh = 3;
+  bool is_block_suggest = 4;
+  bool is_anomaly = 5;
+}
+
+message SuggestLocationResponse {
+  string messageError = 1;
+  string location_id = 2;
+  string code_bar = 3;
+  bool is_valid = 4;
+}
+
+message LocationMovement {
+  string id = 1;
+  string name = 2;
+  string storage_type = 3;
+  string storage_func = 4;
+  string zone_id = 5;
+  string aisle = 6;
+  string bay = 7;
+  double width = 8;
+  double height = 9;
+  double length = 10;
+  string entry_block = 11;
+  string conditionement = 12;
+  double max_height = 13;
+  double max_weight = 14;
+  double min_height = 15;
+  int32 level = 16;
+  double debut = 17;
+  double fin = 18;
+  string location_type = 19;
+  string code = 20;
+  string parent_id = 21;
+  string zone_code = 22;
+}
+
+message GetListLocationForMovementRequest {
+  string stock_id = 1;
+  string sscc = 2;
+}
+
+message GetListLocationForMovementResponse {
+  repeated LocationMovement location_info = 1;
+  string message_error = 2;
+  string status = 3;
+}
+
+message ValidLocationForMovementRequest {
+  string stock_id = 1;
+  string sscc = 2;
+  string destination_location_id = 3;
+  string bar_code = 4;
+}
+
+message ValidLocationForMovementResponse {
+  string message_error = 1;
+  string location_id = 2;
+}
+
+message CheckCanDeleteLocationByIdRequest {
+  string location_id = 1;
+}
+
+message CheckCanDeleteLocationByIdResponse {
+  string message_error = 1;
+  string location_id = 2;
+  bool is_used = 3;
+}
+message ResetMovementRequest {
+  string sscc = 1;
+}
+
+message ResetMovementResponse {
+  string messageError = 1;
+  bool is_valid = 2;
+}
+
+service LocationService {
+  rpc Create(LocationCreateRequest) returns (LocationResponse){}
+  rpc GetAll(GetAllRequest) returns (GetAllResponse){}
+  rpc GetByID(GetLocationByIdRequest) returns (LocationResponse){}
+  rpc ValidLocation(VallidLocationRequest) returns (LocationResponse){}
+  rpc ValidPutAwayManually(CheckPutAwayManuallyRequest) returns (CheckPutAwayManuallyResponse){}
+  rpc ValidPutAwayLocation(CheckPutAwayLocationRequest) returns (CheckPutAwayLocationResponse){}
+  rpc ValidPreparationLocation(CheckPreparationLocationRequest) returns (CheckPreparationLocationResponse){}
+  rpc ValidPickingLocation(CheckPreparationLocationRequest) returns (CheckPreparationLocationResponse){}
+  rpc ValidMovementLocation(CheckMovementLocationRequest) returns (CheckMovementLocationResponse){}
+  rpc ValidReappro(CheckReapproRequest) returns (CheckReapproResponse){}
+  rpc SuggestLocation(SuggestLocationRequest) returns (SuggestLocationResponse){}
+
+  rpc GetListLocationForMovement(GetListLocationForMovementRequest) returns (GetListLocationForMovementResponse){}
+  rpc ValidLocationForMovement(ValidLocationForMovementRequest) returns (ValidLocationForMovementResponse){}
+
+  rpc CheckCanDeleteLocationById(CheckCanDeleteLocationByIdRequest) returns (CheckCanDeleteLocationByIdResponse){}
+  rpc ResetMovement(ResetMovementRequest) returns (ResetMovementResponse){}
 }

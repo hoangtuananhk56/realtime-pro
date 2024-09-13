@@ -21,16 +21,16 @@ var global =
     (function () { return this; }).call(null) ||
     Function('return this')();
 
+var proto_attendu_attendu_pb = require('../../proto/attendu/attendu_pb.js');
+goog.object.extend(proto, proto_attendu_attendu_pb);
+var proto_commande_commande_pb = require('../../proto/commande/commande_pb.js');
+goog.object.extend(proto, proto_commande_commande_pb);
 var proto_comarticle_comarticle_pb = require('../../proto/comarticle/comarticle_pb.js');
 goog.object.extend(proto, proto_comarticle_comarticle_pb);
 var proto_reference_reference_pb = require('../../proto/reference/reference_pb.js');
 goog.object.extend(proto, proto_reference_reference_pb);
 var proto_stock_stock_pb = require('../../proto/stock/stock_pb.js');
 goog.object.extend(proto, proto_stock_stock_pb);
-var proto_attendu_attendu_pb = require('../../proto/attendu/attendu_pb.js');
-goog.object.extend(proto, proto_attendu_attendu_pb);
-var proto_commande_commande_pb = require('../../proto/commande/commande_pb.js');
-goog.object.extend(proto, proto_commande_commande_pb);
 goog.exportSymbol('proto.message.Close', null, global);
 goog.exportSymbol('proto.message.Connect', null, global);
 goog.exportSymbol('proto.message.Message', null, global);
@@ -661,7 +661,7 @@ proto.message.Close.serializeBinaryToWriter = function(message, writer) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.message.Message.oneofGroups_ = [[6,7,8,9,10,11]];
+proto.message.Message.oneofGroups_ = [[6,7,8,9,10,11,12]];
 
 /**
  * @enum {number}
@@ -673,7 +673,8 @@ proto.message.Message.EventCase = {
   COMMANDE_ENTRY: 8,
   COM_ARTICLE_ENTRY: 9,
   REFERENCE_ENTRY: 10,
-  STOCK_ENTRY: 11
+  STOCK_ENTRY: 11,
+  UPDATE_ATTENDU_REQUEST: 12
 };
 
 /**
@@ -724,7 +725,8 @@ proto.message.Message.toObject = function(includeInstance, msg) {
     commandeEntry: (f = msg.getCommandeEntry()) && proto_commande_commande_pb.Commande.toObject(includeInstance, f),
     comArticleEntry: (f = msg.getComArticleEntry()) && proto_comarticle_comarticle_pb.ComArticle.toObject(includeInstance, f),
     referenceEntry: (f = msg.getReferenceEntry()) && proto_reference_reference_pb.Reference.toObject(includeInstance, f),
-    stockEntry: (f = msg.getStockEntry()) && proto_stock_stock_pb.Stock.toObject(includeInstance, f)
+    stockEntry: (f = msg.getStockEntry()) && proto_stock_stock_pb.Stock.toObject(includeInstance, f),
+    updateAttenduRequest: (f = msg.getUpdateAttenduRequest()) && proto_attendu_attendu_pb.RealtimeAttendu.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -810,6 +812,11 @@ proto.message.Message.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto_stock_stock_pb.Stock;
       reader.readMessage(value,proto_stock_stock_pb.Stock.deserializeBinaryFromReader);
       msg.setStockEntry(value);
+      break;
+    case 12:
+      var value = new proto_attendu_attendu_pb.RealtimeAttendu;
+      reader.readMessage(value,proto_attendu_attendu_pb.RealtimeAttendu.deserializeBinaryFromReader);
+      msg.setUpdateAttenduRequest(value);
       break;
     default:
       reader.skipField();
@@ -921,6 +928,14 @@ proto.message.Message.serializeBinaryToWriter = function(message, writer) {
       11,
       f,
       proto_stock_stock_pb.Stock.serializeBinaryToWriter
+    );
+  }
+  f = message.getUpdateAttenduRequest();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      proto_attendu_attendu_pb.RealtimeAttendu.serializeBinaryToWriter
     );
   }
 };
@@ -1235,6 +1250,43 @@ proto.message.Message.prototype.clearStockEntry = function() {
  */
 proto.message.Message.prototype.hasStockEntry = function() {
   return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional attendu.RealtimeAttendu update_attendu_request = 12;
+ * @return {?proto.attendu.RealtimeAttendu}
+ */
+proto.message.Message.prototype.getUpdateAttenduRequest = function() {
+  return /** @type{?proto.attendu.RealtimeAttendu} */ (
+    jspb.Message.getWrapperField(this, proto_attendu_attendu_pb.RealtimeAttendu, 12));
+};
+
+
+/**
+ * @param {?proto.attendu.RealtimeAttendu|undefined} value
+ * @return {!proto.message.Message} returns this
+*/
+proto.message.Message.prototype.setUpdateAttenduRequest = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 12, proto.message.Message.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.message.Message} returns this
+ */
+proto.message.Message.prototype.clearUpdateAttenduRequest = function() {
+  return this.setUpdateAttenduRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.message.Message.prototype.hasUpdateAttenduRequest = function() {
+  return jspb.Message.getField(this, 12) != null;
 };
 
 

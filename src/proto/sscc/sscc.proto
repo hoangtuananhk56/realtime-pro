@@ -1,8 +1,11 @@
 syntax = "proto3";
 
+import "proto/comarticle/comarticle.proto";
+import "proto/stock/stock.proto";
+
 package sscc;
 
-option go_package = "warehouse-service/proto/sscc";
+option go_package = "broker-service/pb/sscc";
 
 message SSCC {
   string id = 1;
@@ -10,4 +13,184 @@ message SSCC {
   int64 update_at = 3;
   string num = 4;
   string code_status = 5;
+  // string att_production_id = 6;
+  // string commande_production_id = 7;
+}
+
+message SSCCNumber {
+  string num = 1;
+}
+
+message SSCCResponse {
+  SSCC entry = 1;
+  string messageError = 2;
+}
+
+message SSCCGeneratorRequest {
+  int64 quantity = 1;
+  string clientid = 2;
+}
+
+message SSCCGeneratorRespponse {
+  repeated string sscc_codes = 1;
+  string messageError = 2;
+}
+
+message SSCCLocationCheckRequest {
+  string sscc = 1;
+  string user_id = 2;
+  string article_id = 3;
+  string mission_id = 4;
+  int64 quantity = 5;
+  string sscc_host = 6;
+  bool is_accept_over_height = 7;
+}
+
+message SSCCLocationCheckResponse {
+  string message_error = 1;
+  bool is_valid = 2;
+  string location_id = 3;
+  bool is_first_scanned = 4;
+  bool is_scan_next = 5;
+  bool is_last_mission = 6;
+  bool is_first_mission_in_day = 7;
+  repeated comarticle.ComArticle com_article = 8;
+  int64 recommend_qte = 9;
+  bool is_over_height = 10;
+}
+
+message SSCCMovementCheckRequest {
+  string sscc = 1;
+  string mission_id = 2;
+}
+
+message SSCCMovementCheckResponse {
+  string message_error = 1;
+  bool is_valid = 2;
+}
+
+message SSCCLoadingCheckRequest {
+  string sscc = 1;
+  string user_id = 2;
+}
+
+message SSCCLoadingCheckResponse {
+  string message_error = 1;
+  bool is_valid = 2;
+  bool is_mission_ended = 3;
+  bool is_need_released = 4;
+}
+
+message SSCCRegCheckRequest {
+  string sscc = 1;
+}
+
+message SSCCRegCheckResponse {
+  string message_error = 1;
+  bool is_valid = 2;
+  stock.Stock stock = 3;
+  AttFournisseur att_fournisseur = 4;
+}
+
+message AttFournisseur {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string code_nom = 4;
+    string addresse = 5;
+    string code_postal = 6;
+    string ville = 7;
+    string pays = 8;
+    string iso = 9;
+    string complement = 10;
+    string contact = 11;
+    string tel = 12;
+    string mobile = 13;
+    string email = 14;
+    string attendu_id = 15;
+    string gln = 16;
+}
+
+message SSCCReapproCheckRequest {
+  string sscc = 1;
+  string mission_id = 2;
+}
+
+message SSCCReapproCheckResponse {
+  string message_error = 1;
+  bool is_valid = 2;
+}
+
+message FindSsccInStockRequest {
+  string sscc = 1;
+  string reference_id = 2;
+  string company_id = 3;
+  string warehouse_id = 4;
+  string client_id = 5;
+}
+
+message FindSsccInStockResponse {
+  repeated stock.Stock entry = 1;
+  string messageError = 2;
+}
+
+message MetaData {
+  int64 count = 1;
+  int64 offset = 2; 
+  int64 limit  = 3; 
+  int64 total  = 4;
+  int64 count_history = 5;
+}
+
+message SSCCHistory {
+  string id = 1;
+  int64 created_at = 2;
+  string movement_type = 3;
+  string movement_state = 4;
+  string object_type = 5;
+  string object_id = 6;
+  string code = 7;
+  string description = 8;
+  string user_id = 9;
+  string sscc = 10;
+  string client_code_nom = 11;
+  string company_code_nom = 12;
+  string warehouse_code_nom = 13;
+  string chrono = 14;
+  string action = 15;
+  string location_address = 16;
+  string reference_number = 17;
+  string libelle = 18;
+  string event_type = 19;
+  string user_name = 20;
+  string object_number = 21;
+  int64 qte = 22;
+}
+
+message GetHistoryBySSCCNumberRequest {
+  string sscc = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+  int64 from = 4;
+  int64 to = 5;
+}
+
+message GetHistoryBySSCCNumberResponse {
+  repeated SSCCHistory entry = 1;
+  MetaData metadata = 2;
+  string messageError = 3;
+}
+
+service SSCCService {
+  rpc CheckDuplicateNumber(SSCCNumber) returns (SSCCResponse){}
+  rpc DeleteNumber(SSCCNumber) returns (SSCCResponse){}
+  rpc SSCCGenerator(SSCCGeneratorRequest) returns (SSCCGeneratorRespponse){}
+  rpc SSCCLocationCheck(SSCCLocationCheckRequest) returns (SSCCLocationCheckResponse){}
+  rpc SSCCPickingCheck(SSCCLocationCheckRequest) returns (SSCCLocationCheckResponse){}
+  rpc SSCCMovementCheck(SSCCMovementCheckRequest) returns (SSCCMovementCheckResponse){}
+  rpc SSCCLoadingCheck(SSCCLoadingCheckRequest) returns (SSCCLoadingCheckResponse){}
+  rpc SSCCRegularizationCheck(SSCCRegCheckRequest) returns (SSCCRegCheckResponse){}
+  rpc SSCCReapproCheck(SSCCReapproCheckRequest) returns (SSCCReapproCheckResponse){}
+  rpc FindSsccInStock(FindSsccInStockRequest) returns (FindSsccInStockResponse){}
+  rpc GetHistoryBySSCCNumber(GetHistoryBySSCCNumberRequest) returns (GetHistoryBySSCCNumberResponse){}
 }

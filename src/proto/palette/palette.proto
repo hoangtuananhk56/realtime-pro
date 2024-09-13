@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package palette;
 
-option go_package = "warehouse-service/proto/palette";
+option go_package = "broker-service/pb/palette";
 
 message Palette {
     string id = 1;

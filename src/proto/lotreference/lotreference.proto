@@ -3,7 +3,7 @@ syntax = "proto3";
 
 package lotreference;
 
-option go_package="warehouse-service/proto/lotreference";
+option go_package="broker-service/pb/lotreference";
 
 message LotReference {
     string id = 1;

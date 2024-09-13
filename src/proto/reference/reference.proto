@@ -1,12 +1,15 @@
 syntax = "proto3";
 
-package reference;
+// import "proto/production_batch/production_batch.proto";
 import "proto/conditionnement/conditionnement.proto";
 import "proto/specificites/specificites.proto";
 import "proto/lotreference/lotreference.proto";
 import "proto/stock/stock.proto";
+import "proto/export/export.proto";
 
-option go_package="warehouse-service/proto/reference";
+package reference;
+
+option go_package = "broker-service/pb/reference";
 
 message Reference {
     string id = 1;
@@ -29,11 +32,11 @@ message Reference {
     bool dlv = 16;
     int32 dlv_value = 17;
     bool gestion = 18;
-	bool blocage_entree = 19;
-	bool blocage_sortie = 20;
-	bool variante = 21;
-	int32 alerte_stock  = 22;
-	string niveau_alerte  = 23;
+    bool blocage_entree = 19;
+    bool blocage_sortie = 20;
+    bool variante = 21;
+    int32 alerte_stock = 22;
+    string niveau_alerte = 23;
 
     repeated conditionnement.Conditionnement conditionnement = 24;
 
@@ -48,6 +51,7 @@ message Reference {
     Comment ref_charement = 29;
     Comment ref_livraison = 30;
     Comment ref_reception = 31;
+
     string client_code_nom = 32;
     bool dlc = 33;
     int32 dlc_value = 34;
@@ -70,7 +74,7 @@ message Reference {
     int64 sous_qte = 50;
     int64 total_pieses = 51;
     string pre_block_status = 52;
-    repeated lotreference.LotReference config_lot = 53;
+    repeated lotreference.LotReference lot_reference = 53;
     string client_id = 54;
 }
 
@@ -87,14 +91,15 @@ message RefFournissers {
     int64 create_at = 2;
     int64 update_at = 3;
     string reference_fournisser = 4;
-	string ref_nom = 5;
-	string fournisser_id = 6;
-	string client_code_nom = 7;
+    string ref_nom = 5;
+    string fournisser_id = 6;
+    string client_code_nom = 7;
     bool blocage_entree = 8;
     bool att_enable = 9;
     bool block_del = 10;
     string reference_id = 11;
     string client_id = 12;
+
 }
 
 message Matieresdangereuses{
@@ -102,7 +107,7 @@ message Matieresdangereuses{
     int64 create_at = 2;
     int64 update_at = 3;
     string code = 4;
-	string description = 5;
+    string description = 5;
 
 }
 
@@ -111,10 +116,104 @@ message ICPE {
     int64 create_at = 2;
     int64 update_at = 3;
     string code = 4;
-	string description = 5;
-	int64 qte_nv1 = 6;
-	int64 qte_total_ref = 7;
-	int64 qte_total_code = 8;
+    string description = 5;
+    int64 qte_nv1 = 6;
+    int64 qte_total_ref = 7;
+    int64 qte_total_code = 8;
+}
+
+// message Photos {
+//     repeated Photo photos = 1;
+// }
+
+message Photo {
+    string photo = 1;
+}
+
+message CreateReferenceRequest {
+    Reference entry = 1;
+}
+
+message GetByNumRequest {
+    string nom = 1;
+    string client_code_nom = 2;
+    string client_id = 3;
+}
+
+message GetByIdRequest {
+    string id = 1;
+}
+
+message GetByDigit {
+    string data = 1;
+}
+
+message GetAllRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+    string client_code_nom = 3;
+    string user_id = 4;
+    string role = 5;
+    string client_id = 6;
+}
+
+message CreateReferenceResponse {
+    Reference entry = 1;
+    string messageError = 2;
+}
+
+message CheckExistRefFourRequest {
+    string client_code_nom = 1;
+    string fournisser_id = 2;
+    string reference_fournisser = 3;
+    string client_id = 4;
+}
+
+message GetByNomRefDigitRequest {
+    string client_code_nom = 1;
+    string fournisser_id = 2;
+    string nom = 3;
+    string client_id = 4;
+}
+
+message CheckExistRefFourResponse {
+    RefFournissers entry = 1;
+    string messageError = 2;
+}
+
+message GetByRefFourDitgitResponse {
+    repeated RefFournissers entry = 1;
+    string messageError = 2;
+}
+
+message GetRefFourByNomRequest {
+    string ref_nom = 1;
+    string client_code_nom = 2;
+    string four_id = 3;
+    string client_id = 4;
+}
+
+message ValidateRefFourRequest {
+    string ref_nom = 1;
+    string client_code_nom = 2;
+    string four_id = 3;
+    bool block_relation = 4;
+    string reference_fournisser = 5;
+    string client_id = 6;
+}
+
+message ValidateRefFourReponse {
+    RefFournissers entry = 1;
+    string messageError = 2;
+}
+
+message DeleteRefFourRequest {
+    string id = 1;
+}
+
+message DeleteRefFourReponse {
+    RefFournissers entry = 1;
+    string messageError = 2;
 }
 
 message AttenduForRefFourCreate {
@@ -129,9 +228,198 @@ message AttenduForRefFourCreate {
     string company_id = 9;
 }
 
+message RefFourCreateRequest {
+    repeated RefFournissers RefFourArray = 1;
+    AttenduForRefFourCreate Attendu = 2;
+}
+
+message RefFourCreateResponse {
+    repeated RefFournissers entry = 1;
+    string messageError = 2;
+}
+
+message MetaData {
+    int32 count = 1;
+    int32 offset = 2;
+    int32 limit = 3;
+    int64 total = 4;
+    int64 count_history = 5;
+}
+
+message GetAllResponse {
+    repeated Reference  entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message ValidDeleteRequest {
+    string id = 1;
+}
+
+message ValidDeleteResponse {
+    bool status = 1;
+}
+
+message DeleteByIds {
+    repeated string id = 1;
+}
+
+message UpdateReferenceRequest {
+    Reference entry = 1;
+    DeleteByIds ref_four_delete = 2;
+    DeleteByIds conditionnement_delete = 3;
+}
+
+message UpdateReferenceResponse {
+    bool status = 1;
+    string message_error = 2;
+}
+
+message DeleteRefByIdRequest {
+    string id = 1;
+    string modificationer_id = 2;
+}
+
+message DeleteRefByIdResponse {
+    bool status = 1;
+    string message_error = 2;
+}
+
+message GetAllReferenceRequest {
+    string client_id = 1;
+    string company_id = 2;
+    string warehouse_id = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+
+    string bl = 10; // BL
+    string description = 11; // Libelle
+    string supplier = 12; // Fournisseur
+    string type = 13; // Type
+    string mouvement = 14; // Mouvement
+    string eta = 15; // État
+    string chrono = 16; // Chrono
+    string debut = 17; // Debut
+    string fin = 18; // Fin
+    string status = 19; // Statut
+    string sscc = 20; // Pallete
+    string lot = 21; // Lot
+    string cdn = 22; // Cdn
+    string zone = 23; // Zone
+    string aisle = 24; // Allée
+    string bay = 25; // Travée
+    string level = 26; // Niveau
+    string type_cdn = 27; // Type CDN
+    bool emplacements_vide = 28; // Emplacements Vide
+    string product_number = 29; // No Produit
+    string sort = 30; // Sort
+}
+
+message CheckExistEanVarianteForConditonnametRequest {
+    string ean = 1;
+    string variante = 2;
+    string id = 3;
+}
+
+message CheckExistEanVarianteForConditonnametResponse {
+    conditionnement.Conditionnement entry = 1;
+    string messageError = 2;
+}
+
+message HistoryChange {
+    string event_type = 1;
+    string field = 2;
+    string value = 3;
+    string old_value = 4;
+    string new_value = 5;
+}
+
+message RefHistory {
+    string id = 1;
+    int64 created_at = 2;
+    string movement_type = 3;
+    string movement_state = 4;
+    string code = 5;
+    string object_type = 6;
+    string object_id = 7;
+    string object_number = 8;
+    string description = 9;
+    string user_id = 10;
+    string user_name = 11;
+    string client_code_nom = 12;
+    string company_code_nom = 13;
+    string warehouse_code_nom = 14;
+    string chrono = 15;
+    string action = 16;
+    string event_type = 17;
+    repeated HistoryChange changes = 18;
+}
+
+message GetHistoryByIdRequest {
+    string id = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    int64 from = 4;
+    int64 to = 5;
+}
+
+message GetHistoryByIdResponse {
+    repeated RefHistory entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
 message ReferenceProduct {
     string id = 1;
     bool blocage_entree = 2;
     bool blocage_sortie = 3;
     string pre_block_status = 4;
+}
+
+message UpdateBlockLotRequest {
+  string refrence_id = 1;
+  bool lot_block_status = 2;
+  string motif = 3;
+	string origine = 4;
+  string company_id = 5;
+  string warehouse_id = 6;
+  string client_id = 7;
+  string lot = 8;
+  string usercode = 9;
+}
+
+message UpdateBlockLotResponse {
+    string status = 1;
+    string message_error = 2;
+}
+
+service ReferenceService {
+    rpc Create(CreateReferenceRequest) returns (CreateReferenceResponse){}
+    rpc UpdateByID(UpdateReferenceRequest) returns (UpdateReferenceResponse){}
+    rpc DeleteByID(DeleteRefByIdRequest) returns (DeleteRefByIdResponse){}
+    rpc GetById(GetByIdRequest) returns (CreateReferenceResponse){}
+    rpc GetByNum(GetByNumRequest) returns (CreateReferenceResponse){}
+
+    rpc GetByNumForAtt(GetByNumRequest) returns (CreateReferenceResponse){}
+
+    rpc GetAll(GetAllRequest) returns (GetAllResponse) {}
+    rpc CheckExistRefFour(CheckExistRefFourRequest) returns (CheckExistRefFourResponse){}
+    rpc CheckExistEanAndVarianteForConditionnement(CheckExistEanVarianteForConditonnametRequest) returns (CheckExistEanVarianteForConditonnametResponse){}
+    rpc GetByRefFourDitgit(CheckExistRefFourRequest) returns (GetByRefFourDitgitResponse) {}
+    rpc GetByNomDigit(GetByNomRefDigitRequest) returns (GetByRefFourDitgitResponse) {}
+    rpc GetByIdForAtt(GetByIdRequest) returns (CreateReferenceResponse){}
+
+    rpc GetRefFourByNom(GetRefFourByNomRequest) returns (CreateReferenceResponse) {}
+    rpc ValidateRefFour(ValidateRefFourRequest) returns (ValidateRefFourReponse){}
+    rpc DeleteRefFour(DeleteRefFourRequest) returns (DeleteRefFourReponse){}
+    rpc CreateRefFour(RefFourCreateRequest) returns (RefFourCreateResponse){}
+
+    rpc ValidDeleteRefFour(ValidDeleteRequest) returns (ValidDeleteResponse){}
+    rpc ValidDeleteCondition(ValidDeleteRequest) returns (ValidDeleteResponse){}
+    rpc ValidDeleteRef(ValidDeleteRequest) returns (ValidDeleteResponse){}
+    rpc GetAllReference(GetAllReferenceRequest) returns (GetAllResponse){}
+    rpc GetHistoryById(GetHistoryByIdRequest) returns (GetHistoryByIdResponse){}
+
+    rpc UpdateBlockLot(UpdateBlockLotRequest) returns (UpdateBlockLotResponse){}
+    rpc ExportAllReferences(export.ExportAllReferencesRequest) returns (export.ExportResponse){}
 }

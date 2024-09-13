@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package notification;
+
+option go_package="warehouse-service/pb/notification";
+
+message Notification {
+    string id = 1;
+    int64 created_time = 2;
+    string created_by = 3;
+    int64 updated_at = 4;
+    string mission_id = 5;
+    string mission_number = 6;
+    int32 mission_type = 7;
+    bool is_read = 8;
+    string assignee_by = 9;
+    string assignee_id = 10;
+    string action_type = 11;
+    string client_name = 12;
+    string company_name = 13;
+    string warehouse_name = 14;
+    string content = 15;
+}
+
+message GetAllRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+    string user_id = 3;
+}
+
+message MetaData {
+    int32 count = 1;
+    int32 offset = 2; 
+    int32 limit  = 3; 
+    int64 total  = 4;
+}
+
+message GetAllResponse {
+    repeated Notification entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message ReadNotiRequest {
+    string id = 1;
+}
+
+message ReadNotiResponse {
+    string messageError = 1;
+}
+
+message CountUnreadRequest {
+    string user_id = 1;
+}
+
+message CountUnreadResponse {
+    string messageError = 1;
+    int64 count_unread = 2;
+}
+
+service NotificationService {
+    rpc GetAll(GetAllRequest) returns (GetAllResponse){}
+    rpc ReadNotification(ReadNotiRequest) returns (ReadNotiResponse){}
+    rpc CountUnreadNotification(CountUnreadRequest) returns (CountUnreadResponse){}
+}

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package conditionnement;
 
-option go_package="warehouse-service/proto/conditionnement";
+option go_package="broker-service/pb/conditionnement";
 
 message Conditionnement {
     string id = 1;
@@ -27,8 +27,5 @@ message Conditionnement {
     string reference_id= 20;
     double poids_add = 21;
     bool att_enable = 22;
-    bool block_del = 23;
     bool qte_variable = 24;
 }
-
-

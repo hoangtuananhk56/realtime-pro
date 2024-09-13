@@ -1,0 +1,15 @@
+syntax = "proto3";
+package icpe;
+
+option go_package = "broker-service/pb/icpe";
+
+message ICPE {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string code = 4;
+    string description = 5;
+    string qte_nv1 = 6;
+    string qte_total_ref = 7;
+    string qte_total_code = 8;
+}

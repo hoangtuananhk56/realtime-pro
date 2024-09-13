@@ -1,11 +1,15 @@
 syntax = "proto3";
 
-package stock;
-
+//import "proto/attendu/attendu.proto";
+// import "proto/sscc/sscc.proto";
 import "proto/conditionnement/conditionnement.proto";
 import "proto/lotreference/lotreference.proto";
 
-option go_package = "warehouse-service/proto/stock";
+// import "google/protobuf/timestamp.proto";
+
+package stock;
+
+option go_package="broker-service/pb/stock";
 
 message Stock {
     string id = 1;
@@ -28,14 +32,14 @@ message Stock {
     string cur_location_code = 16;
     string cur_location_aisle = 17;
     string cur_location_bay = 18;
-    string cur_zone_code = 19;
+	string cur_zone_code = 19;
 
-    string pre_location_id = 20;
-    string pre_location_code = 21;
-    string pre_zone_id = 22;
-    string pre_location_aisle = 23;
-    string pre_location_bay = 24;
-    string pre_zone_code = 25;
+	string pre_location_id = 20;
+	string pre_location_code = 21;
+	string pre_zone_id = 22;
+	string pre_location_aisle  = 23;
+	string pre_location_bay  = 24;
+	string pre_zone_code  = 25;
 
     string reference_number = 26;
     int64 fabrication_at = 27;
@@ -56,8 +60,10 @@ message Stock {
     int64 liberation_at = 37;
     string liberation_by = 38;
     string liberationer_id = 39;
+
     int32 cur_level = 40;
     int32 pre_level = 41;
+
     double cur_poids_net = 42;
     double cur_poids_brut = 43;
     double cur_height = 44;
@@ -89,7 +95,17 @@ message Stock {
     int64 updated_entry_time = 69;
     string origine = 70;
     int64 creation_at = 71;
+    LocationOb location = 72;
+    string company_id = 73;
+    string warehouse_id = 74;
+    string client_id = 75;
 }
+
+message LocationOb {
+    string id = 1;
+    string prev_entry_block = 2;
+    string entry_block = 3;
+} 
 
 message StockSsccInfo {
     string id = 1;
@@ -170,13 +186,14 @@ message StockSsccInfo {
 	string origine = 77;
     string location_type = 64;
 	string storage_type = 78;
-    lotreference.LotReference config_lot = 79;
+    lotreference.LotReference lot_reference = 79;
     int64 updated_entry_time = 80;
     string storage_func = 81;
     bool is_skip_block_lot = 82;
     string company_id = 83;
     string warehouse_id = 84;
     string client_id = 85;
+    string pre_block_ref_status = 86;
 }
 
 message ParentOb {
@@ -221,10 +238,10 @@ message AttProduction {
     int64 total_pieses = 12;
     string conditionement = 13;
     string attendu_id = 14;
-    float volume_qte = 15;
-    float poids_qte = 16;
-    float volume_sousqte = 17;
-    float poids_sousqte = 18;
+    double volume_qte = 15;
+    double poids_qte = 16;
+    double volume_sousqte = 17;
+    double poids_sousqte = 18;
     string conditionement_id = 19;
     string ref_fournisser_id = 20;
     conditionnement.Conditionnement conditionnement = 21;
@@ -244,4 +261,264 @@ message AttProduction {
     string type = 35;
     string mouvement = 36;
     string eta = 37;
+}
+
+message MetaData {
+    int64 count = 1;
+    int64 offset = 2; 
+    int64 limit  = 3; 
+    int64 total  = 4;
+}
+
+
+message GetAllStockRequest {
+    string client_id = 1;
+    string company_id = 2;
+    string warehouse_id = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+
+    string bl = 10; // BL
+    string description = 11; // Libelle
+    string supplier = 12; // Fournisseur
+    string type = 13; // Type
+    string mouvement = 14; // Mouvement
+    string eta = 15; // État
+    string chrono = 16; // Chrono
+    string debut = 17; // Debut
+    string fin = 18; // Fin
+    string statut = 19; // Statut
+    int64 sscc = 20; // Pallete
+    string lot = 21; // Lot
+    string cdn = 22; // Cdn
+    string zone = 23; // Zone
+    string aisle = 24; // Allée
+    string bay = 25; // Travée
+    string level = 26; // Niveau
+    string type_cdn = 27; // Type CDN
+    bool emplacements_vide = 28; // Emplacements Vide
+}
+
+message GetAllStockResponse {
+    repeated Stock entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message LoadMoreRequest {
+    string client_code_nom = 1;
+    string company_code_nom = 2;
+    string warehouse_code_nom = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+    string id = 6;
+}
+
+message GetDashboardInformationRequest{
+    repeated string client_id = 1;
+    repeated string company_id = 2;
+    repeated string warehouse_id = 3;
+    repeated string user_id = 4;
+    repeated string reference = 5; // Référence
+    repeated string member = 6; // Membre
+    string start_date = 7; // Début
+    string end_date = 8; // Fin
+}
+
+message TypeOfConditionnementItem{
+    string level = 1;
+    float percent = 2;
+}
+
+message DashboardChart {
+    string date = 1;
+    string name = 2;
+    int64 value = 3;
+    float percent = 4;
+}
+
+message GetDashboardInformationResponse{
+    string messageError = 1;
+    int64 referecence = 2; // Références
+    int64 items = 3; // Articles (total)
+    int64 items_cdn = 4; // Articles (Selon CDN)
+    int64 blocked_items = 5; // Articles bloqués
+    int64 reserved_items = 6; // Articles réservés
+    int64 movements_inprogress = 7; // Mouvements(en cours)
+    int64 movements_processed = 8; // Mouvements(traitées)
+    int64 regularizations_inprogress = 9; // Régularisations(en cours)
+    int64 regularizations_processed = 10; // Régularisations(traitées)
+    int64 affected_staff = 11; // Personnel concerné
+    repeated TypeOfConditionnementItem type_of_conditionnement = 12; // Type de function
+    int64 unavailable = 13; // Indisponible
+    int64 available = 14; // Disponibles
+    repeated DashboardChart stick_chart = 15;
+    repeated DashboardChart pie_chart = 16;
+}
+
+message GetStockInfoBySsccRequest {
+    string client_id = 1;
+    string company_id = 2;
+    string warehouse_id = 3;
+    string sscc = 4;
+    string reference_id = 5;
+}
+
+message GetStockInfoBySsccResponse {
+    StockSsccInfo entry = 1;
+    string message_error = 2;
+    string status = 3;
+}
+
+message GetListSsccByLotRequest {
+    string client_id = 1;
+    string company_id = 2;
+    string warehouse_id = 3;
+    string reference_id = 4;
+    string lot = 5;
+}
+
+message GetListSsccByLotResponse {
+    message SsccInfo {
+        string stock_id = 1;
+        string sscc = 2;
+        bool is_skip_block_lot = 3;
+      }
+    repeated SsccInfo entry = 1;
+    string message_error = 2;
+    string status = 3;
+}
+
+message GetListSsccByLotV2Request {
+    string client_id = 1;
+    string company_id = 2;
+    string warehouse_id = 3;
+    string reference_id = 4;
+    string lot = 5;
+    string sscc_origin = 6;
+}
+
+message GetListSsccByLotV2Response {
+    message SsccInfo {
+        string stock_id = 1;
+        string sscc = 2;
+        bool sscc_block = 3;
+      }
+    repeated SsccInfo entry = 1;
+    string message_error = 2;
+    string status = 3;
+}
+
+message UpdateBlockListLotSsccByStockIdRequest {
+    repeated string stock_id_block = 1;
+    repeated string stock_id_unblock = 2;
+    string motif = 3;
+	string origine = 4;
+    string client_id = 5;
+    string company_id = 6;
+    string warehouse_id = 7;
+    string reference_id = 8;
+    string lot = 9;
+    bool lot_block = 10;
+}
+
+message UpdateBlockListLotSsccByStockIdResponse {
+    string status = 1;
+    string message_error = 2;
+}
+
+message UpdateBlockSsccByStockIdRequest {
+    string stock_id = 1;
+    bool sscc_block_status = 2;
+    string motif = 3;
+	string origine = 4;
+}
+
+message UpdateBlockSsccByStockIdResponse {
+    string status = 1;
+    string message_error = 2;
+}
+
+message GetEmplacementPopupInfoRequest {
+    string stock_id = 1;
+    string sscc = 2;
+    int32 conditionement_level = 3;
+}
+
+message GetEmplacementPopupInfoResponse {
+    string sscc = 1;
+    string pre_warehouse_code_nom = 2;
+    string pre_zone_code = 3;
+    string pre_location_aisle = 4;
+    string pre_location_bay = 5;
+    int64 pre_level = 6;
+    string pre_position_code = 7;
+    int64 pre_total_piece = 8;
+    string cur_warehouse_code_nom = 9;
+    string cur_zone_code = 10;
+    string cur_location_aisle = 11;
+    string cur_location_bay = 12;
+    int64 cur_level = 13;
+    string cur_position_code = 14;
+    int64 cur_total_piece = 15;
+    bool cur_is_visible_level = 16;
+    bool cur_is_visible_position = 17;
+    bool pre_is_visible_level = 18;
+    bool pre_is_visible_position = 19;
+    string message_error = 20;
+    bool can_movement = 21;
+    string entry_block = 22;
+    bool is_finish_movement_mission = 23;
+    string destination_codebar = 24;
+    int32 priorite = 25;
+    string location_id = 26;
+    string storage_type = 27;
+    int64 updated_entry_time = 28;
+}
+
+message UpdateBlockLotRequest {
+    repeated string stock_id_block = 1;
+    repeated string stock_id_unblock = 2;
+    string motif = 3;
+	string origine = 4;
+    string client_id = 5;
+    string company_id = 6;
+    string warehouse_id = 7;
+    string reference_id = 8;
+    string lot = 9;
+    bool lot_block = 10;
+}
+
+message UpdateBlockListSsccByStockIdRequest {
+  repeated string stock_id_block = 1;
+  repeated string stock_id_unblock = 2;
+  string motif = 3;
+	string origine = 4;
+  string client_id = 5;
+  string company_id = 6;
+  string warehouse_id = 7;
+  string reference_id = 8;
+  bool sscc_block_status = 9;
+  string origin_stock_id = 10;
+  string usercode = 11;
+}
+
+message UpdateBlockListSsccByStockIdResponse {
+    string status = 1;
+    string message_error = 2;
+}
+
+service StockService {
+    rpc GetAllStock(GetAllStockRequest) returns (GetAllStockResponse){};
+    rpc LoadMoreByID(LoadMoreRequest) returns (GetAllStockResponse){};
+    rpc GetDashboardInformation(GetDashboardInformationRequest) returns (GetDashboardInformationResponse){};
+    rpc GetStockInfoBySscc(GetStockInfoBySsccRequest) returns (GetStockInfoBySsccResponse){}
+    rpc GetListSsccByLot(GetListSsccByLotRequest) returns (GetListSsccByLotResponse){}
+    rpc GetListSsccByLotV2(GetListSsccByLotV2Request) returns (GetListSsccByLotV2Response){}
+
+    rpc UpdateBlockListLotSsccByStockId(UpdateBlockListLotSsccByStockIdRequest) returns (UpdateBlockListLotSsccByStockIdResponse){}
+    rpc UpdateBlockListSsccByStockId(UpdateBlockListSsccByStockIdRequest) returns (UpdateBlockListSsccByStockIdResponse){}
+    rpc UpdateBlockSsccByStockId(UpdateBlockSsccByStockIdRequest) returns (UpdateBlockSsccByStockIdResponse){}
+    rpc GetEmplacementPopupInfo(GetEmplacementPopupInfoRequest) returns (GetEmplacementPopupInfoResponse){}
+
 }

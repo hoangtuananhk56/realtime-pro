@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package destinataire;
 
-option go_package="warehouse-service/proto/destinataire";
+option go_package="broker-service/pb/destinataire";
 
 message ClientDestinataire {
     string id = 1;
@@ -11,6 +11,7 @@ message ClientDestinataire {
     string destinataire_code = 4;
     string client_code_nom = 5;
     string client_id = 6;
+
 }
 
 message Destinataire {
@@ -48,4 +49,50 @@ message DesContact {
     string mobile = 6;
     string email = 7;
     string destinataire_id = 8;
+}
+
+message GetByIdElementRequest {
+    string id = 1;
+    string id_contact = 2;
+    string id_address = 3;
+}
+
+message CreateRequest {
+    Destinataire entry = 1;
+}
+
+message GetByCodeRequest {
+    string data = 1;
+    string client_id = 2;
+}
+
+
+message GetAllRequest {
+
+}
+
+message DestinatairesResponse {
+    repeated Destinataire entry = 1;
+    string messageError = 2;
+}
+
+message CreateResponse {
+    Destinataire entry = 1;
+    string messageError = 2;
+}
+
+message GetByNameOrCodeRequest {
+    string data = 1;
+    string client_code_nom = 2;
+    string client_id = 6;
+}
+
+service DestinataireService {
+    rpc Create(CreateRequest) returns (CreateResponse){}
+    rpc GetByCode(GetByCodeRequest) returns (CreateResponse){}
+    rpc GetByID(GetByCodeRequest) returns (CreateResponse){}
+    rpc GetByIdElement(GetByIdElementRequest) returns (CreateResponse){}
+    rpc GetByNameDigit(GetByCodeRequest) returns (DestinatairesResponse){}
+    rpc GetAll(GetAllRequest) returns (DestinatairesResponse){}
+    rpc GetByNameOrCode(GetByNameOrCodeRequest) returns (DestinatairesResponse){}
 }

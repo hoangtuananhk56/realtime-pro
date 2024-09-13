@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package chrono;
+
+option go_package = "broker-service/pb/chrono";
+
+message Chrono {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3; 
+    string production_item_id = 4;
+    string name = 5;
+    string type_alerte = 6;
+}

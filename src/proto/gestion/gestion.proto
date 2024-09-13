@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package gestion;
+
+option go_package = "broker-service/pb/gestion";
+
+message Gestion {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3; 
+    string production_batch_id = 4;
+    bool dluo = 5;
+    bool dlv = 6;
+    bool dlc = 7;
+    string nbr_jours_dluo = 8;
+    string nbr_jours_dlv = 9;
+    bool gestion_de_lot = 10;
+    bool blocage_entree = 11;
+    bool blocage_sortie = 12;
+    string alerte_stock = 13;
+    string type_alerte = 14;
+}

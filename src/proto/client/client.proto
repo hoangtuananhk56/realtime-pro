@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package client;
 
-option go_package="warehouse-service/proto/client";
+option go_package="/pb/client";
 
 message Client {
     string id = 1;
@@ -18,16 +18,50 @@ message Client {
     int64 current_sscc_value = 11;
     string pre_code = 12;
     string code_nom = 13;
-    bool rupture = 14;
-    bool variantes = 15;
-    bool fifo = 16;
-    bool fefo = 17;
-    bool types_cdn = 18;
+    optional bool rupture = 14;
+    optional bool variantes = 15;
+    optional bool fifo = 16;
+    optional bool fefo = 17;
+    optional bool types_cdn = 18;
     int64 alerte_dluo = 19;
     repeated ClientCompany client_company = 20;
     repeated WarehouseClient warehouse_client = 21;
     repeated ClientWarehouseCompany client_warehouse_company = 22;
     string email = 23;
+    optional bool mois_dluo_activate = 24;
+    int32 mois_dluo_input = 25;
+    optional bool multi_bl = 26;
+    optional bool etiquettes = 27;
+    optional bool supports = 28;
+    optional bool sauvegarde_support = 29;
+    optional bool support_reception = 30;
+    optional bool reappro_partiel = 31;
+    optional bool respect_hauteur_palette = 32;
+    optional bool is_del = 33;
+    repeated ClientWarehouseCompanyOrg client_warehouse_company_org = 34;
+    optional bool priority_picking = 35;
+
+}
+
+message ClientSwag {
+    string nom = 1;
+	string adresse = 2;
+	string tel = 3;
+	string fax = 4;
+	string detail = 5;
+	string contact = 6;
+	string code = 7;
+    int64 current_sscc_value = 8;
+    string pre_code = 9;
+    string code_nom = 10;
+    bool rupture = 11;
+    bool variantes = 12;
+    bool fifo = 13;
+    bool fefo = 14;
+    bool types_cdn = 15;
+    int64 alerte_dluo = 16;
+    repeated ClientCompany client_company = 17;
+    repeated WarehouseClient warehouse_client = 18;
     bool mois_dluo_activate = 24;
     int32 mois_dluo_input = 25;
     bool multi_bl = 26;
@@ -37,8 +71,13 @@ message Client {
     bool support_reception = 30;
     bool reappro_partiel = 31;
     bool respect_hauteur_palette = 32;
-    bool is_del = 33;
-    repeated ClientWarehouseCompanyOrg client_warehouse_company_org = 34;
+}
+
+message MetaData {
+    int32 count = 1;
+    int32 offset = 2; 
+    int32 limit  = 3; 
+    int64 total  = 4;
 }
 
 message ClientCompany {
@@ -72,8 +111,8 @@ message WarehouseCompany {
 
 message ClientWarehouseCompany {
     string user_id = 1;
-    string company_code_nom = 2;
-    string client_code_nom = 3;
+    int64 company_code_nom = 2;
+    int64 client_code_nom = 3;
     string warehouse_code_nom = 4;
     string client_id = 5;
     string id = 6;
@@ -89,4 +128,157 @@ message ClientWarehouseCompanyOrg {
     string client_code_nom = 5;
     string company_code_nom = 6;
     string warehouse_code_nom = 7;
+}
+
+message CreateRequest {
+    Client entry = 1;
+}
+
+message GetByIdRequest{
+    string id = 1;
+}
+
+message GetByCodeNomRequest{
+    string code_nom = 1;
+}
+
+message Response {
+    Client entry = 1;
+    string messageError = 2;
+}
+
+message GetAllRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message GetAllResponse {
+    repeated Client entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message GetCompanyForCreateRequest {
+    string user_id = 1;
+}
+
+message GetCompanyForCreateResponse {
+    repeated WarehouseCompany entry = 1;
+    string messageError = 2;
+
+}
+
+message GetAllClientRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+    string role = 3;
+    string user_id = 4;
+    repeated CompanyWarehouseArrayPayload ArrayPayload = 5;
+}
+
+message CompanyWarehouseArrayPayload {
+    string company_code_nom = 1;
+    string warehouse_code_nom = 2;
+}
+
+message CommonItemResponse {
+    string code_nom = 1;
+    string id = 2;
+}
+
+message ClientArrayResponse {
+    repeated UserSettingRespponse entry = 1;
+    string messageError = 2;
+    MetaData meta_data = 3;
+}
+message UserSettingRespponse {
+    CommonItemResponse client = 1;
+    CommonItemResponse company = 2;
+    CommonItemResponse warehouse = 3;
+}
+
+message GetAllCompanyWarehouseRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+    string role = 3;
+    string user_id = 4;
+    repeated string ArrayPayload = 5;
+}
+
+message GetByContentRequest {
+    int32 paging = 1;
+    int32 page_size = 2;
+    string content = 3;
+    string warehouse_code_nom = 4;
+    string company_code_nom = 5;
+    string warehouse_id = 6;
+    string company_id = 7;
+}
+
+message ClientMinimalDetail {
+    string id = 1;
+    string code_nom = 2;
+}
+
+message GetByContentResponse {
+    repeated string client_code_noms = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+    repeated string client_ids = 4;
+    repeated ClientMinimalDetail client = 5;
+}
+
+message ListClientByCompanyIdsRequest {
+    int32 limit = 1;
+    int32 page = 2;
+    repeated string company_ids = 3;
+}
+
+message ClientInfo {
+    string id = 1;
+    string code_nom = 2;
+}
+
+message ListClientByCompanyIdsResponse {
+    repeated ClientInfo list = 1;
+    string messageError = 2;
+}
+
+message UpdateOneRequest {
+    Client client = 1;
+    repeated string ids = 2;
+}
+
+message UpdateResponse {
+    string messageError = 1;
+    string status = 2;
+}
+
+message DeleteOneRequest {
+    string id = 1;
+}
+
+message DeleteManyRequest {
+    repeated string ids = 1;
+}
+
+message DeleteResponse {
+    string messageError = 1;
+    string status = 2;
+}
+
+service ClientService {
+    rpc Create(CreateRequest) returns (Response) {};
+    rpc GetByID(GetByIdRequest) returns (Response) {};
+    rpc GetByCodeNom(GetByCodeNomRequest) returns (Response) {};
+    rpc GetAll(GetAllRequest) returns (GetAllResponse) {};
+    rpc GetByContent(GetByContentRequest) returns (GetByContentResponse) {};
+
+    rpc GetCompany(GetCompanyForCreateRequest) returns (GetCompanyForCreateResponse) {};
+    rpc GetAllClientsByCompanyWarehouse(GetAllClientRequest) returns (ClientArrayResponse) {};
+    rpc GetAllCompanyWarehouseByClientCodeNom(GetAllCompanyWarehouseRequest) returns (ClientArrayResponse) {};
+    rpc ListClientByCompanyIds(ListClientByCompanyIdsRequest) returns (ListClientByCompanyIdsResponse) {};
+    rpc UpdateOne(UpdateOneRequest) returns (UpdateResponse) {};
+    rpc DeteleOne(DeleteOneRequest) returns (DeleteResponse) {};
+    rpc DeteleMany(DeleteManyRequest) returns (DeleteResponse) {};
 }

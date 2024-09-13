@@ -4,6 +4,7 @@ import * as proto_conditionnement_conditionnement_pb from '../../proto/condition
 import * as proto_specificites_specificites_pb from '../../proto/specificites/specificites_pb'; // proto import: "proto/specificites/specificites.proto"
 import * as proto_lotreference_lotreference_pb from '../../proto/lotreference/lotreference_pb'; // proto import: "proto/lotreference/lotreference.proto"
 import * as proto_stock_stock_pb from '../../proto/stock/stock_pb'; // proto import: "proto/stock/stock.proto"
+import * as proto_export_export_pb from '../../proto/export/export_pb'; // proto import: "proto/export/export.proto"
 
 
 export class Reference extends jspb.Message {
@@ -195,10 +196,10 @@ export class Reference extends jspb.Message {
   getPreBlockStatus(): string;
   setPreBlockStatus(value: string): Reference;
 
-  getConfigLotList(): Array<proto_lotreference_lotreference_pb.LotReference>;
-  setConfigLotList(value: Array<proto_lotreference_lotreference_pb.LotReference>): Reference;
-  clearConfigLotList(): Reference;
-  addConfigLot(value?: proto_lotreference_lotreference_pb.LotReference, index?: number): proto_lotreference_lotreference_pb.LotReference;
+  getLotReferenceList(): Array<proto_lotreference_lotreference_pb.LotReference>;
+  setLotReferenceList(value: Array<proto_lotreference_lotreference_pb.LotReference>): Reference;
+  clearLotReferenceList(): Reference;
+  addLotReference(value?: proto_lotreference_lotreference_pb.LotReference, index?: number): proto_lotreference_lotreference_pb.LotReference;
 
   getClientId(): string;
   setClientId(value: string): Reference;
@@ -265,7 +266,7 @@ export namespace Reference {
     sousQte: number,
     totalPieses: number,
     preBlockStatus: string,
-    configLotList: Array<proto_lotreference_lotreference_pb.LotReference.AsObject>,
+    lotReferenceList: Array<proto_lotreference_lotreference_pb.LotReference.AsObject>,
     clientId: string,
   }
 }
@@ -446,6 +447,410 @@ export namespace ICPE {
   }
 }
 
+export class Photo extends jspb.Message {
+  getPhoto(): string;
+  setPhoto(value: string): Photo;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Photo.AsObject;
+  static toObject(includeInstance: boolean, msg: Photo): Photo.AsObject;
+  static serializeBinaryToWriter(message: Photo, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Photo;
+  static deserializeBinaryFromReader(message: Photo, reader: jspb.BinaryReader): Photo;
+}
+
+export namespace Photo {
+  export type AsObject = {
+    photo: string,
+  }
+}
+
+export class CreateReferenceRequest extends jspb.Message {
+  getEntry(): Reference | undefined;
+  setEntry(value?: Reference): CreateReferenceRequest;
+  hasEntry(): boolean;
+  clearEntry(): CreateReferenceRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateReferenceRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateReferenceRequest): CreateReferenceRequest.AsObject;
+  static serializeBinaryToWriter(message: CreateReferenceRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateReferenceRequest;
+  static deserializeBinaryFromReader(message: CreateReferenceRequest, reader: jspb.BinaryReader): CreateReferenceRequest;
+}
+
+export namespace CreateReferenceRequest {
+  export type AsObject = {
+    entry?: Reference.AsObject,
+  }
+}
+
+export class GetByNumRequest extends jspb.Message {
+  getNom(): string;
+  setNom(value: string): GetByNumRequest;
+
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): GetByNumRequest;
+
+  getClientId(): string;
+  setClientId(value: string): GetByNumRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByNumRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByNumRequest): GetByNumRequest.AsObject;
+  static serializeBinaryToWriter(message: GetByNumRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByNumRequest;
+  static deserializeBinaryFromReader(message: GetByNumRequest, reader: jspb.BinaryReader): GetByNumRequest;
+}
+
+export namespace GetByNumRequest {
+  export type AsObject = {
+    nom: string,
+    clientCodeNom: string,
+    clientId: string,
+  }
+}
+
+export class GetByIdRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): GetByIdRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByIdRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByIdRequest): GetByIdRequest.AsObject;
+  static serializeBinaryToWriter(message: GetByIdRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByIdRequest;
+  static deserializeBinaryFromReader(message: GetByIdRequest, reader: jspb.BinaryReader): GetByIdRequest;
+}
+
+export namespace GetByIdRequest {
+  export type AsObject = {
+    id: string,
+  }
+}
+
+export class GetByDigit extends jspb.Message {
+  getData(): string;
+  setData(value: string): GetByDigit;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByDigit.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByDigit): GetByDigit.AsObject;
+  static serializeBinaryToWriter(message: GetByDigit, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByDigit;
+  static deserializeBinaryFromReader(message: GetByDigit, reader: jspb.BinaryReader): GetByDigit;
+}
+
+export namespace GetByDigit {
+  export type AsObject = {
+    data: string,
+  }
+}
+
+export class GetAllRequest extends jspb.Message {
+  getLimit(): number;
+  setLimit(value: number): GetAllRequest;
+
+  getOffset(): number;
+  setOffset(value: number): GetAllRequest;
+
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): GetAllRequest;
+
+  getUserId(): string;
+  setUserId(value: string): GetAllRequest;
+
+  getRole(): string;
+  setRole(value: string): GetAllRequest;
+
+  getClientId(): string;
+  setClientId(value: string): GetAllRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetAllRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllRequest): GetAllRequest.AsObject;
+  static serializeBinaryToWriter(message: GetAllRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllRequest;
+  static deserializeBinaryFromReader(message: GetAllRequest, reader: jspb.BinaryReader): GetAllRequest;
+}
+
+export namespace GetAllRequest {
+  export type AsObject = {
+    limit: number,
+    offset: number,
+    clientCodeNom: string,
+    userId: string,
+    role: string,
+    clientId: string,
+  }
+}
+
+export class CreateReferenceResponse extends jspb.Message {
+  getEntry(): Reference | undefined;
+  setEntry(value?: Reference): CreateReferenceResponse;
+  hasEntry(): boolean;
+  clearEntry(): CreateReferenceResponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): CreateReferenceResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateReferenceResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateReferenceResponse): CreateReferenceResponse.AsObject;
+  static serializeBinaryToWriter(message: CreateReferenceResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateReferenceResponse;
+  static deserializeBinaryFromReader(message: CreateReferenceResponse, reader: jspb.BinaryReader): CreateReferenceResponse;
+}
+
+export namespace CreateReferenceResponse {
+  export type AsObject = {
+    entry?: Reference.AsObject,
+    messageerror: string,
+  }
+}
+
+export class CheckExistRefFourRequest extends jspb.Message {
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): CheckExistRefFourRequest;
+
+  getFournisserId(): string;
+  setFournisserId(value: string): CheckExistRefFourRequest;
+
+  getReferenceFournisser(): string;
+  setReferenceFournisser(value: string): CheckExistRefFourRequest;
+
+  getClientId(): string;
+  setClientId(value: string): CheckExistRefFourRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CheckExistRefFourRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CheckExistRefFourRequest): CheckExistRefFourRequest.AsObject;
+  static serializeBinaryToWriter(message: CheckExistRefFourRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CheckExistRefFourRequest;
+  static deserializeBinaryFromReader(message: CheckExistRefFourRequest, reader: jspb.BinaryReader): CheckExistRefFourRequest;
+}
+
+export namespace CheckExistRefFourRequest {
+  export type AsObject = {
+    clientCodeNom: string,
+    fournisserId: string,
+    referenceFournisser: string,
+    clientId: string,
+  }
+}
+
+export class GetByNomRefDigitRequest extends jspb.Message {
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): GetByNomRefDigitRequest;
+
+  getFournisserId(): string;
+  setFournisserId(value: string): GetByNomRefDigitRequest;
+
+  getNom(): string;
+  setNom(value: string): GetByNomRefDigitRequest;
+
+  getClientId(): string;
+  setClientId(value: string): GetByNomRefDigitRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByNomRefDigitRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByNomRefDigitRequest): GetByNomRefDigitRequest.AsObject;
+  static serializeBinaryToWriter(message: GetByNomRefDigitRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByNomRefDigitRequest;
+  static deserializeBinaryFromReader(message: GetByNomRefDigitRequest, reader: jspb.BinaryReader): GetByNomRefDigitRequest;
+}
+
+export namespace GetByNomRefDigitRequest {
+  export type AsObject = {
+    clientCodeNom: string,
+    fournisserId: string,
+    nom: string,
+    clientId: string,
+  }
+}
+
+export class CheckExistRefFourResponse extends jspb.Message {
+  getEntry(): RefFournissers | undefined;
+  setEntry(value?: RefFournissers): CheckExistRefFourResponse;
+  hasEntry(): boolean;
+  clearEntry(): CheckExistRefFourResponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): CheckExistRefFourResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CheckExistRefFourResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: CheckExistRefFourResponse): CheckExistRefFourResponse.AsObject;
+  static serializeBinaryToWriter(message: CheckExistRefFourResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CheckExistRefFourResponse;
+  static deserializeBinaryFromReader(message: CheckExistRefFourResponse, reader: jspb.BinaryReader): CheckExistRefFourResponse;
+}
+
+export namespace CheckExistRefFourResponse {
+  export type AsObject = {
+    entry?: RefFournissers.AsObject,
+    messageerror: string,
+  }
+}
+
+export class GetByRefFourDitgitResponse extends jspb.Message {
+  getEntryList(): Array<RefFournissers>;
+  setEntryList(value: Array<RefFournissers>): GetByRefFourDitgitResponse;
+  clearEntryList(): GetByRefFourDitgitResponse;
+  addEntry(value?: RefFournissers, index?: number): RefFournissers;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): GetByRefFourDitgitResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetByRefFourDitgitResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetByRefFourDitgitResponse): GetByRefFourDitgitResponse.AsObject;
+  static serializeBinaryToWriter(message: GetByRefFourDitgitResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetByRefFourDitgitResponse;
+  static deserializeBinaryFromReader(message: GetByRefFourDitgitResponse, reader: jspb.BinaryReader): GetByRefFourDitgitResponse;
+}
+
+export namespace GetByRefFourDitgitResponse {
+  export type AsObject = {
+    entryList: Array<RefFournissers.AsObject>,
+    messageerror: string,
+  }
+}
+
+export class GetRefFourByNomRequest extends jspb.Message {
+  getRefNom(): string;
+  setRefNom(value: string): GetRefFourByNomRequest;
+
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): GetRefFourByNomRequest;
+
+  getFourId(): string;
+  setFourId(value: string): GetRefFourByNomRequest;
+
+  getClientId(): string;
+  setClientId(value: string): GetRefFourByNomRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetRefFourByNomRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetRefFourByNomRequest): GetRefFourByNomRequest.AsObject;
+  static serializeBinaryToWriter(message: GetRefFourByNomRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetRefFourByNomRequest;
+  static deserializeBinaryFromReader(message: GetRefFourByNomRequest, reader: jspb.BinaryReader): GetRefFourByNomRequest;
+}
+
+export namespace GetRefFourByNomRequest {
+  export type AsObject = {
+    refNom: string,
+    clientCodeNom: string,
+    fourId: string,
+    clientId: string,
+  }
+}
+
+export class ValidateRefFourRequest extends jspb.Message {
+  getRefNom(): string;
+  setRefNom(value: string): ValidateRefFourRequest;
+
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): ValidateRefFourRequest;
+
+  getFourId(): string;
+  setFourId(value: string): ValidateRefFourRequest;
+
+  getBlockRelation(): boolean;
+  setBlockRelation(value: boolean): ValidateRefFourRequest;
+
+  getReferenceFournisser(): string;
+  setReferenceFournisser(value: string): ValidateRefFourRequest;
+
+  getClientId(): string;
+  setClientId(value: string): ValidateRefFourRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ValidateRefFourRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: ValidateRefFourRequest): ValidateRefFourRequest.AsObject;
+  static serializeBinaryToWriter(message: ValidateRefFourRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ValidateRefFourRequest;
+  static deserializeBinaryFromReader(message: ValidateRefFourRequest, reader: jspb.BinaryReader): ValidateRefFourRequest;
+}
+
+export namespace ValidateRefFourRequest {
+  export type AsObject = {
+    refNom: string,
+    clientCodeNom: string,
+    fourId: string,
+    blockRelation: boolean,
+    referenceFournisser: string,
+    clientId: string,
+  }
+}
+
+export class ValidateRefFourReponse extends jspb.Message {
+  getEntry(): RefFournissers | undefined;
+  setEntry(value?: RefFournissers): ValidateRefFourReponse;
+  hasEntry(): boolean;
+  clearEntry(): ValidateRefFourReponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): ValidateRefFourReponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ValidateRefFourReponse.AsObject;
+  static toObject(includeInstance: boolean, msg: ValidateRefFourReponse): ValidateRefFourReponse.AsObject;
+  static serializeBinaryToWriter(message: ValidateRefFourReponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ValidateRefFourReponse;
+  static deserializeBinaryFromReader(message: ValidateRefFourReponse, reader: jspb.BinaryReader): ValidateRefFourReponse;
+}
+
+export namespace ValidateRefFourReponse {
+  export type AsObject = {
+    entry?: RefFournissers.AsObject,
+    messageerror: string,
+  }
+}
+
+export class DeleteRefFourRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): DeleteRefFourRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteRefFourRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteRefFourRequest): DeleteRefFourRequest.AsObject;
+  static serializeBinaryToWriter(message: DeleteRefFourRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteRefFourRequest;
+  static deserializeBinaryFromReader(message: DeleteRefFourRequest, reader: jspb.BinaryReader): DeleteRefFourRequest;
+}
+
+export namespace DeleteRefFourRequest {
+  export type AsObject = {
+    id: string,
+  }
+}
+
+export class DeleteRefFourReponse extends jspb.Message {
+  getEntry(): RefFournissers | undefined;
+  setEntry(value?: RefFournissers): DeleteRefFourReponse;
+  hasEntry(): boolean;
+  clearEntry(): DeleteRefFourReponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): DeleteRefFourReponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteRefFourReponse.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteRefFourReponse): DeleteRefFourReponse.AsObject;
+  static serializeBinaryToWriter(message: DeleteRefFourReponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteRefFourReponse;
+  static deserializeBinaryFromReader(message: DeleteRefFourReponse, reader: jspb.BinaryReader): DeleteRefFourReponse;
+}
+
+export namespace DeleteRefFourReponse {
+  export type AsObject = {
+    entry?: RefFournissers.AsObject,
+    messageerror: string,
+  }
+}
+
 export class AttenduForRefFourCreate extends jspb.Message {
   getId(): string;
   setId(value: string): AttenduForRefFourCreate;
@@ -496,6 +901,628 @@ export namespace AttenduForRefFourCreate {
   }
 }
 
+export class RefFourCreateRequest extends jspb.Message {
+  getReffourarrayList(): Array<RefFournissers>;
+  setReffourarrayList(value: Array<RefFournissers>): RefFourCreateRequest;
+  clearReffourarrayList(): RefFourCreateRequest;
+  addReffourarray(value?: RefFournissers, index?: number): RefFournissers;
+
+  getAttendu(): AttenduForRefFourCreate | undefined;
+  setAttendu(value?: AttenduForRefFourCreate): RefFourCreateRequest;
+  hasAttendu(): boolean;
+  clearAttendu(): RefFourCreateRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RefFourCreateRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: RefFourCreateRequest): RefFourCreateRequest.AsObject;
+  static serializeBinaryToWriter(message: RefFourCreateRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RefFourCreateRequest;
+  static deserializeBinaryFromReader(message: RefFourCreateRequest, reader: jspb.BinaryReader): RefFourCreateRequest;
+}
+
+export namespace RefFourCreateRequest {
+  export type AsObject = {
+    reffourarrayList: Array<RefFournissers.AsObject>,
+    attendu?: AttenduForRefFourCreate.AsObject,
+  }
+}
+
+export class RefFourCreateResponse extends jspb.Message {
+  getEntryList(): Array<RefFournissers>;
+  setEntryList(value: Array<RefFournissers>): RefFourCreateResponse;
+  clearEntryList(): RefFourCreateResponse;
+  addEntry(value?: RefFournissers, index?: number): RefFournissers;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): RefFourCreateResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RefFourCreateResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: RefFourCreateResponse): RefFourCreateResponse.AsObject;
+  static serializeBinaryToWriter(message: RefFourCreateResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RefFourCreateResponse;
+  static deserializeBinaryFromReader(message: RefFourCreateResponse, reader: jspb.BinaryReader): RefFourCreateResponse;
+}
+
+export namespace RefFourCreateResponse {
+  export type AsObject = {
+    entryList: Array<RefFournissers.AsObject>,
+    messageerror: string,
+  }
+}
+
+export class MetaData extends jspb.Message {
+  getCount(): number;
+  setCount(value: number): MetaData;
+
+  getOffset(): number;
+  setOffset(value: number): MetaData;
+
+  getLimit(): number;
+  setLimit(value: number): MetaData;
+
+  getTotal(): number;
+  setTotal(value: number): MetaData;
+
+  getCountHistory(): number;
+  setCountHistory(value: number): MetaData;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): MetaData.AsObject;
+  static toObject(includeInstance: boolean, msg: MetaData): MetaData.AsObject;
+  static serializeBinaryToWriter(message: MetaData, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): MetaData;
+  static deserializeBinaryFromReader(message: MetaData, reader: jspb.BinaryReader): MetaData;
+}
+
+export namespace MetaData {
+  export type AsObject = {
+    count: number,
+    offset: number,
+    limit: number,
+    total: number,
+    countHistory: number,
+  }
+}
+
+export class GetAllResponse extends jspb.Message {
+  getEntryList(): Array<Reference>;
+  setEntryList(value: Array<Reference>): GetAllResponse;
+  clearEntryList(): GetAllResponse;
+  addEntry(value?: Reference, index?: number): Reference;
+
+  getMetadata(): MetaData | undefined;
+  setMetadata(value?: MetaData): GetAllResponse;
+  hasMetadata(): boolean;
+  clearMetadata(): GetAllResponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): GetAllResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetAllResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllResponse): GetAllResponse.AsObject;
+  static serializeBinaryToWriter(message: GetAllResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllResponse;
+  static deserializeBinaryFromReader(message: GetAllResponse, reader: jspb.BinaryReader): GetAllResponse;
+}
+
+export namespace GetAllResponse {
+  export type AsObject = {
+    entryList: Array<Reference.AsObject>,
+    metadata?: MetaData.AsObject,
+    messageerror: string,
+  }
+}
+
+export class ValidDeleteRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): ValidDeleteRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ValidDeleteRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: ValidDeleteRequest): ValidDeleteRequest.AsObject;
+  static serializeBinaryToWriter(message: ValidDeleteRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ValidDeleteRequest;
+  static deserializeBinaryFromReader(message: ValidDeleteRequest, reader: jspb.BinaryReader): ValidDeleteRequest;
+}
+
+export namespace ValidDeleteRequest {
+  export type AsObject = {
+    id: string,
+  }
+}
+
+export class ValidDeleteResponse extends jspb.Message {
+  getStatus(): boolean;
+  setStatus(value: boolean): ValidDeleteResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ValidDeleteResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: ValidDeleteResponse): ValidDeleteResponse.AsObject;
+  static serializeBinaryToWriter(message: ValidDeleteResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ValidDeleteResponse;
+  static deserializeBinaryFromReader(message: ValidDeleteResponse, reader: jspb.BinaryReader): ValidDeleteResponse;
+}
+
+export namespace ValidDeleteResponse {
+  export type AsObject = {
+    status: boolean,
+  }
+}
+
+export class DeleteByIds extends jspb.Message {
+  getIdList(): Array<string>;
+  setIdList(value: Array<string>): DeleteByIds;
+  clearIdList(): DeleteByIds;
+  addId(value: string, index?: number): DeleteByIds;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteByIds.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteByIds): DeleteByIds.AsObject;
+  static serializeBinaryToWriter(message: DeleteByIds, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteByIds;
+  static deserializeBinaryFromReader(message: DeleteByIds, reader: jspb.BinaryReader): DeleteByIds;
+}
+
+export namespace DeleteByIds {
+  export type AsObject = {
+    idList: Array<string>,
+  }
+}
+
+export class UpdateReferenceRequest extends jspb.Message {
+  getEntry(): Reference | undefined;
+  setEntry(value?: Reference): UpdateReferenceRequest;
+  hasEntry(): boolean;
+  clearEntry(): UpdateReferenceRequest;
+
+  getRefFourDelete(): DeleteByIds | undefined;
+  setRefFourDelete(value?: DeleteByIds): UpdateReferenceRequest;
+  hasRefFourDelete(): boolean;
+  clearRefFourDelete(): UpdateReferenceRequest;
+
+  getConditionnementDelete(): DeleteByIds | undefined;
+  setConditionnementDelete(value?: DeleteByIds): UpdateReferenceRequest;
+  hasConditionnementDelete(): boolean;
+  clearConditionnementDelete(): UpdateReferenceRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UpdateReferenceRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateReferenceRequest): UpdateReferenceRequest.AsObject;
+  static serializeBinaryToWriter(message: UpdateReferenceRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateReferenceRequest;
+  static deserializeBinaryFromReader(message: UpdateReferenceRequest, reader: jspb.BinaryReader): UpdateReferenceRequest;
+}
+
+export namespace UpdateReferenceRequest {
+  export type AsObject = {
+    entry?: Reference.AsObject,
+    refFourDelete?: DeleteByIds.AsObject,
+    conditionnementDelete?: DeleteByIds.AsObject,
+  }
+}
+
+export class UpdateReferenceResponse extends jspb.Message {
+  getStatus(): boolean;
+  setStatus(value: boolean): UpdateReferenceResponse;
+
+  getMessageError(): string;
+  setMessageError(value: string): UpdateReferenceResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UpdateReferenceResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateReferenceResponse): UpdateReferenceResponse.AsObject;
+  static serializeBinaryToWriter(message: UpdateReferenceResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateReferenceResponse;
+  static deserializeBinaryFromReader(message: UpdateReferenceResponse, reader: jspb.BinaryReader): UpdateReferenceResponse;
+}
+
+export namespace UpdateReferenceResponse {
+  export type AsObject = {
+    status: boolean,
+    messageError: string,
+  }
+}
+
+export class DeleteRefByIdRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): DeleteRefByIdRequest;
+
+  getModificationerId(): string;
+  setModificationerId(value: string): DeleteRefByIdRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteRefByIdRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteRefByIdRequest): DeleteRefByIdRequest.AsObject;
+  static serializeBinaryToWriter(message: DeleteRefByIdRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteRefByIdRequest;
+  static deserializeBinaryFromReader(message: DeleteRefByIdRequest, reader: jspb.BinaryReader): DeleteRefByIdRequest;
+}
+
+export namespace DeleteRefByIdRequest {
+  export type AsObject = {
+    id: string,
+    modificationerId: string,
+  }
+}
+
+export class DeleteRefByIdResponse extends jspb.Message {
+  getStatus(): boolean;
+  setStatus(value: boolean): DeleteRefByIdResponse;
+
+  getMessageError(): string;
+  setMessageError(value: string): DeleteRefByIdResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteRefByIdResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteRefByIdResponse): DeleteRefByIdResponse.AsObject;
+  static serializeBinaryToWriter(message: DeleteRefByIdResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteRefByIdResponse;
+  static deserializeBinaryFromReader(message: DeleteRefByIdResponse, reader: jspb.BinaryReader): DeleteRefByIdResponse;
+}
+
+export namespace DeleteRefByIdResponse {
+  export type AsObject = {
+    status: boolean,
+    messageError: string,
+  }
+}
+
+export class GetAllReferenceRequest extends jspb.Message {
+  getClientId(): string;
+  setClientId(value: string): GetAllReferenceRequest;
+
+  getCompanyId(): string;
+  setCompanyId(value: string): GetAllReferenceRequest;
+
+  getWarehouseId(): string;
+  setWarehouseId(value: string): GetAllReferenceRequest;
+
+  getLimit(): number;
+  setLimit(value: number): GetAllReferenceRequest;
+
+  getOffset(): number;
+  setOffset(value: number): GetAllReferenceRequest;
+
+  getBl(): string;
+  setBl(value: string): GetAllReferenceRequest;
+
+  getDescription(): string;
+  setDescription(value: string): GetAllReferenceRequest;
+
+  getSupplier(): string;
+  setSupplier(value: string): GetAllReferenceRequest;
+
+  getType(): string;
+  setType(value: string): GetAllReferenceRequest;
+
+  getMouvement(): string;
+  setMouvement(value: string): GetAllReferenceRequest;
+
+  getEta(): string;
+  setEta(value: string): GetAllReferenceRequest;
+
+  getChrono(): string;
+  setChrono(value: string): GetAllReferenceRequest;
+
+  getDebut(): string;
+  setDebut(value: string): GetAllReferenceRequest;
+
+  getFin(): string;
+  setFin(value: string): GetAllReferenceRequest;
+
+  getStatus(): string;
+  setStatus(value: string): GetAllReferenceRequest;
+
+  getSscc(): string;
+  setSscc(value: string): GetAllReferenceRequest;
+
+  getLot(): string;
+  setLot(value: string): GetAllReferenceRequest;
+
+  getCdn(): string;
+  setCdn(value: string): GetAllReferenceRequest;
+
+  getZone(): string;
+  setZone(value: string): GetAllReferenceRequest;
+
+  getAisle(): string;
+  setAisle(value: string): GetAllReferenceRequest;
+
+  getBay(): string;
+  setBay(value: string): GetAllReferenceRequest;
+
+  getLevel(): string;
+  setLevel(value: string): GetAllReferenceRequest;
+
+  getTypeCdn(): string;
+  setTypeCdn(value: string): GetAllReferenceRequest;
+
+  getEmplacementsVide(): boolean;
+  setEmplacementsVide(value: boolean): GetAllReferenceRequest;
+
+  getProductNumber(): string;
+  setProductNumber(value: string): GetAllReferenceRequest;
+
+  getSort(): string;
+  setSort(value: string): GetAllReferenceRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetAllReferenceRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllReferenceRequest): GetAllReferenceRequest.AsObject;
+  static serializeBinaryToWriter(message: GetAllReferenceRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllReferenceRequest;
+  static deserializeBinaryFromReader(message: GetAllReferenceRequest, reader: jspb.BinaryReader): GetAllReferenceRequest;
+}
+
+export namespace GetAllReferenceRequest {
+  export type AsObject = {
+    clientId: string,
+    companyId: string,
+    warehouseId: string,
+    limit: number,
+    offset: number,
+    bl: string,
+    description: string,
+    supplier: string,
+    type: string,
+    mouvement: string,
+    eta: string,
+    chrono: string,
+    debut: string,
+    fin: string,
+    status: string,
+    sscc: string,
+    lot: string,
+    cdn: string,
+    zone: string,
+    aisle: string,
+    bay: string,
+    level: string,
+    typeCdn: string,
+    emplacementsVide: boolean,
+    productNumber: string,
+    sort: string,
+  }
+}
+
+export class CheckExistEanVarianteForConditonnametRequest extends jspb.Message {
+  getEan(): string;
+  setEan(value: string): CheckExistEanVarianteForConditonnametRequest;
+
+  getVariante(): string;
+  setVariante(value: string): CheckExistEanVarianteForConditonnametRequest;
+
+  getId(): string;
+  setId(value: string): CheckExistEanVarianteForConditonnametRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CheckExistEanVarianteForConditonnametRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CheckExistEanVarianteForConditonnametRequest): CheckExistEanVarianteForConditonnametRequest.AsObject;
+  static serializeBinaryToWriter(message: CheckExistEanVarianteForConditonnametRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CheckExistEanVarianteForConditonnametRequest;
+  static deserializeBinaryFromReader(message: CheckExistEanVarianteForConditonnametRequest, reader: jspb.BinaryReader): CheckExistEanVarianteForConditonnametRequest;
+}
+
+export namespace CheckExistEanVarianteForConditonnametRequest {
+  export type AsObject = {
+    ean: string,
+    variante: string,
+    id: string,
+  }
+}
+
+export class CheckExistEanVarianteForConditonnametResponse extends jspb.Message {
+  getEntry(): proto_conditionnement_conditionnement_pb.Conditionnement | undefined;
+  setEntry(value?: proto_conditionnement_conditionnement_pb.Conditionnement): CheckExistEanVarianteForConditonnametResponse;
+  hasEntry(): boolean;
+  clearEntry(): CheckExistEanVarianteForConditonnametResponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): CheckExistEanVarianteForConditonnametResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CheckExistEanVarianteForConditonnametResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: CheckExistEanVarianteForConditonnametResponse): CheckExistEanVarianteForConditonnametResponse.AsObject;
+  static serializeBinaryToWriter(message: CheckExistEanVarianteForConditonnametResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CheckExistEanVarianteForConditonnametResponse;
+  static deserializeBinaryFromReader(message: CheckExistEanVarianteForConditonnametResponse, reader: jspb.BinaryReader): CheckExistEanVarianteForConditonnametResponse;
+}
+
+export namespace CheckExistEanVarianteForConditonnametResponse {
+  export type AsObject = {
+    entry?: proto_conditionnement_conditionnement_pb.Conditionnement.AsObject,
+    messageerror: string,
+  }
+}
+
+export class HistoryChange extends jspb.Message {
+  getEventType(): string;
+  setEventType(value: string): HistoryChange;
+
+  getField(): string;
+  setField(value: string): HistoryChange;
+
+  getValue(): string;
+  setValue(value: string): HistoryChange;
+
+  getOldValue(): string;
+  setOldValue(value: string): HistoryChange;
+
+  getNewValue(): string;
+  setNewValue(value: string): HistoryChange;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): HistoryChange.AsObject;
+  static toObject(includeInstance: boolean, msg: HistoryChange): HistoryChange.AsObject;
+  static serializeBinaryToWriter(message: HistoryChange, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): HistoryChange;
+  static deserializeBinaryFromReader(message: HistoryChange, reader: jspb.BinaryReader): HistoryChange;
+}
+
+export namespace HistoryChange {
+  export type AsObject = {
+    eventType: string,
+    field: string,
+    value: string,
+    oldValue: string,
+    newValue: string,
+  }
+}
+
+export class RefHistory extends jspb.Message {
+  getId(): string;
+  setId(value: string): RefHistory;
+
+  getCreatedAt(): number;
+  setCreatedAt(value: number): RefHistory;
+
+  getMovementType(): string;
+  setMovementType(value: string): RefHistory;
+
+  getMovementState(): string;
+  setMovementState(value: string): RefHistory;
+
+  getCode(): string;
+  setCode(value: string): RefHistory;
+
+  getObjectType(): string;
+  setObjectType(value: string): RefHistory;
+
+  getObjectId(): string;
+  setObjectId(value: string): RefHistory;
+
+  getObjectNumber(): string;
+  setObjectNumber(value: string): RefHistory;
+
+  getDescription(): string;
+  setDescription(value: string): RefHistory;
+
+  getUserId(): string;
+  setUserId(value: string): RefHistory;
+
+  getUserName(): string;
+  setUserName(value: string): RefHistory;
+
+  getClientCodeNom(): string;
+  setClientCodeNom(value: string): RefHistory;
+
+  getCompanyCodeNom(): string;
+  setCompanyCodeNom(value: string): RefHistory;
+
+  getWarehouseCodeNom(): string;
+  setWarehouseCodeNom(value: string): RefHistory;
+
+  getChrono(): string;
+  setChrono(value: string): RefHistory;
+
+  getAction(): string;
+  setAction(value: string): RefHistory;
+
+  getEventType(): string;
+  setEventType(value: string): RefHistory;
+
+  getChangesList(): Array<HistoryChange>;
+  setChangesList(value: Array<HistoryChange>): RefHistory;
+  clearChangesList(): RefHistory;
+  addChanges(value?: HistoryChange, index?: number): HistoryChange;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RefHistory.AsObject;
+  static toObject(includeInstance: boolean, msg: RefHistory): RefHistory.AsObject;
+  static serializeBinaryToWriter(message: RefHistory, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RefHistory;
+  static deserializeBinaryFromReader(message: RefHistory, reader: jspb.BinaryReader): RefHistory;
+}
+
+export namespace RefHistory {
+  export type AsObject = {
+    id: string,
+    createdAt: number,
+    movementType: string,
+    movementState: string,
+    code: string,
+    objectType: string,
+    objectId: string,
+    objectNumber: string,
+    description: string,
+    userId: string,
+    userName: string,
+    clientCodeNom: string,
+    companyCodeNom: string,
+    warehouseCodeNom: string,
+    chrono: string,
+    action: string,
+    eventType: string,
+    changesList: Array<HistoryChange.AsObject>,
+  }
+}
+
+export class GetHistoryByIdRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): GetHistoryByIdRequest;
+
+  getLimit(): number;
+  setLimit(value: number): GetHistoryByIdRequest;
+
+  getOffset(): number;
+  setOffset(value: number): GetHistoryByIdRequest;
+
+  getFrom(): number;
+  setFrom(value: number): GetHistoryByIdRequest;
+
+  getTo(): number;
+  setTo(value: number): GetHistoryByIdRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetHistoryByIdRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetHistoryByIdRequest): GetHistoryByIdRequest.AsObject;
+  static serializeBinaryToWriter(message: GetHistoryByIdRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetHistoryByIdRequest;
+  static deserializeBinaryFromReader(message: GetHistoryByIdRequest, reader: jspb.BinaryReader): GetHistoryByIdRequest;
+}
+
+export namespace GetHistoryByIdRequest {
+  export type AsObject = {
+    id: string,
+    limit: number,
+    offset: number,
+    from: number,
+    to: number,
+  }
+}
+
+export class GetHistoryByIdResponse extends jspb.Message {
+  getEntryList(): Array<RefHistory>;
+  setEntryList(value: Array<RefHistory>): GetHistoryByIdResponse;
+  clearEntryList(): GetHistoryByIdResponse;
+  addEntry(value?: RefHistory, index?: number): RefHistory;
+
+  getMetadata(): MetaData | undefined;
+  setMetadata(value?: MetaData): GetHistoryByIdResponse;
+  hasMetadata(): boolean;
+  clearMetadata(): GetHistoryByIdResponse;
+
+  getMessageerror(): string;
+  setMessageerror(value: string): GetHistoryByIdResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetHistoryByIdResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetHistoryByIdResponse): GetHistoryByIdResponse.AsObject;
+  static serializeBinaryToWriter(message: GetHistoryByIdResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetHistoryByIdResponse;
+  static deserializeBinaryFromReader(message: GetHistoryByIdResponse, reader: jspb.BinaryReader): GetHistoryByIdResponse;
+}
+
+export namespace GetHistoryByIdResponse {
+  export type AsObject = {
+    entryList: Array<RefHistory.AsObject>,
+    metadata?: MetaData.AsObject,
+    messageerror: string,
+  }
+}
+
 export class ReferenceProduct extends jspb.Message {
   getId(): string;
   setId(value: string): ReferenceProduct;
@@ -523,6 +1550,78 @@ export namespace ReferenceProduct {
     blocageEntree: boolean,
     blocageSortie: boolean,
     preBlockStatus: string,
+  }
+}
+
+export class UpdateBlockLotRequest extends jspb.Message {
+  getRefrenceId(): string;
+  setRefrenceId(value: string): UpdateBlockLotRequest;
+
+  getLotBlockStatus(): boolean;
+  setLotBlockStatus(value: boolean): UpdateBlockLotRequest;
+
+  getMotif(): string;
+  setMotif(value: string): UpdateBlockLotRequest;
+
+  getOrigine(): string;
+  setOrigine(value: string): UpdateBlockLotRequest;
+
+  getCompanyId(): string;
+  setCompanyId(value: string): UpdateBlockLotRequest;
+
+  getWarehouseId(): string;
+  setWarehouseId(value: string): UpdateBlockLotRequest;
+
+  getClientId(): string;
+  setClientId(value: string): UpdateBlockLotRequest;
+
+  getLot(): string;
+  setLot(value: string): UpdateBlockLotRequest;
+
+  getUsercode(): string;
+  setUsercode(value: string): UpdateBlockLotRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UpdateBlockLotRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateBlockLotRequest): UpdateBlockLotRequest.AsObject;
+  static serializeBinaryToWriter(message: UpdateBlockLotRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateBlockLotRequest;
+  static deserializeBinaryFromReader(message: UpdateBlockLotRequest, reader: jspb.BinaryReader): UpdateBlockLotRequest;
+}
+
+export namespace UpdateBlockLotRequest {
+  export type AsObject = {
+    refrenceId: string,
+    lotBlockStatus: boolean,
+    motif: string,
+    origine: string,
+    companyId: string,
+    warehouseId: string,
+    clientId: string,
+    lot: string,
+    usercode: string,
+  }
+}
+
+export class UpdateBlockLotResponse extends jspb.Message {
+  getStatus(): string;
+  setStatus(value: string): UpdateBlockLotResponse;
+
+  getMessageError(): string;
+  setMessageError(value: string): UpdateBlockLotResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UpdateBlockLotResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateBlockLotResponse): UpdateBlockLotResponse.AsObject;
+  static serializeBinaryToWriter(message: UpdateBlockLotResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateBlockLotResponse;
+  static deserializeBinaryFromReader(message: UpdateBlockLotResponse, reader: jspb.BinaryReader): UpdateBlockLotResponse;
+}
+
+export namespace UpdateBlockLotResponse {
+  export type AsObject = {
+    status: string,
+    messageError: string,
   }
 }
 

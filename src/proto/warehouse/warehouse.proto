@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package Warehouse;
 
-option go_package="warehouse-service/proto/warehouse";
+option go_package="/pb/warehouse";
 
 message Warehouse {
   optional string ID = 1;
@@ -13,4 +13,67 @@ message Warehouse {
   string code = 6;
   string code_nom = 7;
   float height = 8;
+}
+
+message MetaData {
+  int32 count = 1;
+  int32 offset = 2;
+  int32 limit  = 3;
+  int64 total  = 4;
+}
+
+message CreateRequest {
+  Warehouse entry = 1;
+}
+
+message Response {
+  Warehouse entry = 1;
+  string messageError = 2;
+}
+
+message GetAllRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message GetAllResponse {
+  repeated Warehouse entry = 1;
+  MetaData metadata = 2;
+  string messageError = 3;
+}
+
+message ValidWarningDluoRequest {
+  int64 dluo = 1;
+  string warehouse_id = 2;
+}
+
+message ValidWarningDluoResponse {
+  bool is_warning = 1;
+  string message_error = 2;
+}
+
+message ValidDeletingWarehouseRequest {
+  string warehouse_id = 1;
+}
+
+message ValidDeletingWarehouseResponse {
+  bool can_delete = 1;
+  string messageError = 2;
+}
+
+message HookDeletingWarehouseRequest {
+  string warehouse_id = 1;
+}
+
+message HookDeletingWarehouseResponse {
+  string messageError = 1;
+}
+
+service WarehouseService {
+  rpc Create(CreateRequest) returns (Response) {};
+  rpc GetAll(GetAllRequest) returns (GetAllResponse) {};
+
+  rpc ValidWarningDluo(ValidWarningDluoRequest) returns (ValidWarningDluoResponse) {};
+  rpc ValidDeletingWarehouse(ValidDeletingWarehouseRequest) returns (ValidDeletingWarehouseResponse) {};
+  rpc HookDeletingWarehouse(HookDeletingWarehouseRequest) returns (HookDeletingWarehouseResponse) {};
 }

@@ -2,12 +2,72 @@ syntax = "proto3";
 
 package attendu;
 import "proto/conditionnement/conditionnement.proto";
+import "proto/destinataire/destinataire.proto";
+import "proto/transporteur/transporteur.proto";
+import "proto/user/user.proto";
+import "proto/comarticle/comarticle.proto";
+import "proto/stock/stock.proto";
 import "proto/sscc/sscc.proto";
+import "proto/commande/commande.proto";
 import "proto/reference/reference.proto";
+import "proto/export/export.proto";
 
-option go_package = "warehouse-service/proto/attendu";
+option go_package="broker-service/pb/attendu";
 
 message Attendu {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string bl = 4;
+    int64 commande = 5;
+    string client_code_nom = 6;
+    string number_of_fournisseur = 7;
+    int64 livraison = 8;
+    int64 priorite = 9;
+    int64 qte_total = 10;
+    int64 sous_qte_total = 11;
+    repeated AttProduction att_production = 12;
+    AttCommentaire att_commentaire = 13;
+    AttFournisseur att_fournisseur = 14;
+    repeated AttFile att_file = 15;
+    string fournisseur_id = 16;
+    bool is_val = 17;
+    string no_commande = 18;
+    string status = 19;
+    int32 photos = 20;
+    string location_id = 21;
+    string assignee_id = 22;
+    string company_code_nom= 23;
+    string warehouse_code_nom = 24;
+    string created_by = 25;
+    string modification_by = 26;
+    string validation_by = 27;
+    int64 validation_time = 28;
+    string modificationer_id = 29;
+    string manager_by = 30;
+    string manager_id = 31;
+    string assignee_by = 32;
+    string type = 33;
+    string mouvement = 34;
+    string eta = 35;
+    int32 rec_type = 36;
+
+    repeated string mouvements = 37;
+    repeated string etas = 38;
+    repeated string statuses = 39;
+    repeated string types = 40;
+    repeated int64 type_cdn = 41;
+    int64 quantite = 42;
+    int64 sous_qte = 43;
+    int64 total_pieses = 44;
+    string chrono = 45;
+    string client_id = 46;
+    string company_id = 47;
+    string warehouse_id = 48;
+    repeated MissionDTO missions = 49;
+}
+
+message MissionDTO {
     string id = 1;
     int64 create_at = 2;
     int64 update_at = 3;
@@ -40,22 +100,49 @@ message Attendu {
     string manager_by = 30;
     string manager_id = 31;
     string assignee_by = 32;
-    string type = 33;
-    string mouvement = 34;
-    string eta = 35;
-    int32 rec_type = 36;
-    repeated string mouvements = 37;
-    repeated string etas = 38;
-    repeated string statuses = 39;
-    repeated string types = 40;
-    repeated int64 type_cdn = 41;
-    int64 quantite = 42;
-    int64 sous_qte = 43;
-    int64 total_pieses = 44;
-    string chrono = 45;
-    string client_id = 46;
-    string company_id = 47;
-    string warehouse_id = 48;
+
+    string nom = 33;
+    string nom_client = 34;
+    repeated comarticle.ComArticle com_article = 35;
+    commande.ComComment com_preparation = 36;
+    commande.ComComment com_livraison = 37;
+
+    string destinataire_id = 38;
+    destinataire.Destinataire destinataire = 39;
+    string des_addresse_id = 40;
+    destinataire.DesAddresse des_addresse = 41;
+    string des_contact_id = 42;
+    destinataire.DesContact des_contact = 43;
+
+    string transporteur_id = 44;
+    transporteur.Transporteur transporteur = 45;
+    string tran_addresse_id = 46;
+    transporteur.TranAddresse tran_addresse = 47;
+    string tran_contact_id = 48;
+    transporteur.TranContact tran_contact = 49;
+
+    string relay_detail = 50;
+    int64 livraison_at = 51;
+    int64 chargement_at = 52;
+    bool imperatif = 53;
+    repeated commande.ComFile com_file = 54;
+    string status_code = 55;
+    int32 mission_type = 56;
+    repeated comarticle.ComArticle loading_com_article = 57;
+    LocationDTO location = 58;
+    LocationDTO stock_location = 59;
+    int32 rec_type = 60;
+    string sscc = 61;
+    string info = 62;
+    bool client_multi_bl = 63;
+    string client_id = 64;
+    string company_id = 65;
+    string warehouse_id = 66;
+    repeated string lot_block_sscc = 67;
+    int32 uploaded_photo_count = 68;
+    int64 execution_date = 69;
+    int64 assignment_date = 70;
+    int64 expected_date = 71;
 }
 
 message LocationDTO {
@@ -63,10 +150,17 @@ message LocationDTO {
     string zone_id = 2;
     string aisle = 4;
     string bay = 5;
-    string zone_code = 6;
+	string zone_code = 6;
     int32 level = 7;
     string entry_block = 8;
     string code = 9;
+    ZoneDTO zone = 10;
+}
+
+message ZoneDTO {
+    string id = 1;
+    string name = 2;
+    string code = 3;
 }
 
 message AttFile {
@@ -159,4 +253,436 @@ message AttProduction {
     string company_id = 48;
     string warehouse_id = 49;
     string client_id = 50;
+}
+
+message AttenduRequest {
+    Attendu attenduEntry = 1;
+}
+
+message UpdateAttenduRequest {
+    Attendu attenduEntry = 1;
+    string realtime_object = 2;
+}
+
+message AttenduResponse {
+    Attendu entry = 1;
+    string messageError = 2;
+}
+
+message GetMissionResponse {
+    Attendu entry = 1;
+    string messageError = 2;
+    int64 count = 3;
+}
+
+message GetMissionImportantResponse{
+    Attendu attendu = 1;
+    commande.Commande commande = 2;
+    int32 type = 3;
+    string messageError = 4;
+    int64 count = 5;
+}
+
+message GetByIdAttenduRequest {
+    string id = 1;
+}
+
+message MetaData {
+    int32 count = 1;
+    int32 offset = 2; 
+    int32 limit  = 3; 
+    int64 total  = 4;
+}
+
+message GetAllRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+    string client_id = 3;
+    string warehouse_id = 4;
+    string company_id = 5;
+    string user_id = 6;
+    string role = 7;
+    string bl = 8;
+    string description = 9;
+    string supplier = 10;
+    string type = 11;
+    string mouvement = 12;
+    string eta = 13;
+    string chrono = 14;
+    string start_date = 15;
+    string end_date = 16;
+    string product = 17;
+    string status = 18;
+    string palette = 19;
+    string lot = 20;
+    string sort = 21;
+}
+
+message GetAllResponse {
+    repeated Attendu entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message DeleteFileRequest {
+    string id = 1;
+}
+
+message GetFilesInAtt {
+    string att_id = 1;
+}
+
+message GetFileByIdRequest {
+    string id = 1;
+}
+
+message GetFileByNameRequest {
+    string id = 1;
+    string att_id = 2;
+}
+
+message UploadNewFileRequest{
+    AttFile file = 1;
+}
+
+message UploadMultiFileRequest{
+    repeated AttFile files = 1;
+}
+
+message GetFilesInAttReponse{
+    repeated AttFile entry = 1;
+    string messageError = 2;
+}
+
+message UploadMultiFileResponse{
+    repeated AttFile entry = 1;
+    string messageError = 2;
+}
+
+message AttFileReponse{
+    AttFile entry = 1;
+    string messageError = 2;
+}
+
+message GetMissionRequest{
+    string user_id = 1;
+}
+
+message GetMissionImportantRequest{
+    string user_id = 1;
+    string company_code_nom = 2;
+    string warehouse_code_nom = 3;
+}
+
+message ValidMissionRequest{
+    string att_nom = 1;
+    string client_code_nom = 2;
+}
+
+message ValidMissionResponse{
+    string status = 1;
+    string messageError = 2;
+}
+
+message UpdateMissionLocationRequest{
+    string att_id = 1;
+    string warehourse_code_nom = 2;
+    string code_bar = 3;
+    string warehouse_id = 4;
+}
+
+message UpdateMissionLocationResponse{
+    string status = 1;
+    string messageError = 2;
+}
+
+message UpdateMissionArticleRequest{
+    string id = 1;
+    int64 dluo = 2;
+    int64 dlc = 3;
+    int64 manufacture_date = 4;
+    string lot = 5;
+    int32  quantity = 6;
+    string variante = 7;
+    bool is_update_scan = 8;
+}
+
+message UpdateMissionArticleResponse{
+    string status = 1;
+    string messageError = 2;
+    bool block = 3;
+    bool is_scan_next = 4;
+    bool is_valid = 5;
+}
+
+
+message GetDashboardInformationRequest{
+    repeated string client_id = 1;
+    repeated string company_id = 2;
+    repeated string warehouse_id = 3;
+    repeated string user_id = 4;
+    repeated string reference = 5; // Référence
+    repeated string member = 6; // Membre
+    string start_date = 7; // Début
+    string end_date = 8; // Fin
+}
+
+message DashboardChart {
+    string date = 1;
+    string name = 2;
+    int64 value = 3;
+    float percent = 4;
+}
+
+message GetDashboardInformationResponse{
+    string messageError = 1;
+    int64 total = 2; // Total
+    int64 items = 3; // Articles (total)
+    int64 items_cdn = 4; // Articles (selon CDN)
+    int64 referecence = 5; // Références
+    int64 disputes = 6; // Litiges
+    int64 reception_inprogress = 7; // Réceptions (en cours)
+    int64 reception_processed = 8; // Réceptions ( traitées)
+    int64 average_reception_time = 9; // Temps moyen de réception
+    int64 placements_in_stock_inprogress = 10; // Mises au stock (en cours)
+    int64 placements_in_stock_processed = 11; // Mises au stock (traitées)
+    int64 average_time_to_stock = 12; // Temps moyen de mise au stock
+    int64 affected_staff = 13; // Personnel concerné
+    repeated DashboardChart stick_chart = 14;
+    repeated DashboardChart pie_chart = 15;
+    //    int64 on_hold = 14; // En attente
+    //    int64 receipts = 15; // Reçus
+}
+
+message GetMissionByStatusRequest{
+    string company_code_nom = 1;
+    string warehouse_code_nom = 2;
+    string status = 3;
+    int32 paging = 4; // 0
+    int32 pageSize = 5; // 10
+    string nom = 6;
+    repeated string client_code_nom = 7;
+    repeated int32 mission_type = 8;
+    string user_id = 9;
+    int64 delivery_date = 10;
+    string company_id = 11;
+    string warehouse_id = 12;
+    repeated string client_id = 13;
+}
+
+message GetMissionDetailRequest{
+    string id = 1;
+}
+
+message GetMissionDetailResponse{
+    MissionDTO mission = 1;
+    user.User usr = 2;
+    string messageError = 3;
+}
+
+message UpdateMissionStatusRequest{
+    string id = 1;
+    string user_id = 2;
+    string status = 3;
+    int32 type = 4;
+    string manager_id = 5;
+    string sscc = 6;
+    string reason = 7;
+    string reason_note = 8;
+}
+
+message UpdateMissionStatusResponse {
+    Attendu entry = 1;
+    commande.Commande entry_cmd = 2;
+    string messageError = 3;
+}
+
+message MissionPayload {
+    MissionDTO mission = 1;
+    user.User usr = 2;
+}
+
+message MissionPayloadResponse {
+    repeated MissionPayload entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message MissionImportantResponse {
+    MissionDTO entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+    int64 count = 4;
+    user.User usr = 5;
+}
+
+message MissionImpotant {
+    string company_code_nom = 1;
+    string warehouse_code_nom = 2;
+    string company_id = 3;
+    string warehouse_id = 4;
+}
+
+message MissionImportantArrayRequest {
+    string user_id = 1;
+    MissionImpotant mission = 2;
+}
+
+message GetAllAttenduStockRequest {
+    string client_code_nom = 1;
+    string company_code_nom = 2;
+    string warehouse_code_nom = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+}
+
+message GetAllAttenduStockResponse {
+    repeated AttProduction entry = 1;
+    MetaData metadata = 2;
+    string messageError = 3;
+}
+
+message GetAttProBySSCCRequest {
+    string sscc = 1;
+    string client_code_nom = 2;
+    string company_code_nom = 3;
+    string warehouse_code_nom = 4;
+}
+
+message GetAttProBySSCCReponse {
+    stock.AttProduction entry = 1;
+    string messageError = 2;
+}
+
+message PrintAttProductionInforRequest {
+    string att_production_id = 1;
+}
+
+message PrintAttProductionInforResponse {
+    string client_name = 1;  //att_production table
+    string reference_number = 2; //att_production table
+    float poids_brut = 3; //conditionnement table
+    float poids_add = 4; //conditionnement table
+    string sscc_number = 5; //att_production table
+    string no_codebarre = 6;  // Value of EAN or Code at conditionnement table
+    int32 qty_n_1 = 7; //conditionnement table
+    string couche = 8; //conditionnement table
+    string variante = 9; //conditionnement table
+    int32 qty_n = 10; //conditionnement table
+    string libelle_long = 11; //reference table
+    string lot = 12; //att_production table
+    int64 dluo = 13; //att_production table
+}
+
+message AttProductionInforResponse  {
+    string path = 1;
+    string messageError = 2;
+}
+
+message DeleteByIdAttenduRequest {
+    string id = 1;
+    string modificationer_id = 2;
+}
+
+message HistoryMetaData {
+    int64 count = 1;
+    int64 offset = 2; 
+    int64 limit  = 3; 
+    int64 total  = 4;
+    int64 count_history = 5;
+}
+
+message HistoryChange {
+    string event_type = 1;
+    string field = 2;
+    string value = 3;
+    string old_value = 4;
+    string new_value = 5;
+}
+
+message AttenduHistory {
+  string id = 1;
+  int64 created_at = 2;
+  string movement_type = 3;
+  string movement_state = 4;
+  string code = 5;
+  string object_type = 6;
+  string object_id = 7;
+  string object_number = 8;
+  string description = 9;
+  string user_id = 10;
+  string user_name = 11;
+  string client_code_nom = 12;
+  string company_code_nom = 13;
+  string warehouse_code_nom = 14;
+  string chrono = 15;
+  string action = 16;
+  string event_type = 17;
+  repeated HistoryChange changes = 18;
+}
+
+message GetHistoryByAttenduIdRequest {
+  string attendu_id = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+  int64 from = 4;
+  int64 to = 5;
+}
+
+message GetHistoryByAttenduIdResponse {
+  repeated AttenduHistory entry = 1;
+  HistoryMetaData metadata = 2;
+  string messageError = 3;
+}
+
+message AttProductionListRequest {
+    repeated string att_production_ids = 1;
+}
+
+message AttProductionListResponse {
+    string path = 1;
+    string messageError = 2;
+}
+
+message RealtimeAttendu {
+    Attendu attendu = 1;
+    string realtime_object = 2;
+}
+
+service AttenduService {
+    rpc Create(AttenduRequest) returns (AttenduResponse){}
+    rpc GetAll(GetAllRequest) returns (GetAllResponse){}
+    rpc UpdateByID(UpdateAttenduRequest) returns (AttenduResponse){}
+    rpc UpdatePatch(AttenduRequest) returns (AttenduResponse){}
+    rpc GetByID(GetByIdAttenduRequest) returns (AttenduResponse){}
+    rpc DeleteByID(DeleteByIdAttenduRequest) returns (AttenduResponse){}
+
+    rpc DeleteFile(DeleteFileRequest) returns (AttFileReponse){}
+    rpc GetAllFiles(GetFilesInAtt) returns (GetFilesInAttReponse){}
+    rpc UploadFile(UploadNewFileRequest) returns (AttFileReponse){}
+    rpc UploadMultiFile(UploadMultiFileRequest) returns (UploadMultiFileResponse){}
+    rpc GetFileById(GetFileByIdRequest) returns (AttFileReponse){}
+    rpc GetFileByName(GetFileByNameRequest) returns (AttFileReponse){}
+
+    rpc GetMission(GetMissionRequest) returns (GetMissionResponse){}
+    rpc GetMissionDetail(GetMissionDetailRequest) returns (MissionImportantResponse){}
+    rpc ValidMission(ValidMissionRequest) returns (ValidMissionResponse){}
+    rpc UnValidMission(ValidMissionRequest) returns (ValidMissionResponse){}
+    rpc UpdateMissionLocation(UpdateMissionLocationRequest) returns (UpdateMissionLocationResponse){}
+    rpc UpdateMissionArticle(UpdateMissionArticleRequest) returns (UpdateMissionArticleResponse){}
+
+    rpc GetDashboardInformation(GetDashboardInformationRequest) returns (GetDashboardInformationResponse){}
+    rpc GetMissionByStatus(GetMissionByStatusRequest) returns (MissionPayloadResponse){}
+    rpc UpdateMissionStatus(UpdateMissionStatusRequest) returns (UpdateMissionStatusResponse){}
+    rpc GetMissionImportant(GetMissionImportantRequest) returns (GetMissionImportantResponse){}
+    rpc GetMissionImportantArrayRequest(MissionImportantArrayRequest) returns (MissionImportantResponse){}
+
+    rpc GetAllAttStock(GetAllAttenduStockRequest) returns (GetAllAttenduStockResponse){}
+
+    rpc GetAttProBySSCC(GetAttProBySSCCRequest) returns (GetAttProBySSCCReponse){}
+    rpc PrintingInformationOfAttProduction(PrintAttProductionInforRequest) returns (AttProductionInforResponse){}
+
+    rpc GetHistoryByAttenduId(GetHistoryByAttenduIdRequest) returns (GetHistoryByAttenduIdResponse){}
+    rpc GenerationAllSSCConPdf(AttProductionListRequest) returns (AttProductionListResponse);
+    rpc ExportAllAttendus(export.ExportAllAttenduRequest) returns (export.ExportResponse){}
 }

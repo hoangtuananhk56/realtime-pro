@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package specificites;
 
-option go_package = "warehouse-service/proto/specificites";
+option go_package = "broker-service/pb/specificites";
 
 message Specificites {
     string id = 1;

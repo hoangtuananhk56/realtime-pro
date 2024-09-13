@@ -147,5 +147,48 @@ export class MessageServiceClient {
     this.methodDescriptorCloseStream);
   }
 
+  methodDescriptorCheckConnection = new grpcWeb.MethodDescriptor(
+    '/message.MessageService/CheckConnection',
+    grpcWeb.MethodType.UNARY,
+    proto_message_message_pb.Close,
+    proto_message_message_pb.Close,
+    (request: proto_message_message_pb.Close) => {
+      return request.serializeBinary();
+    },
+    proto_message_message_pb.Close.deserializeBinary
+  );
+
+  checkConnection(
+    request: proto_message_message_pb.Close,
+    metadata?: grpcWeb.Metadata | null): Promise<proto_message_message_pb.Close>;
+
+  checkConnection(
+    request: proto_message_message_pb.Close,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: proto_message_message_pb.Close) => void): grpcWeb.ClientReadableStream<proto_message_message_pb.Close>;
+
+  checkConnection(
+    request: proto_message_message_pb.Close,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: proto_message_message_pb.Close) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/message.MessageService/CheckConnection',
+        request,
+        metadata || {},
+        this.methodDescriptorCheckConnection,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/message.MessageService/CheckConnection',
+    request,
+    metadata || {},
+    this.methodDescriptorCheckConnection);
+  }
+
 }
 

@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package authentication;
+
+import "proto/clientwarehousecompany/clientwarehousecompany.proto";
+option go_package="broker-service/pb/authentication";
+
+message User {
+    string id = 1;
+    int64 create_at = 2;
+    int64 update_at = 3;
+    string username = 4;
+    string password = 5;
+    string nom = 6;
+    string pre_nom = 7;
+    string address = 8;
+    string tel = 9;
+    string mail = 10;
+    bool actif = 11;
+    string manager_id = 12;
+    repeated User stockist = 13;
+    string code = 14;
+    string role = 15;
+    repeated clientwarehousecompany.ClientWarehouseCompany client_warehouse_company = 16;
+}
+
+message Request {
+    string code = 1;
+    string password = 2;
+}
+
+message SignInRequest {
+    Request signInEntry = 1;
+}
+
+message Response {
+    User user = 1;
+    string messageError = 2;
+    string accessToken = 3;
+    string refreshToken = 4;
+}
+
+message SignUpForm {
+    string username = 1;
+    string password = 2;
+    string nom = 3;
+    string pre_nom = 4;
+    string address = 5;
+    string tel = 6;
+    string mail = 7;
+    bool actif = 8;
+    string manager_id = 9;
+    repeated User stockist = 10;
+    string code = 11;
+    string role = 12;
+    repeated clientwarehousecompany.ClientWarehouseCompany client_warehouse_company = 13;
+}
+
+message SignUpRequest {
+    SignUpForm signUpEntry = 1;
+}
+
+service AuthenticationService {
+    rpc SignIn(SignInRequest) returns (Response) {}
+    rpc SignInOnBO(SignInRequest) returns (Response) {}
+    rpc SignUp(SignUpRequest) returns (Response) {}
+}
